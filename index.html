@@ -225,6 +225,22 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .cat-section.grid-2 .btn-row{ flex-direction:column; gap:6px; }
 .cat-section.grid-2 .buy-btn{ font-size:12px; padding:11px 6px; gap:5px; border-radius:12px; }
 .cat-section.grid-2 .video-wrapper{ margin-bottom:10px; }
+.cat-section.grid-2 .video-wrapper .fs-btn{
+  position:absolute; bottom:7px; right:7px; z-index:10;
+  width:32px; height:32px; border-radius:9px;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,0.18);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:background 0.2s, transform 0.15s;
+}
+.cat-section.grid-2 .video-wrapper .fs-btn:active{
+  background:rgba(0,232,122,0.3); transform:scale(0.92);
+}
+.cat-section.grid-2 .video-wrapper .fs-btn svg{
+  width:14px; height:14px; fill:none; stroke:#fff; stroke-width:2;
+  stroke-linecap:round; stroke-linejoin:round;
+}
 
 .cat-header{
   display:flex; align-items:center; gap:14px;
@@ -1324,6 +1340,29 @@ window.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.25 });
     document.querySelectorAll('.product').forEach(p => shimmerObs.observe(p));
   }
+
+  // ─── Fullscreen btn on 2-col video wrappers ───
+  document.querySelectorAll('.grid-2 .video-wrapper').forEach(wrapper => {
+    const iframe = wrapper.querySelector('iframe');
+    if(!iframe) return;
+    const btn = document.createElement('button');
+    btn.className = 'fs-btn';
+    btn.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>`;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const el = iframe;
+      try {
+        if(el.requestFullscreen) el.requestFullscreen();
+        else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if(el.webkitEnterFullscreen) el.webkitEnterFullscreen();
+      } catch(err) {
+        // fallback: open video in new tab
+        const src = el.src;
+        window.open(src, '_blank');
+      }
+    });
+    wrapper.appendChild(btn);
+  });
 
   // ─── Scroll progress bar ───
   const progressBar = document.getElementById('scrollProgress');
