@@ -3,17 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DerBeste37</title>
+<title>DerBeste37 Boutique</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
 
 body{
-background-image: url('https://drive.google.com/uc?export=view&id=1F96rqmj26th0C68FZJB1_i_68PL1YxOW');
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
+background:url("background.jpg") no-repeat center center/cover;
 min-height:100vh;
 display:flex;
 justify-content:center;
@@ -95,23 +92,26 @@ font-size:14px;
 <body>
 
 <div class="container">
-<h1>DerBeste37</h1>
+<h1>DerBeste37 Boutique</h1>
 
 <div class="section">
 <h2>Produits</h2>
 
 <!-- ===== PRODUIT 1 ===== -->
 <div class="product">
-<img id="product-img-1" src="image1.jpg" alt="Produit 1">
-<h3>Runtz</h3>
-<p>Cali Hollandaise</p>
-<div class="price">2.5G • 40€   5G • 60€  10G • 100€</div>
-<a class="buy-btn" href="https://t.me/DerBeste37">Commander</a>
+  <video id="product-video-1" controls poster="image1.jpg" style="width:100%;border-radius:12px;margin-bottom:10px;">
+    <source src="https://drive.google.com/uc?export=download&id=1bkU288KKRcsgRyeLkeH2j7MBI8I4pPkK" type="video/mp4">
+    Votre navigateur ne supporte pas la vidéo.
+  </video>
+  <h3>Cali Hollandaise "Runtz"</h3>
+  <p>Description du produit.</p>
+  <div class="price">29 €</div>
+  <a class="buy-btn" href="https://t.me/DerBeste37">Commander</a>
 </div>
 
 <!-- ===== PRODUIT 2 ===== -->
 <div class="product">
-<video id="product-video-1" controls src="video1.mp4"></video>
+<video controls src="video1.mp4"></video>
 <h3>Nom du Produit 2</h3>
 <p>Description du produit vidéo.</p>
 <div class="price">49 €</div>
@@ -123,34 +123,15 @@ font-size:14px;
 <div class="section">
 <h2>Information</h2>
 <div class="info-box">
- DER BESTE COFFEE 
-Numéro 🥇 dans le 37000
-Since 2020 👌
-
-Bienvenue chez Der Beste Coffee
-Nous vous offrons une sélection de produits haut de gamme dans lesquels vous retrouverez les Farms les plus prestigieuses à des prix défiants toute concurrence.
-
-Localisation📍
-➡️ Meet-up 🤝
--> Tours 37000
-➡️ Livraison 🛵🚚
--> 37 / 49 / 86 / 36 / 41 / 72 
-
-Produits
-➡️ JAUNE 🧽
-➡️ FLEURS 🌿
-➡️ HASH PREMIUM 🍫
-➡️ HASH US 🇺🇸
-➡️ STATIC 🔥
-➡️ FROZEN 🥶
-➡️ ÉCAILLE ❄️
+Ici tu écris les informations de ta boutique.
+Livraison, délais, garantie, etc.
 </div>
 </div>
 
 <div class="section">
 <h2>Contact</h2>
 <div class="info-box">
-Contact : @DerBeste37
+Contact : DerBeste37
 </div>
 </div>
 
@@ -163,22 +144,13 @@ tg.expand();
 
 <script>
 ;(async function(){
-	// fallback image if local file missing
-	const img = document.getElementById('product-img-1');
-	if(img){
-		try{
-			const r = await fetch(img.getAttribute('src'), {method:'HEAD'});
-			if(!r.ok) img.src = 'https://picsum.photos/seed/derbeste/800/600';
-		}catch(e){ img.src = 'https://picsum.photos/seed/derbeste/800/600'; }
-	}
-
-	// fallback video if local file missing
+	// fallback video if local file missing (Produit 1)
 	const video = document.getElementById('product-video-1');
 	if(video){
 		try{
-			const r2 = await fetch(video.getAttribute('src'), {method:'HEAD'});
-			if(!r2.ok) video.src = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
-		}catch(e){ video.src = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'; }
+			const r2 = await fetch(video.querySelector('source').getAttribute('src'), {method:'HEAD'});
+			if(!r2.ok) video.querySelector('source').src = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
+		}catch(e){ video.querySelector('source').src = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'; }
 	}
 })();
 </script>
