@@ -3,50 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DerBeste37 Boutique</title>
+<title>DerBeste37</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+:root{
+--green:#00ff88;
+--dark:#0e0e0e;
+--glass:rgba(255,255,255,0.06);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
 
 body{
-background:url("background.jpg") no-repeat center center/cover;
-min-height:100vh;
-display:flex;
-justify-content:center;
-padding:15px;
+background:#000;
 color:white;
+overflow-x:hidden;
 }
 
-.container{
-background:rgba(0,0,0,0.75);
-backdrop-filter:blur(8px);
+/* HERO VIDEO */
+.hero{
+position:relative;
+height:60vh;
+overflow:hidden;
+}
+
+.hero video{
 width:100%;
-max-width:500px;
-border-radius:20px;
-padding:20px;
+height:100%;
+object-fit:cover;
+filter:brightness(0.6);
 }
 
-h1{
-text-align:center;
-margin-bottom:25px;
-font-weight:600;
+.hero-overlay{
+position:absolute;
+bottom:30px;
+left:20px;
 }
 
-.section{
-margin-bottom:30px;
+.hero-overlay h1{
+font-size:32px;
+font-weight:700;
+letter-spacing:1px;
 }
 
-.product{
-background:rgba(255,255,255,0.1);
-padding:15px;
-border-radius:15px;
+.hero-overlay p{
+opacity:0.8;
+margin-top:5px;
+}
+
+/* CONTAINER */
+.container{
+padding:25px 20px 40px;
+max-width:550px;
+margin:auto;
+}
+
+/* SECTION TITLE */
+.section-title{
+font-size:20px;
 margin-bottom:15px;
-transition:0.3s;
+border-left:3px solid var(--green);
+padding-left:10px;
+}
+
+/* PRODUCT CARD */
+.product{
+background:var(--glass);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:18px;
+padding:15px;
+margin-bottom:20px;
+transition:0.4s;
 }
 
 .product:hover{
-transform:translateY(-3px);
+transform:translateY(-5px);
+border-color:var(--green);
 }
 
 .product img,
@@ -57,81 +96,107 @@ margin-bottom:10px;
 }
 
 .product h3{
+font-size:18px;
 margin-bottom:5px;
 }
 
+.product p{
+font-size:14px;
+opacity:0.8;
+margin-bottom:8px;
+}
+
 .price{
-color:#00e676;
-font-weight:bold;
-margin:8px 0;
+color:var(--green);
+font-weight:600;
+font-size:16px;
+margin-bottom:10px;
 }
 
 .buy-btn{
 display:block;
 text-align:center;
 padding:10px;
-background:linear-gradient(135deg,#00c853,#2e7d32);
-border-radius:10px;
+border-radius:12px;
+background:linear-gradient(90deg,var(--green),#00cc66);
+color:black;
+font-weight:600;
 text-decoration:none;
-color:white;
-font-weight:bold;
+transition:0.3s;
 }
 
+.buy-btn:hover{
+opacity:0.85;
+}
+
+/* INFO BOX */
 .info-box{
-background:rgba(255,255,255,0.1);
+background:var(--glass);
+border-radius:15px;
 padding:15px;
-border-radius:12px;
 font-size:14px;
+opacity:0.9;
+}
+
+/* FOOTER */
+.footer{
+text-align:center;
+margin-top:40px;
+opacity:0.5;
+font-size:12px;
 }
 
 @media(max-width:600px){
-.container{border-radius:0;min-height:100vh}
+.hero-overlay h1{font-size:26px;}
 }
 </style>
 </head>
 <body>
 
+<div class="hero">
+<video autoplay muted loop playsinline>
+<source src="runtz.mp4" type="video/mp4">
+</video>
+<div class="hero-overlay">
+<h1>DerBeste37</h1>
+<p>Premium Collection</p>
+</div>
+</div>
+
 <div class="container">
-<h1>DerBeste37 Boutique</h1>
 
-<div class="section">
-<h2>Produits</h2>
+<div class="section-title">Produits</div>
 
-<!-- ===== PRODUIT 1 ===== -->
 <div class="product">
-  <video id="product-video-1" controls poster="image1.jpg" style="width:100%;border-radius:12px;margin-bottom:10px;">
-    <source src="https://drive.google.com/uc?export=download&id=1bkU288KKRcsgRyeLkeH2j7MBI8I4pPkK" type="video/mp4">
-  </video>
-  <h3>Runtz</h3>
-  <p>Cali Hollandaise</p>
-  <div class="price">2.5G/40€  5G/60€  10G/100€</div>
-  <a class="buy-btn" href="https://t.me/DerBeste37">Commander</a>
+<video controls>
+<source src="runtz.mp4" type="video/mp4">
+</video>
+<h3>Runtz Premium</h3>
+<p>Produit exclusif haut de gamme. Qualité sélectionnée.</p>
+<div class="price">29 €</div>
+<a class="buy-btn" href="https://t.me/TON_USERNAME">Commander</a>
 </div>
 
-<!-- ===== PRODUIT 2 ===== -->
 <div class="product">
-<video controls src="video1.mp4"></video>
-<h3>Nom du Produit 2</h3>
-<p>Description du produit vidéo.</p>
+<img src="image2.jpg">
+<h3>Produit Elite</h3>
+<p>Nouvelle génération, design moderne et qualité supérieure.</p>
 <div class="price">49 €</div>
-<a class="buy-btn" href="https://t.me/DerBeste37">Commander</a>
+<a class="buy-btn" href="https://t.me/TON_USERNAME">Commander</a>
 </div>
 
-</div>
-
-<div class="section">
-<h2>Information</h2>
+<div class="section-title">Information</div>
 <div class="info-box">
-Ici tu écris les informations de ta boutique.
-Livraison, délais, garantie, etc.
-</div>
+Livraison rapide. Service premium. Produits sélectionnés avec soin.
 </div>
 
-<div class="section">
-<h2>Contact</h2>
+<div class="section-title">Contact</div>
 <div class="info-box">
-Contact : DerBeste37
+Telegram : @TON_USERNAME
 </div>
+
+<div class="footer">
+© 2026 DerBeste37
 </div>
 
 </div>
@@ -139,19 +204,6 @@ Contact : DerBeste37
 <script>
 const tg = window.Telegram.WebApp;
 tg.expand();
-</script>
-
-<script>
-;(async function(){
-	// fallback video if local file missing (Produit 1)
-	const video = document.getElementById('product-video-1');
-	if(video){
-		try{
-			const r2 = await fetch(video.querySelector('source').getAttribute('src'), {method:'HEAD'});
-			if(!r2.ok) video.querySelector('source').src = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
-		}catch(e){ video.querySelector('source').src = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'; }
-	}
-})();
 </script>
 
 </body>
