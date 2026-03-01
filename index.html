@@ -132,6 +132,23 @@ transition:0.3s;
 opacity:0.85;
 }
 
+/* VIDEO WRAPPER */
+.video-wrapper{
+position:relative;
+padding-top:56.25%;
+border-radius:12px;
+overflow:hidden;
+margin-bottom:10px;
+}
+.video-wrapper iframe{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:0;
+}
+
 /* INFO BOX */
 .info-box{
 background:var(--glass);
@@ -174,7 +191,7 @@ font-size:12px;
 
 <div class="video-wrapper">
 <iframe 
-src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=runtz_hnzuyh"
+src="https://player.cloudinary.com/embed/?cloud_name=fdgqujioghpx&public_id=_hnzuyh"
 allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
 allowfullscreen
 frameborder="0">
@@ -189,9 +206,14 @@ frameborder="0">
 </div>
 
 <div class="product">
-<video controls>
-<source src="https://streamable.com/u9qdyg" type="video/mp4">
-</video>
+<div class="video-wrapper">
+<iframe
+src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=runtz_hnzuyh"
+allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+allowfullscreen
+frameborder="0">
+</iframe>
+</div>
 <h3>GMO</h3>
 <p></p>
 <div class="price">2.5G/40€ | 5G/60€ | 10G/100€</div>
