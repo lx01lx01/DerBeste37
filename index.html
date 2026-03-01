@@ -246,11 +246,11 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   border-radius:24px; padding:16px; margin-bottom:14px;
   transition:transform 0.4s cubic-bezier(.2,.8,.3,1), border-color 0.4s, box-shadow 0.4s;
 }
-.product.cali-card:hover   { border-color:rgba(0,232,122,0.3);   box-shadow:0 20px 60px rgba(0,232,122,0.07),   0 4px 20px rgba(0,0,0,0.3); transform:translateY(-4px); }
-.product.frozen-card:hover { border-color:rgba(100,216,255,0.3); box-shadow:0 20px 60px rgba(100,216,255,0.07), 0 4px 20px rgba(0,0,0,0.3); transform:translateY(-4px); }
-.product.static-card:hover { border-color:rgba(255,107,53,0.3);  box-shadow:0 20px 60px rgba(255,107,53,0.07),  0 4px 20px rgba(0,0,0,0.3); transform:translateY(-4px); }
-.product.anon-card:hover   { border-color:rgba(179,136,255,0.3); box-shadow:0 20px 60px rgba(179,136,255,0.07), 0 4px 20px rgba(0,0,0,0.3); transform:translateY(-4px); }
-.product.olive-card:hover  { border-color:rgba(212,168,67,0.3);  box-shadow:0 20px 60px rgba(212,168,67,0.07),  0 4px 20px rgba(0,0,0,0.3); transform:translateY(-4px); }
+.product.cali-card:hover,   .product.cali-card.lit   { border-color:rgba(0,232,122,0.45);   box-shadow:0 0 0 1px rgba(0,232,122,0.2), 0 16px 48px rgba(0,232,122,0.18),   0 4px 20px rgba(0,0,0,0.4); transform:translateY(-3px); }
+.product.frozen-card:hover, .product.frozen-card.lit { border-color:rgba(100,216,255,0.45); box-shadow:0 0 0 1px rgba(100,216,255,0.2), 0 16px 48px rgba(100,216,255,0.18), 0 4px 20px rgba(0,0,0,0.4); transform:translateY(-3px); }
+.product.static-card:hover, .product.static-card.lit { border-color:rgba(255,107,53,0.45);  box-shadow:0 0 0 1px rgba(255,107,53,0.2),  0 16px 48px rgba(255,107,53,0.18),  0 4px 20px rgba(0,0,0,0.4); transform:translateY(-3px); }
+.product.anon-card:hover,   .product.anon-card.lit   { border-color:rgba(179,136,255,0.45); box-shadow:0 0 0 1px rgba(179,136,255,0.2), 0 16px 48px rgba(179,136,255,0.18), 0 4px 20px rgba(0,0,0,0.4); transform:translateY(-3px); }
+.product.olive-card:hover,  .product.olive-card.lit  { border-color:rgba(212,168,67,0.45);  box-shadow:0 0 0 1px rgba(212,168,67,0.2),  0 16px 48px rgba(212,168,67,0.18),  0 4px 20px rgba(0,0,0,0.4); transform:translateY(-3px); }
 
 .video-wrapper{
   position:relative; padding-top:56.25%;
@@ -1352,6 +1352,19 @@ window.addEventListener('DOMContentLoaded', () => {
       container.appendChild(p);
     }
   }
+
+  // ─── Touch glow on product cards (mobile) ───
+  document.querySelectorAll('.product').forEach(card => {
+    card.addEventListener('touchstart', () => {
+      card.classList.add('lit');
+    }, { passive: true });
+    card.addEventListener('touchend', () => {
+      setTimeout(() => card.classList.remove('lit'), 400);
+    }, { passive: true });
+    card.addEventListener('touchcancel', () => {
+      card.classList.remove('lit');
+    }, { passive: true });
+  });
 
   // ─── Ripple on buttons ───
   document.querySelectorAll('.buy-btn').forEach(btn => {
