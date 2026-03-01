@@ -331,6 +331,27 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   padding:4px 10px; border-radius:20px; letter-spacing:0.3px;
 }
 
+/* ─── ANONYMUZ STRAINS ─── */
+.anon-strains{
+  display:flex; flex-direction:column; gap:0;
+  border:1px solid rgba(179,136,255,0.15);
+  border-radius:14px; overflow:hidden; margin-bottom:4px;
+}
+.anon-strain-item{
+  padding:11px 14px;
+  border-bottom:1px solid rgba(179,136,255,0.1);
+  transition:background 0.2s;
+}
+.anon-strain-item:last-child{ border-bottom:none; }
+.anon-strain-item:hover{ background:rgba(179,136,255,0.06); }
+.anon-strain-name{
+  font-family:'Syne',sans-serif; font-size:14px; font-weight:700;
+  color:var(--text); margin-bottom:3px;
+}
+.anon-strain-desc{
+  font-size:12px; color:var(--text-dim); font-weight:300; line-height:1.5;
+}
+
 /* ─── FESTIVE SLOT ─── */
 .festive-section{ margin-bottom:40px; }
 
@@ -794,78 +815,44 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
     </div>
 
-    <!-- Produit 8 — Weeding Cake -->
+    <!-- Carte unique Anonymuz Farm — 3 strains -->
     <div class="product anon-card reveal">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Weeding Cake -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=lemon_ice_k5aatd" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
-      <div class="product-header">
-        <h3>Weeding Cake 🎂</h3>
-        <div style="display:flex;gap:6px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-anon">🏴‍☠️ Anonymuz</span>
-          <span class="product-tag tag-top">🏆 Top Farm</span>
-        </div>
-      </div>
-      <p>Static Sift Anonymuz Farm 2026. Qualité d'exception. Profil aromatique complexe.</p>
-      <div class="price">
-        <span class="price-pill anon-pill">1.5G / 40€</span>
-        <span class="price-pill anon-pill">5G / 120€</span>
-        <span class="price-pill anon-pill">10G / 200€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn telegram" href="https://t.me/DerBeste37?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Weeding%20Cake%20%F0%9F%8E%82%20(Anonymuz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">✈️ Telegram</a>
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Weeding%20Cake%20%F0%9F%8E%82%20(Anonymuz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
 
-    <!-- Produit 9 — Gelato 41 -->
-    <div class="product anon-card reveal">
-      <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Gelato 41 -->
-        <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=lemon_ice_k5aatd" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
-      </div>
-      <div class="product-header">
-        <h3>Gelato 41 🍭</h3>
-        <div style="display:flex;gap:6px;flex-direction:column;align-items:flex-end">
+      <div class="product-header" style="margin-bottom:14px;">
+        <h3>Static Sift 2026</h3>
+        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
           <span class="product-tag tag-anon">🏴‍☠️ Anonymuz</span>
           <span class="product-tag tag-top">🏆 Top Farm</span>
         </div>
       </div>
-      <p>Static Sift Anonymuz Farm 2026. La référence absolue. Dense et puissant.</p>
-      <div class="price">
-        <span class="price-pill anon-pill">1.5G / 40€</span>
-        <span class="price-pill anon-pill">5G / 120€</span>
-        <span class="price-pill anon-pill">10G / 200€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn telegram" href="https://t.me/DerBeste37?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Gelato%2041%20%F0%9F%8D%AD%20(Anonymuz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">✈️ Telegram</a>
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Gelato%2041%20%F0%9F%8D%AD%20(Anonymuz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
 
-    <!-- Produit 10 — Ice Cream -->
-    <div class="product anon-card reveal">
-      <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Ice Cream -->
-        <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=lemon_ice_k5aatd" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
-      </div>
-      <div class="product-header">
-        <h3>Ice Cream 🍨</h3>
-        <div style="display:flex;gap:6px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-anon">🏴‍☠️ Anonymuz</span>
-          <span class="product-tag tag-top">🏆 Top Farm</span>
+      <!-- 3 strains -->
+      <div class="anon-strains">
+        <div class="anon-strain-item">
+          <div class="anon-strain-name">Weeding Cake 🎂</div>
+          <div class="anon-strain-desc">Profil aromatique complexe. Qualité d'exception.</div>
+        </div>
+        <div class="anon-strain-item">
+          <div class="anon-strain-name">Gelato 41 🍭</div>
+          <div class="anon-strain-desc">La référence absolue. Dense et puissant.</div>
+        </div>
+        <div class="anon-strain-item">
+          <div class="anon-strain-name">Ice Cream 🍨</div>
+          <div class="anon-strain-desc">Finition cristalline. Arômes crémeux d'exception.</div>
         </div>
       </div>
-      <p>Static Sift Anonymuz Farm 2026. Finition cristalline. Arômes crémeux d'exception.</p>
-      <div class="price">
+
+      <div class="price" style="margin-top:14px;">
         <span class="price-pill anon-pill">1.5G / 40€</span>
         <span class="price-pill anon-pill">5G / 120€</span>
         <span class="price-pill anon-pill">10G / 200€</span>
       </div>
       <div class="btn-row">
-        <a class="buy-btn telegram" href="https://t.me/DerBeste37?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Ice%20Cream%20%F0%9F%8D%A8%20(Anonymuz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">✈️ Telegram</a>
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Ice%20Cream%20%F0%9F%8D%A8%20(Anonymuz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
+        <a class="buy-btn telegram" href="https://t.me/DerBeste37?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Anonymuz%20Farm%20Static%20Sift%0A%F0%9F%8C%BF%20Strain%20%3A%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">✈️ Telegram</a>
+        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Anonymuz%20Farm%20Static%20Sift%0A%F0%9F%8C%BF%20Strain%20%3A%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
       </div>
     </div>
   </div>
@@ -1077,14 +1064,6 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     <div>
       <div class="contact-label">Telegram</div>
       <div class="contact-value">@DerBeste37</div>
-    </div>
-  </a>
-
-  <a class="contact-item reveal" href="https://wa.me/33758464533">
-    <div class="contact-icon-wrap wa">💬</div>
-    <div>
-      <div class="contact-label">WhatsApp</div>
-      <div class="contact-value">+33 7 58 46 45 33</div>
     </div>
   </a>
 
