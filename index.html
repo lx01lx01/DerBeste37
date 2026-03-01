@@ -559,7 +559,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     <span class="ticker-item">&nbsp;·&nbsp;</span>
     <span class="ticker-item">🔒 100% Discret</span>
     <span class="ticker-item">&nbsp;·&nbsp;</span>
-    <span class="ticker-item">🌿 Qualité Premium sélectionnée</span>
+    <span class="ticker-item">Qualité Premium sélectionnée</span>
     <span class="ticker-item">&nbsp;·&nbsp;</span>
     <span class="ticker-item">🛵 Livraison 37 · 49 · 86 · 36 · 41 · 72</span>
     <span class="ticker-item">&nbsp;·&nbsp;</span>
@@ -569,7 +569,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     <span class="ticker-item">&nbsp;·&nbsp;</span>
     <span class="ticker-item">🔒 100% Discret</span>
     <span class="ticker-item">&nbsp;·&nbsp;</span>
-    <span class="ticker-item">🌿 Qualité Premium sélectionnée</span>
+    <span class="ticker-item">Qualité Premium sélectionnée</span>
     <span class="ticker-item">&nbsp;·&nbsp;</span>
   </div>
 </div>
@@ -577,12 +577,12 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 <!-- CATEGORY NAV -->
 <nav class="cat-nav" id="catNav">
   <div class="cat-nav-inner">
-    <button class="cat-tab active-cali"  onclick="scrollTo('sec-cali')">🌿 Cali</button>
-    <button class="cat-tab active-frozen" onclick="scrollTo('sec-frozen')">❄️ Frozen</button>
-    <button class="cat-tab active-static" onclick="scrollTo('sec-static')">⚡ Static</button>
-    <button class="cat-tab active-anon"  onclick="scrollTo('sec-anon')">🏴‍☠️ Anonymuz</button>
-    <button class="cat-tab active-olive" onclick="scrollTo('sec-olive')">🫒 Olive</button>
-    <button class="cat-tab" onclick="scrollTo('sec-info')" style="margin-left:auto;">ℹ️ Info</button>
+    <button class="cat-tab active-cali"  onclick="scrollToSection('sec-cali')">🌿 Cali</button>
+    <button class="cat-tab active-frozen" onclick="scrollToSection('sec-frozen')">❄️ Frozen</button>
+    <button class="cat-tab active-static" onclick="scrollToSection('sec-static')">⚡ Static</button>
+    <button class="cat-tab active-anon"  onclick="scrollToSection('sec-anon')">🏴‍☠️ Anonymuz</button>
+    <button class="cat-tab active-olive" onclick="scrollToSection('sec-olive')">🫒 Olive</button>
+    <button class="cat-tab" onclick="scrollToSection('sec-info')" style="margin-left:auto;">ℹ️ Info</button>
   </div>
 </nav>
 
@@ -1079,7 +1079,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 try { window.Telegram.WebApp.expand(); } catch(e){}
 
 // Smooth scroll to category section
-function scrollTo(id) {
+function scrollToSection(id) {
   const el = document.getElementById(id);
   if(!el) return;
   const offset = document.getElementById('catNav').offsetHeight + 12;
