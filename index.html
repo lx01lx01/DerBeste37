@@ -660,7 +660,47 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .js-ready .reveal{ opacity:0; transform:translateY(28px); }
 .js-ready .reveal.visible{ opacity:1; transform:translateY(0); }
 
+
+/* ─── AURORA BACKGROUND ─── */
+.aurora{
+  position:fixed; inset:0; z-index:0;
+  pointer-events:none; overflow:hidden;
+}
+.aurora-orb{
+  position:absolute; border-radius:50%;
+  filter:blur(80px);
+  animation:aurora-drift linear infinite;
+  will-change:transform;
+  opacity:0.55;
+}
+.a1{ width:70vw; height:70vw; background:radial-gradient(circle, rgba(0,232,122,0.35), transparent 70%);
+     top:-10%; left:-15%; animation-duration:18s; }
+.a2{ width:60vw; height:60vw; background:radial-gradient(circle, rgba(179,136,255,0.3), transparent 70%);
+     top:20%; right:-20%; animation-duration:22s; animation-delay:-6s; }
+.a3{ width:75vw; height:75vw; background:radial-gradient(circle, rgba(255,210,0,0.2), transparent 70%);
+     bottom:-15%; left:10%; animation-duration:26s; animation-delay:-10s; }
+.a4{ width:55vw; height:55vw; background:radial-gradient(circle, rgba(0,200,200,0.25), transparent 70%);
+     bottom:10%; right:-10%; animation-duration:20s; animation-delay:-4s; }
+.a5{ width:65vw; height:65vw; background:radial-gradient(circle, rgba(0,232,122,0.2), transparent 70%);
+     top:45%; left:25%; animation-duration:30s; animation-delay:-15s; }
+
+@keyframes aurora-drift{
+  0%  { transform:translate(0,0) scale(1); }
+  25% { transform:translate(4vw, 5vh) scale(1.05); }
+  50% { transform:translate(-3vw, 8vh) scale(0.97); }
+  75% { transform:translate(5vw, -4vh) scale(1.03); }
+  100%{ transform:translate(0,0) scale(1); }
+}
+
+.container{ position:relative; z-index:1; }
 @media(max-width:600px){ .hero-overlay h1{ font-size:28px; } .hero-num{ font-size:50px; } }
+/* ─── BACKGROUND CANVAS ─── */
+#bgCanvas{
+  position:fixed; inset:0; z-index:0;
+  pointer-events:none;
+}
+.container{ position:relative; z-index:1; }
+
 /* ─── OUT OF STOCK ─── */
 .product.out-of-stock{
   opacity:0.6;
@@ -807,6 +847,9 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 </style>
 </head>
 <body>
+
+<!-- BG CANVAS -->
+<canvas id="bgCanvas"></canvas>
 
 <!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
@@ -1578,6 +1621,63 @@ window.addEventListener('DOMContentLoaded', () => {
   <button class="vid-modal-close" id="vidModalClose">✕</button>
   <div class="vid-modal-inner" id="vidModalInner"></div>
 </div>
+
+<script>
+(function(){
+  const canvas = document.getElementById('bgCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+
+  const GREEN  = '0,232,122';
+  const PURPLE = '179,136,255';
+  const GOLD   = '255,210,0';
+  const TEAL   = '200,255,80';
+
+  // ── Big blurry orbs ──
+  const orbs = [
+    {x:W*.15, y:H*.2,  r:420, vx:.06,  vy:.05,  c:GREEN,  a:.22},
+    {x:W*.85, y:H*.55, r:400, vx:-.05, vy:.07,  c:PURPLE, a:.20},
+    {x:W*.5,  y:H*.85, r:450, vx:.05,  vy:-.06, c:GOLD,   a:.16},
+    {x:W*.1,  y:H*.7,  r:390, vx:.07,  vy:-.04, c:TEAL,   a:.18},
+    {x:W*.9,  y:H*.15, r:410, vx:-.06, vy:.06,  c:GREEN,  a:.18},
+  ];
+
+  let tick = 0;
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    tick++;
+
+    // — Orbs —
+    orbs.forEach(o => {
+      o.x += o.vx; o.y += o.vy;
+      if(o.x < -o.r) o.x = W+o.r; if(o.x > W+o.r) o.x = -o.r;
+      if(o.y < -o.r) o.y = H+o.r; if(o.y > H+o.r) o.y = -o.r;
+      ctx.filter = 'blur(55px)';
+      const g = ctx.createRadialGradient(o.x,o.y,0, o.x,o.y,o.r);
+      g.addColorStop(0,    `rgba(${o.c},${o.a})`);
+      g.addColorStop(0.35, `rgba(${o.c},${o.a*.6})`);
+      g.addColorStop(0.65, `rgba(${o.c},${o.a*.2})`);
+      g.addColorStop(0.85, `rgba(${o.c},${o.a*.05})`);
+      g.addColorStop(1,    `rgba(${o.c},0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(o.x,o.y,o.r,0,Math.PI*2); ctx.fill();
+      ctx.filter = 'none';
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
 
 </body>
 </html>
