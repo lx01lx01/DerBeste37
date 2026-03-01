@@ -661,6 +661,44 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .js-ready .reveal.visible{ opacity:1; transform:translateY(0); }
 
 @media(max-width:600px){ .hero-overlay h1{ font-size:28px; } .hero-num{ font-size:50px; } }
+/* ─── OUT OF STOCK ─── */
+.product.out-of-stock{
+  opacity:0.6;
+  pointer-events:auto;
+}
+.product.out-of-stock .video-wrapper::after{
+  content:'';
+  position:absolute; inset:0;
+  background:rgba(0,0,0,0.45);
+  border-radius:16px;
+  z-index:2;
+}
+.oos-badge{
+  position:absolute; top:10px; left:10px; z-index:3;
+  display:flex; align-items:center; gap:5px;
+  background:rgba(220,38,38,0.85);
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(255,80,80,0.5);
+  border-radius:20px; padding:4px 10px;
+  font-family:'DM Sans',sans-serif; font-size:10px;
+  font-weight:700; letter-spacing:1.2px; text-transform:uppercase;
+  color:#fff;
+}
+.oos-badge::before{ content:'✕'; font-size:9px; }
+.product.out-of-stock .price-pill{
+  opacity:0.35; text-decoration:line-through;
+}
+.btn-oos{
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  padding:13px; border-radius:16px; font-family:'DM Sans',sans-serif;
+  font-weight:600; font-size:14px; flex:1;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.25);
+  cursor:not-allowed;
+  letter-spacing:0.3px;
+}
+
 /* ─── CUSTOM CURSOR — desktop only ─── */
 @media(hover:hover) and (pointer:fine){
   *{ cursor:none !important; }
@@ -879,9 +917,10 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 2 — Runtz -->
-    <div class="product cali-card reveal">
+    <div class="product cali-card out-of-stock reveal">
       <div class="video-wrapper">
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=runtz_hnzuyh" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
+        <div class="oos-badge">Rupture</div>
       </div>
       <div class="product-header">
         <h3>Runtz 🍍</h3>
@@ -894,7 +933,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
         <span class="price-pill cali-pill">10G / 100€</span>
       </div>
       <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Runtz%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
+        <div class="btn-oos">❌ Indisponible</div>
       </div>
     </div>
 
