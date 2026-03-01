@@ -591,15 +591,15 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .js-ready .reveal.visible{ opacity:1; transform:translateY(0); }
 
 @media(max-width:600px){ .hero-overlay h1{ font-size:28px; } .hero-num{ font-size:50px; } }
-/* ─── CUSTOM CURSOR ─── */
-@media(hover:hover){
+/* ─── CUSTOM CURSOR — desktop only ─── */
+@media(hover:hover) and (pointer:fine){
   *{ cursor:none !important; }
   .cursor{
     position:fixed; z-index:9999; pointer-events:none;
     width:10px; height:10px; border-radius:50%;
     background:var(--green);
     transform:translate(-50%,-50%);
-    transition:transform 0.08s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+    transition:width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
     mix-blend-mode:difference;
   }
   .cursor-ring{
@@ -607,10 +607,14 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     width:34px; height:34px; border-radius:50%;
     border:1px solid rgba(0,232,122,0.55);
     transform:translate(-50%,-50%);
-    transition:transform 0.18s ease, width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+    transition:width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
   }
   .cursor.hovering{ width:6px; height:6px; opacity:0.7; }
   .cursor-ring.hovering{ width:46px; height:46px; border-color:rgba(0,232,122,0.3); }
+}
+/* Hide cursor elements on touch */
+@media(hover:none){
+  .cursor, .cursor-ring{ display:none !important; }
 }
 
 /* ─── SHIMMER ON PRODUCT CARDS ─── */
@@ -620,27 +624,32 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 }
 .product::before{
   content:'';
-  position:absolute; top:0; left:-120%;
-  width:60%; height:100%;
-  background:linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.045) 50%, transparent 80%);
-  transform:skewX(-15deg);
-  transition:left 0.6s ease;
+  position:absolute; top:0; left:-140%;
+  width:55%; height:100%;
+  background:linear-gradient(105deg, transparent 15%, rgba(255,255,255,0.06) 45%, rgba(255,255,255,0.03) 55%, transparent 85%);
+  transform:skewX(-12deg);
+  transition:left 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   pointer-events:none;
   z-index:1;
 }
-.product:hover::before{ left:160%; }
+.product:hover::before{ left:180%; }
+/* Auto shimmer on mobile when card becomes visible */
+.product.shimmer-play::before{
+  left:180%;
+  transition:left 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
 /* ─── RIPPLE ON BUTTONS ─── */
 .buy-btn{ overflow:hidden; }
 .ripple{
   position:absolute; border-radius:50%;
-  background:rgba(255,255,255,0.25);
+  background:rgba(255,255,255,0.3);
   transform:scale(0);
-  animation:ripple-anim 0.55s linear;
+  animation:ripple-anim 0.65s ease-out;
   pointer-events:none;
 }
 @keyframes ripple-anim{
-  to{ transform:scale(4); opacity:0; }
+  to{ transform:scale(5); opacity:0; }
 }
 
 /* ─── SCROLL PROGRESS ─── */
@@ -1229,7 +1238,12 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 
 <script>
 // ─── Telegram WebApp ───
-try { window.Telegram.WebApp.expand(); } catch(e){}
+try {
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+  tg.setBackgroundColor('#0d1a14');
+  if(tg.setHeaderColor) tg.setHeaderColor('#0d1a14');
+} catch(e){}
 
 // ─── Smooth scroll ───
 function scrollToSection(id) {
@@ -1254,6 +1268,25 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: 0.06 });
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+  }
+
+  // ─── Mobile shimmer auto-trigger on scroll ───
+  const isTouchDevice = window.matchMedia('(hover:none)').matches;
+  if(isTouchDevice && 'IntersectionObserver' in window){
+    const shimmerObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const card = entry.target;
+          // slight delay so user sees the card first
+          setTimeout(() => {
+            card.classList.add('shimmer-play');
+            setTimeout(() => card.classList.remove('shimmer-play'), 1600);
+          }, 350);
+          shimmerObs.unobserve(card);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.product').forEach(p => shimmerObs.observe(p));
   }
 
   // ─── Scroll progress bar ───
@@ -1297,7 +1330,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // ─── Hero particles ───
   const container = document.getElementById('heroParticles');
   if(container){
-    for(let i = 0; i < 18; i++){
+    const isMobile = window.innerWidth < 600;
+    const count = isMobile ? 10 : 18;
+    for(let i = 0; i < count; i++){
       const p = document.createElement('div');
       p.className = 'particle';
       const size = Math.random() * 3 + 1.5;
