@@ -180,6 +180,12 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   overflow-x:auto;
   scrollbar-width:none;
 }
+.cat-nav-fade{
+  position:sticky; top:0; z-index:101; pointer-events:none;
+  height:52px; margin-top:-52px;
+  background:linear-gradient(to left, rgba(13,26,20,0.9) 0%, transparent 60%);
+  margin-right:0;
+}
 .cat-nav::-webkit-scrollbar{ display:none; }
 .cat-nav-inner{
   display:flex; gap:4px; padding:10px 0; width:max-content; min-width:100%;
@@ -224,8 +230,8 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .cat-section.grid-2 .product-tag{ font-size:9px; padding:3px 8px; white-space:normal; word-break:break-word; max-width:100%; }
 .cat-section.grid-2 .price{ gap:4px; margin-bottom:10px; flex-direction:column; }
 .cat-section.grid-2 .price-pill{ font-size:11px; padding:4px 8px; text-align:center; }
-.cat-section.grid-2 .btn-row{ flex-direction:column; gap:6px; }
-.cat-section.grid-2 .buy-btn{ font-size:12px; padding:11px 6px; gap:5px; border-radius:12px; }
+.cat-section.grid-2 .btn-row{ flex-direction:row; gap:6px; }
+.cat-section.grid-2 .buy-btn{ font-size:11px; padding:10px 4px; gap:3px; border-radius:12px; letter-spacing:0; }
 .cat-section.grid-2 .video-wrapper{ margin-bottom:10px; }
 .cat-section.grid-2 .video-wrapper .fs-btn{
   position:absolute; bottom:7px; right:7px; z-index:10;
@@ -567,7 +573,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .top-farm-banner p{ font-size:11px; color:var(--text-dim); font-weight:300; margin-top:2px; letter-spacing:0; text-transform:none; }
 
 /* ─── WHY US ─── */
-.why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+.why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:20px; }
 .why-card{
   background:var(--surface); border:1px solid var(--border);
   border-radius:18px; padding:16px 10px; text-align:center;
@@ -693,6 +699,105 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 }
 
 .container{ position:relative; z-index:1; }
+
+/* ─── SPLASH SCREEN ─── */
+#splash{
+  position:fixed; inset:0; z-index:9999;
+  background:var(--bg);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:16px;
+  transition:opacity 0.6s ease, transform 0.6s ease;
+}
+#splash.hide{
+  opacity:0; transform:scale(1.04); pointer-events:none;
+}
+.splash-logo{
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:48px; letter-spacing:-1px;
+  display:flex; align-items:baseline; gap:4px;
+  animation:splash-in 0.7s cubic-bezier(.2,.8,.3,1) forwards;
+  opacity:0;
+}
+.splash-logo-text{ color:#ffffff; }
+.splash-logo-num{
+  font-size:80px; letter-spacing:-3px;
+  background:linear-gradient(135deg, #ffffff 30%, var(--green) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(0,232,122,0.4));
+}
+.splash-sub{
+  font-family:'DM Sans',sans-serif; font-size:11px;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--green); opacity:0;
+  animation:splash-in 0.6s cubic-bezier(.2,.8,.3,1) 0.3s forwards;
+}
+.splash-bar-wrap{
+  width:80px; height:2px; border-radius:2px;
+  background:rgba(255,255,255,0.1); overflow:hidden;
+  opacity:0; animation:splash-in 0.5s ease 0.5s forwards;
+}
+.splash-bar{
+  height:100%; width:0; border-radius:2px;
+  background:linear-gradient(90deg, var(--green), rgba(0,232,122,0.4));
+  animation:splash-load 1.2s cubic-bezier(.4,0,.2,1) 0.6s forwards;
+}
+@keyframes splash-in{
+  from{ opacity:0; transform:translateY(12px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+@keyframes splash-load{
+  from{ width:0; } to{ width:100%; }
+}
+
+/* ─── BACK TO TOP ─── */
+#backTop{
+  position:fixed; bottom:22px; right:18px; z-index:500;
+  width:42px; height:42px; border-radius:14px;
+  background:rgba(0,232,122,0.12);
+  border:1px solid rgba(0,232,122,0.3);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; opacity:0; pointer-events:none;
+  transition:opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+  backdrop-filter:blur(10px);
+  -webkit-tap-highlight-color:transparent;
+}
+#backTop.visible{
+  opacity:1; pointer-events:auto;
+}
+#backTop:active{
+  transform:scale(0.92);
+  box-shadow:0 0 16px rgba(0,232,122,0.3);
+}
+#backTop svg{
+  width:16px; height:16px; stroke:var(--green);
+  fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round;
+}
+
+/* ─── BADGE NOUVEAUTÉ ─── */
+.tag-new{
+  background:rgba(0,232,122,0.12); color:var(--green);
+  border:1px solid rgba(0,232,122,0.35);
+  font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700;
+  padding:3px 8px; border-radius:20px; letter-spacing:1px;
+  text-transform:uppercase; white-space:nowrap;
+  animation:pulse-new 2s ease-in-out infinite;
+}
+@keyframes pulse-new{
+  0%,100%{ box-shadow:0 0 0 0 rgba(0,232,122,0.3); }
+  50%{ box-shadow:0 0 0 4px rgba(0,232,122,0); }
+}
+
+/* ─── MINIMUM COMMANDE ─── */
+.min-order-banner{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 18px;
+  background:rgba(255,255,255,0.03);
+  border-top:1px solid rgba(255,255,255,0.05);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  font-family:'DM Sans',sans-serif; font-size:12px;
+  color:rgba(255,255,255,0.6); letter-spacing:0.3px;
+}
 @media(max-width:600px){ .hero-overlay h1{ font-size:28px; } .hero-num{ font-size:50px; } }
 /* ─── BACKGROUND CANVAS ─── */
 #bgCanvas{
@@ -847,6 +952,24 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 </style>
 </head>
 <body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <canvas id="splashCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:16px;">
+    <div class="splash-logo">
+      <span class="splash-logo-text">DerBeste</span>
+      <span class="splash-logo-num">37</span>
+    </div>
+    <div class="splash-sub">Tours · Since 2020</div>
+    <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
+  </div>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <!-- BG CANVAS -->
 <canvas id="bgCanvas"></canvas>
@@ -1049,7 +1172,10 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Pannacotta ☄️</h3>
-        <span class="product-tag tag-frozen">❄️ Frozen Sift</span>
+        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
+          <span class="product-tag tag-frozen">❄️ Frozen Sift</span>
+          <span class="product-tag tag-new">✨ Nouveauté</span>
+        </div>
       </div>
       <p>Frozen Sift Alec 220/90. Arôme de vanille, notes sucrées.</p>
       <div class="price">
@@ -1074,7 +1200,10 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Lemon Lobster 🪐</h3>
-        <span class="product-tag tag-frozen">❄️ Frozen Sift</span>
+        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
+          <span class="product-tag tag-frozen">❄️ Frozen Sift</span>
+          <span class="product-tag tag-new">✨ Nouveauté</span>
+        </div>
       </div>
       <p>Frozen Sift Alec 220/90. Arôme de citron et d'agrumes, notes épicées.</p>
       <div class="price">
@@ -1114,7 +1243,10 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Plata O' Plomo 🚀</h3>
-        <span class="product-tag tag-static">⚡ Static Premium</span>
+        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
+          <span class="product-tag tag-static">⚡ Static Premium</span>
+          <span class="product-tag tag-new">✨ Nouveauté</span>
+        </div>
       </div>
       <p>Gaz Boof 💣 — Plata O' Plomo Farm. Puissance brute.</p>
       <div class="price">
@@ -1167,15 +1299,15 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       <div class="anon-strains">
         <div class="anon-strain-item">
           <div class="anon-strain-name">Weeding Cake 🎂</div>
-          <div class="anon-strain-desc">Profil aromatique complexe. Qualité d'exception.</div>
+          <div class="anon-strain-desc">Sucré, fruité, terreux. Notes de menthe et d'épices poivrées.</div>
         </div>
         <div class="anon-strain-item">
           <div class="anon-strain-name">Gelato 41 🍭</div>
-          <div class="anon-strain-desc">La référence absolue. Dense et puissant.</div>
+          <div class="anon-strain-desc">Vanille, crème, touches de lavande.</div>
         </div>
         <div class="anon-strain-item">
           <div class="anon-strain-name">Ice Cream 🍨</div>
-          <div class="anon-strain-desc">Finition cristalline. Arômes crémeux d'exception.</div>
+          <div class="anon-strain-desc">Arôme sucré de glace à la crème.</div>
         </div>
       </div>
 
@@ -1234,7 +1366,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
           <span class="product-tag tag-hubba">💥 Static</span>
         </div>
       </div>
-      <p>Drop Cherry 🍒 — Hubba Bubbatz Farm. Static puissant aux notes cerise profondes.</p>
+      <p>Drop Cherry 🍒 — Hubba Bubbatz Farm. Static puissant aux notes cerise profondes. Finition cristalline.</p>
       <div class="price">
         <span class="price-pill olive-pill">5G / 120€</span>
         <span class="price-pill olive-pill">10G / 200€</span>
@@ -1331,9 +1463,12 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   ══════════════════════════════ -->
   <div class="section-title reveal">Pourquoi nous</div>
   <div class="why-grid">
-    <div class="why-card reveal"><span class="why-icon">🏆</span><div class="why-label">Qualité<br>Premium</div></div>
-    <div class="why-card reveal"><span class="why-icon">🛵</span><div class="why-label">Livraison<br>Rapide</div></div>
+    <div class="why-card reveal"><span class="why-icon">⭐</span><div class="why-label">Since<br>2020</div></div>
+    <div class="why-card reveal"><span class="why-icon">🛵</span><div class="why-label">Livraison<br>même jour</div></div>
     <div class="why-card reveal"><span class="why-icon">🔒</span><div class="why-label">100%<br>Discret</div></div>
+    <div class="why-card reveal"><span class="why-icon">🌿</span><div class="why-label">Sélection<br>Top Farm</div></div>
+    <div class="why-card reveal"><span class="why-icon">💬</span><div class="why-label">Réponse<br>rapide</div></div>
+    <div class="why-card reveal"><span class="why-icon">📍</span><div class="why-label">Tours<br>& région</div></div>
   </div>
 
   <!-- ══════════════════════════════
@@ -1357,6 +1492,13 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       <div class="block-title">Livraison</div>
       <div class="block-text">37 · 49 · 86<br>36 · 41 · 72</div>
     </div>
+  </div>
+
+  <div class="info-block reveal" style="margin-bottom:10px; border-color:rgba(0,232,122,0.2);">
+    <span class="block-icon">🛵</span>
+    <div class="block-title">Minimum de commande</div>
+    <div class="block-text" style="color:var(--green); font-size:15px;">50€ <span style="font-size:12px; color:var(--text-dim); font-weight:400;">en livraison</span></div>
+    <div style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
   </div>
 
   <div class="horaires-box reveal">
@@ -1406,6 +1548,50 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 </div>
 
 <script>
+// ─── Splash screen with orbs ───
+(function(){
+  const sc = document.getElementById('splashCanvas');
+  if(!sc) return;
+  const ctx = sc.getContext('2d');
+  sc.width = window.innerWidth; sc.height = window.innerHeight;
+  const orbs = [
+    {x:sc.width*.2, y:sc.height*.3, r:200, vx:.5, vy:.4, c:'0,232,122',   a:.25},
+    {x:sc.width*.8, y:sc.height*.6, r:180, vx:-.4,vy:.5, c:'179,136,255', a:.22},
+    {x:sc.width*.5, y:sc.height*.8, r:220, vx:.4, vy:-.4,c:'255,210,0',   a:.18},
+  ];
+  function drawSplash(){
+    ctx.clearRect(0,0,sc.width,sc.height);
+    orbs.forEach(o=>{
+      o.x+=o.vx; o.y+=o.vy;
+      if(o.x<-o.r)o.x=sc.width+o.r; if(o.x>sc.width+o.r)o.x=-o.r;
+      if(o.y<-o.r)o.y=sc.height+o.r; if(o.y>sc.height+o.r)o.y=-o.r;
+      ctx.filter='blur(50px)';
+      const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
+      g.addColorStop(0,`rgba(${o.c},${o.a})`);
+      g.addColorStop(0.5,`rgba(${o.c},${o.a*.4})`);
+      g.addColorStop(1,`rgba(${o.c},0)`);
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(o.x,o.y,o.r,0,Math.PI*2); ctx.fill();
+      ctx.filter='none';
+    });
+    requestAnimationFrame(drawSplash);
+  }
+  drawSplash();
+})();
+
+window.addEventListener('DOMContentLoaded', () => {
+  const splash = document.getElementById('splash');
+  setTimeout(() => {
+    splash.classList.add('hide');
+    setTimeout(() => splash.remove(), 700);
+  }, 2200);
+});
+
+// ─── Back to top visibility ───
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('backTop');
+  if(btn) btn.classList.toggle('visible', window.scrollY > 300);
+}, { passive:true });
+
 // ─── Telegram WebApp ───
 try {
   const tg = window.Telegram.WebApp;
@@ -1421,6 +1607,7 @@ function scrollToSection(id) {
   const offset = document.getElementById('catNav').offsetHeight + 12;
   const top = el.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top, behavior: 'smooth' });
+  try{ window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); }catch(e){}
 }
 
 window.addEventListener('DOMContentLoaded', () => {
