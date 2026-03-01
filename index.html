@@ -206,6 +206,22 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 
 /* ─── CATEGORY SECTION ─── */
 .cat-section{ margin-bottom:40px; }
+.cat-section.grid-2 .products-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.cat-section.grid-2 .products-grid .product{
+  margin-bottom:0;
+}
+/* Smaller text in 2-col cards */
+.cat-section.grid-2 .product h3{ font-size:14px; }
+.cat-section.grid-2 .product p{ font-size:11px; }
+.cat-section.grid-2 .product-tag{ font-size:9px; padding:3px 7px; }
+.cat-section.grid-2 .price{ gap:4px; margin-bottom:10px; }
+.cat-section.grid-2 .price-pill{ font-size:10px; padding:3px 7px; }
+.cat-section.grid-2 .buy-btn{ font-size:11px; padding:10px 6px; gap:4px; }
+.cat-section.grid-2 .video-wrapper{ margin-bottom:10px; }
 
 .cat-header{
   display:flex; align-items:center; gap:14px;
@@ -756,7 +772,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   <!-- ══════════════════════════════
        🌿 CALI HOLLANDAISE — 4 items
   ══════════════════════════════ -->
-  <div class="cat-section section-cali reveal" id="sec-cali">
+  <div class="cat-section section-cali grid-2 reveal" id="sec-cali">
     <div class="cat-header">
       <div class="cat-icon">🌿</div>
       <div class="cat-header-text">
@@ -766,6 +782,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
     </div>
 
+    <div class="products-grid">
     <!-- Produit 1 — Gelato -->
     <div class="product cali-card reveal">
       <div class="video-wrapper">
@@ -851,12 +868,13 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
         <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20GMO%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
       </div>
     </div>
+    </div><!-- /products-grid -->
   </div>
 
   <!-- ══════════════════════════════
        ❄️ FROZEN — 2 items
   ══════════════════════════════ -->
-  <div class="cat-section section-frozen reveal" id="sec-frozen">
+  <div class="cat-section section-frozen grid-2 reveal" id="sec-frozen">
     <div class="cat-header">
       <div class="cat-icon">❄️</div>
       <div class="cat-header-text">
@@ -866,6 +884,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
     </div>
 
+    <div class="products-grid">
     <!-- Produit 5 — Pannacotta -->
     <div class="product frozen-card reveal">
       <div class="video-wrapper">
@@ -917,6 +936,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
         <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Lemon%20Lobster%20%F0%9F%AA%90%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
       </div>
     </div>
+    </div><!-- /products-grid -->
   </div>
 
   <!-- ══════════════════════════════
