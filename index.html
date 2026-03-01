@@ -174,19 +174,29 @@ margin-bottom:14px;
 letter-spacing:0.3px;
 }
 
+.btn-row{
+display:flex;
+gap:10px;
+}
+
 .buy-btn{
 display:flex;
 align-items:center;
 justify-content:center;
-gap:8px;
+gap:7px;
 padding:12px;
 border-radius:14px;
-background:linear-gradient(90deg,#00ff88,#00cc66);
-color:black;
+background:linear-gradient(90deg,#2AABEE,#1a8ec7);
+color:white;
 font-weight:700;
-font-size:15px;
+font-size:14px;
 text-decoration:none;
 transition:opacity 0.25s, transform 0.25s;
+flex:1;
+}
+
+.buy-btn.whatsapp{
+background:linear-gradient(90deg,#25d366,#1aab4f);
 }
 
 .buy-btn:active{
@@ -306,9 +316,12 @@ frameborder="0">
 <h3>Runtz</h3>
 <span class="product-tag">🌿 Top Shelf</span>
 </div>
-<p>Sélection haut de gamme.</p>
+<p>Sélection haut de gamme. Farm premium.</p>
 <div class="price">2.5G / 40€ &nbsp;·&nbsp; 5G / 60€ &nbsp;·&nbsp; 10G / 100€</div>
-<a class="buy-btn" href="https://t.me/DerBeste37">Commander sur Telegram</a>
+<div class="btn-row">
+<a class="buy-btn" href="https://t.me/DerBeste37">✈️ Telegram</a>
+<a class="buy-btn whatsapp" href="https://wa.me/33758464533">💬 WhatsApp</a>
+</div>
 </div>
 
 <div class="product">
@@ -326,10 +339,13 @@ frameborder="0">
 </div>
 <p>Qualité sélectionnée. Goût unique.</p>
 <div class="price">2.5G / 40€ &nbsp;·&nbsp; 5G / 60€ &nbsp;·&nbsp; 10G / 100€</div>
-<a class="buy-btn" href="https://t.me/DerBeste37">Commander sur Telegram</a>
+<div class="btn-row">
+<a class="buy-btn" href="https://t.me/DerBeste37">✈️ Telegram</a>
+<a class="buy-btn whatsapp" href="https://wa.me/33758464533">💬 WhatsApp</a>
+</div>
 </div>
 
-<div class="section-title">Catalogue</div>
+<div class="section-title">Info</div>
 <div class="info-box"><strong>Der Beste Coffee</strong>
 Numéro 🥇 dans le 37000 · Since 2020 👌
 
