@@ -214,13 +214,16 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .cat-section.grid-2 .products-grid .product{
   margin-bottom:0;
 }
-/* Smaller text in 2-col cards */
-.cat-section.grid-2 .product h3{ font-size:14px; }
-.cat-section.grid-2 .product p{ font-size:11px; }
-.cat-section.grid-2 .product-tag{ font-size:9px; padding:3px 7px; }
-.cat-section.grid-2 .price{ gap:4px; margin-bottom:10px; }
-.cat-section.grid-2 .price-pill{ font-size:10px; padding:3px 7px; }
-.cat-section.grid-2 .buy-btn{ font-size:11px; padding:10px 6px; gap:4px; }
+/* ─── 2-col card sizing ─── */
+.cat-section.grid-2 .product{ padding:12px; }
+.cat-section.grid-2 .product h3{ font-size:15px; letter-spacing:-0.2px; }
+.cat-section.grid-2 .product p{ font-size:11.5px; line-height:1.5; margin-bottom:10px; }
+.cat-section.grid-2 .product-header{ flex-direction:column; align-items:flex-start; gap:5px; margin-bottom:8px; }
+.cat-section.grid-2 .product-tag{ font-size:9px; padding:3px 8px; white-space:normal; word-break:break-word; max-width:100%; }
+.cat-section.grid-2 .price{ gap:4px; margin-bottom:10px; flex-direction:column; }
+.cat-section.grid-2 .price-pill{ font-size:11px; padding:4px 8px; text-align:center; }
+.cat-section.grid-2 .btn-row{ flex-direction:column; gap:6px; }
+.cat-section.grid-2 .buy-btn{ font-size:12px; padding:11px 6px; gap:5px; border-radius:12px; }
 .cat-section.grid-2 .video-wrapper{ margin-bottom:10px; }
 
 .cat-header{
