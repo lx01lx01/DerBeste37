@@ -49,14 +49,16 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 /* ─── HERO ─── */
 .hero{
   position:relative;
-  height:62vh;
-  min-height:320px;
+  height:38vh;
+  min-height:200px;
+  max-height:260px;
   overflow:hidden;
 }
 .hero img{
   width:100%; height:100%;
   object-fit:cover;
-  filter:brightness(0.45) saturate(1.1);
+  object-position:center 70%;
+  filter:brightness(0.5) saturate(1.1);
   transform:scale(1.04);
   transition:transform 10s ease;
 }
@@ -75,12 +77,12 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   mix-blend-mode:overlay;
 }
 .hero::after{
-  content:''; position:absolute; bottom:0; left:0; right:0; height:55%;
-  background:linear-gradient(to top, var(--bg) 10%, transparent);
+  content:''; position:absolute; bottom:0; left:0; right:0; height:75%;
+  background:linear-gradient(to top, var(--bg) 20%, rgba(13,26,20,0.7) 55%, transparent 100%);
   z-index:1;
 }
 .hero-overlay{
-  position:absolute; bottom:32px; left:22px; z-index:2;
+  position:absolute; bottom:28px; left:22px; z-index:2;
 }
 
 /* ─── HERO ANIMATIONS ─── */
@@ -103,14 +105,14 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   border:1px solid rgba(0,232,122,0.35);
   color:var(--green); font-size:10px; font-weight:700;
   letter-spacing:2.5px; text-transform:uppercase;
-  padding:5px 12px; border-radius:30px; margin-bottom:12px;
+  padding:4px 10px; border-radius:30px; margin-bottom:8px;
   backdrop-filter:blur(8px);
   opacity:0;
   animation:badge-in 0.6s cubic-bezier(.2,.8,.3,1) 0.2s forwards;
 }
 
 .hero-overlay h1{
-  font-size:38px; font-weight:800; letter-spacing:-0.5px; line-height:1.05;
+  font-size:30px; font-weight:800; letter-spacing:-0.5px; line-height:1.05;
   display:flex; align-items:baseline; gap:4px; color:#ffffff;
   text-shadow:0 0 40px rgba(255,255,255,0.18), 0 4px 30px rgba(0,0,0,0.6);
   opacity:0;
@@ -133,7 +135,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 
 /* 37 gradient blanc → vert */
 .hero-num{
-  font-size:62px; letter-spacing:-2px; font-weight:800;
+  font-size:50px; letter-spacing:-2px; font-weight:800;
   background:linear-gradient(135deg, #ffffff 30%, var(--green) 100%);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -143,7 +145,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 }
 
 .hero-overlay p{
-  color:var(--text-dim); margin-top:7px; font-size:14px; font-weight:300; letter-spacing:0.8px;
+  color:var(--text-dim); margin-top:4px; font-size:12px; font-weight:300; letter-spacing:0.8px;
   opacity:0;
   animation:hero-fade-up 0.6s cubic-bezier(.2,.8,.3,1) 0.7s forwards;
 }
