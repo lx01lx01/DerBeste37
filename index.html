@@ -1958,7 +1958,7 @@ window.addEventListener('scroll', () => {
         const livrEl = document.getElementById('livraison-zones');
         if(livrEl) livrEl.innerHTML = S.zones.slice(0,6).join('<br>');
         const meetEl = document.getElementById('meetup-zones');
-        if(meetEl && S.zones[0]) meetEl.textContent = S.zones[0];
+        if(meetEl) meetEl.textContent = S.meetupLoc || S.zones[0] || 'Tours 37000';
       }
 
       if(S.whatsapp){
@@ -2511,6 +2511,8 @@ window.addEventListener('DOMContentLoaded', () => {
           <input class="fi" id="s-minlivr" placeholder="50" type="number" oninput="markU()"></div>
         <div class="fg"><div class="fl">Minimum meet-up (€)</div>
           <input class="fi" id="s-minmeet" placeholder="0" type="number" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Lieu du meet-up</div>
+          <input class="fi" id="s-meetuploc" placeholder="ex: Tours 37000" type="text" oninput="markU()"></div>
       </div>
 
       <div class="slb">Zones de livraison</div>
@@ -2651,6 +2653,7 @@ let P=[], S={
   heroSub:'Tours · Since 2020', heroBadge:'⭐ Since 2020',
   horaires:{Lun:'12h–22h',Mar:'12h–22h',Mer:'12h–22h',Jeu:'12h–22h',Ven:'12h–22h',Sam:'12h–22h',Dim:'Fermé'},
   horaireMsg:'Livraison tous les jours 12h–22h',
+  meetupLoc:'Tours 37000',
   minLivr:50, minMeet:0,
   zones:['Tours centre','Joué-lès-Tours','Saint-Cyr-sur-Loire','La Riche'],
   paiements:[],
@@ -2718,6 +2721,7 @@ function buildUI(){
   document.getElementById('s-herobadge').value=S.heroBadge;
   document.getElementById('s-minlivr').value=S.minLivr;
   document.getElementById('s-minmeet').value=S.minMeet;
+  document.getElementById('s-meetuploc').value=S.meetupLoc||'';
   document.getElementById('s-horaireMsg').value=S.horaireMsg;
   if(S.ticker) document.getElementById('ticker-preview').textContent=S.ticker;
   if(S.maintenance){document.getElementById('maintBadge').style.display='block';}
@@ -3049,6 +3053,7 @@ async function saveAll(){
   S.heroBadge=document.getElementById('s-herobadge').value;
   S.minLivr=parseInt(document.getElementById('s-minlivr').value)||50;
   S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
+  S.meetupLoc=document.getElementById('s-meetuploc').value;
   S.horaireMsg=document.getElementById('s-horaireMsg').value;
   ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(function(d){var el=document.getElementById('h-'+d);if(el)S.horaires[d]=el.value;});
   // Collect paiements from DOM (belt+suspenders)
@@ -3125,7 +3130,7 @@ function applySettingsToDOM(S){
     const livrEl=document.getElementById('livraison-zones');
     if(livrEl) livrEl.innerHTML=S.zones.slice(0,6).join('<br>');
     const meetEl=document.getElementById('meetup-zones');
-    if(meetEl && S.zones[0]) meetEl.textContent=S.zones[0];
+    if(meetEl) meetEl.textContent=S.meetupLoc||S.zones[0]||'Tours 37000';
   }
   // Paiements on main page
   if(S.paiements){
