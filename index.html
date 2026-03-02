@@ -625,6 +625,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   transition:border-color 0.25s, background 0.25s, color 0.25s;
 }
 .produit-tag:hover{ border-color:rgba(0,232,122,0.3); background:var(--green-dim); color:var(--green); }
+.flag-tag{ background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.12); color:var(--text-dim); font-size:12px; }
 
 /* ─── CONTACT ─── */
 .contact-item{
@@ -1062,7 +1063,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       <div class="cat-icon">🌴</div>
       <div class="cat-header-text">
         <div class="cat-label">Catégorie</div>
-        <div class="cat-name">Cali Hollandaise</div>
+        <div class="cat-name">Cali / Hollandaise</div>
         <div class="cat-sub">4 sélections premium — Qualité top niveau</div>
       </div>
     </div>
@@ -1076,7 +1077,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Gelato 🌈</h3>
-        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
+        <span class="product-tag tag-cali">🌴 Cali / Hollandaise</span>
       </div>
       <p>Saveurs douces et fruitées, notes de vanille.</p>
       <div class="price">
@@ -1097,7 +1098,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Runtz 🍍</h3>
-        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
+        <span class="product-tag tag-cali">🌴 Cali / Hollandaise</span>
       </div>
       <p>Saveurs d'agrumes, notes de bonbons.</p>
       <div class="price">
@@ -1118,7 +1119,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Tropicanozz 🍹</h3>
-        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
+        <span class="product-tag tag-cali">🌴 Cali / Hollandaise</span>
       </div>
       <p>Notes exotiques d'ananas et d'agrumes.</p>
       <div class="price">
@@ -1138,7 +1139,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>GMO 🥞</h3>
-        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
+        <span class="product-tag tag-cali">🌴 Cali / Hollandaise</span>
       </div>
       <p>Goût unique et puissant.</p>
       <div class="price">
@@ -1180,7 +1181,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       <div class="product-header">
         <h3>Pannacotta ☄️</h3>
         <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-frozen">❄️ Frozen Sift</span>
+          <span class="product-tag tag-frozen">❄️ Fresh Frozen</span>
           <span class="product-tag tag-new">✨ Nouveauté</span>
         </div>
       </div>
@@ -1208,7 +1209,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       <div class="product-header">
         <h3>Lemon Lobster 🪐</h3>
         <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-frozen">❄️ Frozen Sift</span>
+          <span class="product-tag tag-frozen">❄️ Fresh Frozen</span>
           <span class="product-tag tag-new">✨ Nouveauté</span>
         </div>
       </div>
@@ -1471,9 +1472,9 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   <div class="section-title reveal">Pourquoi nous</div>
   <div class="why-grid">
     <div class="why-card reveal"><span class="why-icon">⭐</span><div class="why-label">Since<br>2020</div></div>
-    <div class="why-card reveal"><span class="why-icon">🛵</span><div class="why-label">Livraison<br>même jour</div></div>
+    <div class="why-card reveal"><span class="why-icon">🛵</span><div class="why-label">Livraison<br>Express</div></div>
     <div class="why-card reveal"><span class="why-icon">🔒</span><div class="why-label">100%<br>Discret</div></div>
-    <div class="why-card reveal"><span class="why-icon">🌿</span><div class="why-label">Sélection<br>Top Farm</div></div>
+    <div class="why-card reveal"><span class="why-icon">🥇</span><div class="why-label">Sélection<br>Top Farm</div></div>
     <div class="why-card reveal"><span class="why-icon">💬</span><div class="why-label">Réponse<br>rapide</div></div>
     <div class="why-card reveal"><span class="why-icon">📍</span><div class="why-label">Tours<br>& région</div></div>
   </div>
@@ -1523,14 +1524,19 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   <div class="produits-box reveal">
     <div class="block-title">Nos produits</div>
     <div class="produits-grid">
-      <span class="produit-tag">🌴 Cali Hollandaise</span>
-      <span class="produit-tag">❄️ Frozen Sift</span>
+      <span class="produit-tag">🌴 Cali / Hollandaise</span>
+      <span class="produit-tag">❄️ Fresh Frozen</span>
       <span class="produit-tag">⚡ Static Premium</span>
-      <span class="produit-tag">🏴‍☠️ Anonymuz Farm</span>
       <span class="produit-tag">🫒 Olive</span>
       <span class="produit-tag">🍫 Hash Premium</span>
       <span class="produit-tag">🫧 Top Mousse</span>
       <span class="produit-tag">❄️ Écaille</span>
+    </div>
+    <div style="width:100%;height:1px;background:rgba(255,255,255,0.07);margin:10px 0;"></div>
+    <div class="produits-grid">
+      <span class="produit-tag flag-tag">🇲🇦</span>
+      <span class="produit-tag flag-tag">🇳🇱</span>
+      <span class="produit-tag flag-tag">🇺🇸</span>
     </div>
   </div>
 
