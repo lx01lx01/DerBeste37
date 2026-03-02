@@ -2,9 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>DerBeste37</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -30,6 +31,7 @@
 
 *{ margin:0; padding:0; box-sizing:border-box; }
 
+html { scrollbar-gutter: stable; }
 body{
   font-family:'DM Sans',sans-serif;
   background:var(--bg);
@@ -1232,6 +1234,13 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
   -webkit-tap-highlight-color: transparent; user-select: none;
 }
 
+
+/* ─── iOS: prevent zoom on input focus ─── */
+@media screen and (-webkit-min-device-pixel-ratio:0){
+  select:focus, textarea:focus, input:focus { font-size:16px !important; }
+}
+/* ─── Prevent layout shift on admin open/close ─── */
+html { overflow-x:hidden; }
 </style>
 </head>
 <body>
@@ -1348,7 +1357,6 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
     <!-- Produit 1 — Gelato -->
     <div class="product cali-card reveal" data-pid="gelato">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Gelato -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=gelato_tkpg56" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
       <div class="product-header">
@@ -1390,7 +1398,6 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
     <!-- Produit 3 — Tropicanozz -->
     <div class="product cali-card reveal" data-pid="tropi">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Tropicanozz -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=tropi_gchm6a" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
       <div class="product-header">
@@ -1447,12 +1454,10 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
     <!-- Produit 5 — Pannacotta -->
     <div class="product frozen-card reveal" data-pid="pannacotta">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Pannacotta -->
         <div class="video-placeholder">
           <span>☄️</span>
           <p>Vidéo à venir — Pannacotta</p>
         </div>
-        <!-- <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=VOTRE_ID_ICI" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe> -->
       </div>
       <div class="product-header">
         <h3>Pannacotta ☄️</h3>
@@ -1475,12 +1480,10 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
     <!-- Produit 6 — Lemon Lobster -->
     <div class="product frozen-card reveal" data-pid="lobster">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Lemon Lobster -->
         <div class="video-placeholder">
           <span>🪐</span>
           <p>Vidéo à venir — Lemon Lobster</p>
         </div>
-        <!-- <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=VOTRE_ID_ICI" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe> -->
       </div>
       <div class="product-header">
         <h3>Lemon Lobster 🪐</h3>
@@ -1503,7 +1506,7 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
   </div>
 
   <!-- ══════════════════════════════
-       ⚡ STATIC PREMIUM — 1 + 3 (Anonymuz Farm)
+       ⚡ STATIC PREMIUM
   ══════════════════════════════ -->
   <div class="cat-section section-static reveal" id="sec-static">
     <div class="cat-header">
@@ -1515,15 +1518,12 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
       </div>
     </div>
 
-    <!-- Produit 7 — Plata O' Plomo -->
     <div class="product static-card reveal" data-pid="plata">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Plata O'Plomo -->
         <div class="video-placeholder">
           <span>🚀</span>
           <p>Vidéo à venir — Plata O' Plomo</p>
         </div>
-        <!-- <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=VOTRE_ID_ICI" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe> -->
       </div>
       <div class="product-header">
         <h3>Plata O' Plomo 🚀</h3>
@@ -1545,7 +1545,7 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
   </div>
 
   <!-- ══════════════════════════════
-       🏴‍☠️ ANONYMOUZ FARM 2026 — 3 items (Top Farm)
+       🏴‍☠️ ANONYMOUZ FARM 2026
   ══════════════════════════════ -->
   <div class="cat-section section-anon reveal" id="sec-anon">
     <div class="cat-header">
@@ -1565,7 +1565,6 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
       </div>
     </div>
 
-    <!-- Carte unique Anonymuz Farm — 3 strains -->
     <div class="product anon-card reveal" data-pid="anon">
       <div class="video-wrapper">
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=ano_u1eyxc" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
@@ -1579,7 +1578,6 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
         </div>
       </div>
 
-      <!-- 3 strains -->
       <div class="anon-strains">
         <div class="anon-strain-item">
           <div class="anon-strain-name">Weeding Cake 🎂</div>
@@ -1607,7 +1605,7 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
   </div>
 
   <!-- ══════════════════════════════
-       🫒 OLIVE — 3 items (Hubba Bubbatz Farm)
+       🫒 OLIVE
   ══════════════════════════════ -->
   <div class="cat-section section-olive reveal" id="sec-olive">
     <div class="cat-header">
@@ -1619,7 +1617,6 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
       </div>
     </div>
 
-    <!-- Hubba Farm Banner -->
     <div class="hubba-banner reveal">
       <div class="hubba-banner-glow"></div>
       <div class="hubba-banner-inner">
@@ -1637,10 +1634,8 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
       </div>
     </div>
 
-    <!-- Produit 11 — Sultan Static (Hubba Bubbatz) -->
     <div class="product olive-card reveal" data-pid="sultan">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Sultan Static -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=sultan_mshkhn" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
       <div class="product-header">
@@ -1660,10 +1655,8 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
       </div>
     </div>
 
-    <!-- Produit 12 — Tangie Fresh Frozen (Hubba Bubbatz) -->
     <div class="product olive-card reveal" data-pid="tangie">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Tangie -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=tangie_fresh_fro_bwh1jv" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
       <div class="product-header">
@@ -1683,10 +1676,8 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
       </div>
     </div>
 
-    <!-- Produit 13 — Lemon Ice Static (Hubba Bubbatz) -->
     <div class="product olive-card reveal" data-pid="lemon_ice">
       <div class="video-wrapper">
-        <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Lemon Ice -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=lemon_ice_k5aatd" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
       <div class="product-header">
@@ -1707,9 +1698,8 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
     </div>
   </div>
 
-
   <!-- ══════════════════════════════
-       🎊 PRODUIT FESTIF À VENIR
+       💎 PURE 96%
   ══════════════════════════════ -->
   <div class="festive-section reveal" id="sec-festif">
     <div class="section-title" style="color:#ffbf47;">Pure 96%</div>
@@ -1742,9 +1732,7 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
     </div>
   </div>
 
-  <!-- ══════════════════════════════
-       POURQUOI NOUS
-  ══════════════════════════════ -->
+  <!-- POURQUOI NOUS -->
   <div class="section-title reveal">Pourquoi nous</div>
   <div class="why-grid">
     <div class="why-card reveal"><span class="why-icon">⭐</span><div class="why-label">Since<br>2020</div></div>
@@ -1755,9 +1743,7 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
     <div class="why-card reveal"><span class="why-icon">📍</span><div class="why-label">Tours<br>& région</div></div>
   </div>
 
-  <!-- ══════════════════════════════
-       INFO
-  ══════════════════════════════ -->
+  <!-- INFO -->
   <div class="section-title reveal" style="margin-top:8px;" id="sec-info">Info</div>
 
   <div class="info-header reveal">
@@ -1816,9 +1802,7 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
     </div>
   </div>
 
-  <!-- ══════════════════════════════
-       CONTACT
-  ══════════════════════════════ -->
+  <!-- CONTACT -->
   <div class="section-title reveal" style="margin-top:24px;">Contact</div>
 
   <a class="contact-item reveal" href="https://t.me/DerBeste37" style="border-color:rgba(42,171,238,0.2);">
@@ -1882,18 +1866,17 @@ window.addEventListener('scroll', () => {
 }, { passive:true });
 
 // ─── Sync from Admin Panel ───
-(async function applyAdminState(){
-  try {
+(function(){
+  async function _doApply(){
+    try {
     const [sp, ss] = await Promise.allSettled([
-      window.storage.get('admin-products'),
-      window.storage.get('admin-settings')
+      window.Store.get('admin-products'),
+      window.Store.get('admin-settings')
     ]);
 
-    // ══ SETTINGS ══
     if(ss.status==='fulfilled' && ss.value){
       const S = JSON.parse(ss.value.value);
 
-      // Maintenance mode — full overlay
       if(S.maintenance){
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#0d1a14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;';
@@ -1906,7 +1889,6 @@ window.addEventListener('scroll', () => {
         return;
       }
 
-      // Ticker personnalisé
       if(S.tickerOn && S.ticker){
         const tw = document.getElementById('ticker-wrap');
         if(tw){
@@ -1918,13 +1900,11 @@ window.addEventListener('scroll', () => {
         }
       }
 
-      // Hero badge
       if(S.heroBadge){
         const hb = document.getElementById('hero-badge');
         if(hb) hb.textContent = S.heroBadge;
       }
 
-      // Minimum commande
       if(S.minLivr !== undefined){
         const ml = document.getElementById('min-livr-text');
         if(ml) ml.innerHTML = `${S.minLivr}€ <span style="font-size:12px;color:var(--text-dim);font-weight:400;">en livraison</span>`;
@@ -1932,7 +1912,6 @@ window.addEventListener('scroll', () => {
         if(md) md.textContent = `Meet-up sans minimum · Livraison à partir de ${S.minLivr}€`;
       }
 
-      // Horaires message
       if(S.horaireMsg){
         const hb2 = document.getElementById('horaires-box');
         if(hb2){
@@ -1947,7 +1926,6 @@ window.addEventListener('scroll', () => {
         }
       }
 
-      // Moyens de paiement — ajouter dans info si présents
       if(S.paiements && S.paiements.length){
         const hb2 = document.getElementById('horaires-box');
         if(hb2 && !document.getElementById('pay-methods')){
@@ -1960,7 +1938,6 @@ window.addEventListener('scroll', () => {
         }
       }
 
-      // Zones de livraison
       if(S.zones && S.zones.length){
         const livrBlock = document.querySelector('.info-block .block-text');
         if(livrBlock && livrBlock.closest('.info-block')?.querySelector('.block-title')?.textContent?.includes('Livraison')){
@@ -1968,7 +1945,6 @@ window.addEventListener('scroll', () => {
         }
       }
 
-      // WA number — update all WhatsApp links
       if(S.whatsapp){
         document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
           a.href = a.href.replace(/wa\.me\/\d+/, `wa.me/${S.whatsapp}`);
@@ -1976,7 +1952,6 @@ window.addEventListener('scroll', () => {
       }
     }
 
-    // ══ PRODUCTS ══
     if(sp.status!=='fulfilled' || !sp.value) return;
     const products = JSON.parse(sp.value.value);
     const wa = (() => { try{ return JSON.parse((ss.status==='fulfilled'&&ss.value)?ss.value.value:'{}').whatsapp||'33758464533'; }catch(e){return'33758464533';} })();
@@ -1986,10 +1961,8 @@ window.addEventListener('scroll', () => {
       const p = products.find(x => x.id === pid);
       if(!p) return;
 
-      // ── Hidden ──
       if(p.hidden){ card.style.display='none'; return; }
 
-      // ── Out of stock ──
       const btnRow = card.querySelector('.btn-row');
       const wasOos = card.classList.contains('out-of-stock');
       if(p.oos && !wasOos){
@@ -2021,16 +1994,13 @@ window.addEventListener('scroll', () => {
         }
       }
 
-      // ── Nom ──
       if(p.name){ const h3 = card.querySelector('h3'); if(h3) h3.textContent = p.name; }
 
-      // ── Description ──
       if(p.desc){
         const desc = card.querySelector('p:not(.video-placeholder p)');
         if(desc && !desc.closest('.video-placeholder')) desc.textContent = p.desc;
       }
 
-      // ── Nouveauté badge ──
       const header = card.querySelector('.product-header');
       const existingNew = card.querySelector('.tag-new');
       if(p.isNew && !existingNew && header){
@@ -2040,7 +2010,6 @@ window.addEventListener('scroll', () => {
         wrap.appendChild(span);
       } else if(!p.isNew && existingNew){ existingNew.remove(); }
 
-      // ── Promo badge ──
       const existingPromo = card.querySelector('.tag-promo');
       if(p.promo && !existingPromo && header){
         const wrap = header.querySelector('div[style]') || header;
@@ -2051,7 +2020,6 @@ window.addEventListener('scroll', () => {
         wrap.appendChild(span);
       } else if(!p.promo && existingPromo){ existingPromo.remove(); }
 
-      // ── Prices ──
       if(p.prices && p.prices.length){
         const priceEl = card.querySelector('.price');
         if(priceEl){
@@ -2060,7 +2028,6 @@ window.addEventListener('scroll', () => {
         }
       }
 
-      // ── Video ──
       if(p.video){
         const vw = card.querySelector('.video-wrapper');
         if(vw && !vw.querySelector('iframe')){
@@ -2078,6 +2045,10 @@ window.addEventListener('scroll', () => {
     });
 
   } catch(e){ console.log('Admin sync error:', e); }
+  }
+  // Run immediately if Store ready, else wait
+  if(window._storeReady){ _doApply(); }
+  else { window._pendingApply = _doApply; window.addEventListener('storeReady', _doApply, {once:true}); }
 })();
 
 // ─── Telegram WebApp ───
@@ -2100,7 +2071,6 @@ function scrollToSection(id) {
 
 window.addEventListener('DOMContentLoaded', () => {
 
-  // ─── Scroll reveal ───
   if('IntersectionObserver' in window){
     document.body.classList.add('js-ready');
     const revealObs = new IntersectionObserver((entries) => {
@@ -2114,7 +2084,6 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
   }
 
-  // ─── Shimmer once on first scroll-down into view ───
   if('IntersectionObserver' in window){
     let lastScrollY = window.scrollY;
     window.addEventListener('scroll', () => { lastScrollY = window.scrollY; }, { passive:true });
@@ -2127,7 +2096,7 @@ window.addEventListener('DOMContentLoaded', () => {
             card.classList.add('shimmer-play');
             setTimeout(() => card.classList.remove('shimmer-play'), 1000);
           }, 280);
-          shimmerObs.unobserve(card); // once only
+          shimmerObs.unobserve(card);
         }
         entry.target._lastScrollY = lastScrollY;
       });
@@ -2135,7 +2104,6 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.product').forEach(p => shimmerObs.observe(p));
   }
 
-  // ─── Video modal for 2-col wrappers (Telegram iOS compatible) ───
   const vidModal    = document.getElementById('vidModal');
   const vidModalInner = document.getElementById('vidModalInner');
   const vidModalClose = document.getElementById('vidModalClose');
@@ -2170,7 +2138,6 @@ window.addEventListener('DOMContentLoaded', () => {
     wrapper.appendChild(btn);
   });
 
-  // ─── Scroll progress bar ───
   const progressBar = document.getElementById('scrollProgress');
   window.addEventListener('scroll', () => {
     const scrolled = window.scrollY;
@@ -2178,7 +2145,6 @@ window.addEventListener('DOMContentLoaded', () => {
     progressBar.style.transform = `scaleX(${scrolled / maxScroll})`;
   }, { passive: true });
 
-  // ─── Active nav on scroll ───
   const sections = [
     { id:'sec-cali',   cls:'nav-active-cali' },
     { id:'sec-frozen', cls:'nav-active-frozen' },
@@ -2208,7 +2174,6 @@ window.addEventListener('DOMContentLoaded', () => {
     if(el) navObs.observe(el);
   });
 
-  // ─── Hero particles ───
   const container = document.getElementById('heroParticles');
   if(container){
     const isMobile = window.innerWidth < 600;
@@ -2230,15 +2195,13 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ─── Touch glow + shimmer on product cards (mobile) ───
   document.querySelectorAll('.product').forEach(card => {
     card.addEventListener('touchstart', () => {
       card.classList.add('lit');
-      // trigger shimmer on touch if not already playing
       if(!card.dataset.shimmering){
         card.dataset.shimmering = '1';
         card.classList.remove('shimmer-play');
-        void card.offsetWidth; // force reflow to reset
+        void card.offsetWidth;
         card.classList.add('shimmer-play');
         setTimeout(() => {
           card.classList.remove('shimmer-play');
@@ -2254,7 +2217,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   });
 
-  // ─── Ripple on buttons ───
   document.querySelectorAll('.buy-btn').forEach(btn => {
     btn.addEventListener('click', function(e){
       const r = document.createElement('span');
@@ -2264,12 +2226,10 @@ window.addEventListener('DOMContentLoaded', () => {
       r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;`;
       this.appendChild(r);
       setTimeout(() => r.remove(), 600);
-      // Haptic via Telegram
       try{ window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); }catch(e){}
     });
   });
 
-  // ─── Custom cursor ───
   const cursor = document.getElementById('cursor');
   const ring   = document.getElementById('cursorRing');
   if(cursor && ring && window.matchMedia('(hover:hover)').matches){
@@ -2316,7 +2276,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const GOLD   = '255,210,0';
   const TEAL   = '200,255,80';
 
-  // ── Big blurry orbs ──
   const orbs = [
     {x:W*.15, y:H*.2,  r:420, vx:.06,  vy:.05,  c:GREEN,  a:.22},
     {x:W*.85, y:H*.55, r:400, vx:-.05, vy:.07,  c:PURPLE, a:.20},
@@ -2331,7 +2290,6 @@ window.addEventListener('DOMContentLoaded', () => {
     ctx.clearRect(0, 0, W, H);
     tick++;
 
-    // — Orbs —
     orbs.forEach(o => {
       o.x += o.vx; o.y += o.vy;
       if(o.x < -o.r) o.x = W+o.r; if(o.x > W+o.r) o.x = -o.r;
@@ -2620,8 +2578,6 @@ window.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <!-- ─── Admin trigger ─── -->
-
-<!-- ─── Admin trigger ─── -->
 <span id="admin-trigger" onclick="window.openAdminPanel()">admin</span>
 
 <script>
@@ -2689,34 +2645,31 @@ function tryLogin(){
 // ═══════════════════════════════════════
 async function adminInit(){
   try{
-    const sp=await window.storage.get('admin-products');
-    if(sp)P=JSON.parse(sp.value); else P=JSON.parse(JSON.stringify(DEFS));
-    const ss=await window.storage.get('admin-settings');
-    if(ss)S={...S,...JSON.parse(ss.value)};
-  }catch(e){P=JSON.parse(JSON.stringify(DEFS));}
+    var Store = window.Store;
+    if(!Store) throw new Error('Store not ready');
+    const sp = await Store.get('admin-products');
+    if(sp) P=JSON.parse(sp.value); else P=JSON.parse(JSON.stringify(DEFS));
+    const ss = await Store.get('admin-settings');
+    if(ss) S={...S,...JSON.parse(ss.value)};
+  }catch(e){ console.warn('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
   buildUI(); render();
 }
 
 function buildUI(){
-  // Cat select for add
   const nc=document.getElementById('nc');
   nc.innerHTML=Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
 
-  // Horaires
   const hg=document.getElementById('horaires-grid');
   hg.innerHTML=DAYS.map(d=>`<div class="h-row">
     <div class="h-day">${d}</div>
     <input class="fi h-inp" id="h-${d}" value="${S.horaires[d]||'Fermé'}" type="text" oninput="S.horaires['${d}']=this.value;markU()">
   </div>`).join('');
 
-  // Zones
   renderZones();
 
-  // Paiements
   const pg=document.getElementById('pay-grid');
   pg.innerHTML=PAYS.map(p=>`<div class="pay-tag${S.paiements.includes(p)?' on':''}" onclick="togglePay(this,'${p}')">${p}</div>`).join('');
 
-  // WA templates
   document.getElementById('s-watpl').value=S.waTpl;
   document.getElementById('s-wanotif').value=S.waNotif;
   document.getElementById('s-wa').value=S.whatsapp;
@@ -2733,11 +2686,9 @@ function buildUI(){
   if(S.ticker) document.getElementById('ticker-preview').textContent=S.ticker;
   if(S.maintenance){document.getElementById('maintBadge').style.display='block';}
 
-  // Promo product select
   const pp=document.getElementById('promo-pid');
   pp.innerHTML=P.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 
-  // Cat actions
   const ca=document.getElementById('catActions');
   ca.innerHTML=Object.entries(CATS).map(([k,v])=>`
     <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
@@ -2833,7 +2784,6 @@ function render(){
   document.getElementById('sO').textContent=oos;
   document.getElementById('sN').textContent=nw;
 
-  // Update promo select
   const pp=document.getElementById('promo-pid');
   if(pp) pp.innerHTML=P.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 
@@ -3033,13 +2983,13 @@ function importData(input){
 function confirmA(action,id,title,text){
   document.getElementById('m-title').textContent=title;
   document.getElementById('m-text').innerHTML=text;
-  document.getElementById('m-ok').onclick=()=>{
+  document.getElementById('m-ok').onclick=async()=>{
     document.getElementById('modal').classList.remove('on');
     if(action==='del'){P=P.filter(x=>x.id!==id);render();markU();toast('🗑️ Supprimé');}
     else if(action==='reset'){qAction('reset');}
     else if(action==='wipe'){
-      window.storage.delete('admin-products');
-      window.storage.delete('admin-settings');
+      if(window.Store){ await window.Store.delete('admin-products'); await window.Store.delete('admin-settings'); }
+      else { localStorage.removeItem('admin-products'); localStorage.removeItem('admin-settings'); }
       toast('💣 Données effacées');setTimeout(()=>location.reload(),1500);
     }
   };
@@ -3051,7 +3001,6 @@ function confirmA(action,id,title,text){
 // ═══════════════════════════════════════
 function markU(){unsaved=true;document.getElementById('GS').style.display='block';}
 async function saveAll(){
-  // Collect settings from UI
   S.whatsapp=document.getElementById('s-wa').value;
   S.telegram=document.getElementById('s-tg').value;
   S.maintMsg=document.getElementById('s-maintmsg').value;
@@ -3065,11 +3014,19 @@ async function saveAll(){
   S.waTpl=document.getElementById('s-watpl').value;
   S.waNotif=document.getElementById('s-wanotif').value;
   try{
-    await window.storage.set('admin-products',JSON.stringify(P));
-    await window.storage.set('admin-settings',JSON.stringify(S));
+    var Store = window.Store;
+    if(!Store) throw new Error('Firebase non disponible');
+    await Store.set('admin-products', JSON.stringify(P));
+    await Store.set('admin-settings', JSON.stringify(S));
     unsaved=false;document.getElementById('GS').style.display='none';
-    toast('✅ Tout sauvegardé — catalogue mis à jour');
-  }catch(e){toast('❌ Erreur de sauvegarde');}
+    toast('✅ Sauvegardé — visible par tous !');
+  }catch(e){
+    // Fallback: save to localStorage so changes aren't lost
+    localStorage.setItem('admin-products', JSON.stringify(P));
+    localStorage.setItem('admin-settings', JSON.stringify(S));
+    unsaved=false;document.getElementById('GS').style.display='none';
+    toast('⚠️ Sauvé localement (Firebase hors ligne)');
+  }
 }
 
 // ═══════════════════════════════════════
@@ -3083,8 +3040,6 @@ function toast(msg){
 
 
   // ── Expose globally ──
-
-  // ── Expose ALL onclick functions globally ──
   if(typeof tryLogin !== "undefined") window.tryLogin = tryLogin;
   if(typeof ST !== "undefined") window.ST = ST;
   if(typeof TE !== "undefined") window.TE = TE;
@@ -3096,11 +3051,9 @@ function toast(msg){
   if(typeof addProduct !== "undefined") window.addProduct = addProduct;
   if(typeof addPromo !== "undefined") window.addPromo = addPromo;
   if(typeof addZone !== "undefined") window.addZone = addZone;
-  if(typeof addNewPriceRow !== "undefined") window.addNewPriceRow = addNewPriceRow;
   if(typeof catAction !== "undefined") window.catAction = catAction;
   if(typeof changePass !== "undefined") window.changePass = changePass;
   if(typeof confirmA !== "undefined") window.confirmA = confirmA;
-  if(typeof closeModal !== "undefined") window.closeModal = closeModal;
   if(typeof delZone !== "undefined") window.delZone = delZone;
   if(typeof exportData !== "undefined") window.exportData = exportData;
   if(typeof importData !== "undefined") window.importData = importData;
@@ -3113,11 +3066,13 @@ function toast(msg){
   if(typeof toast !== "undefined") window.toast = toast;
   if(typeof buildUI !== "undefined") window.buildUI = buildUI;
   if(typeof render !== "undefined") window.render = render;
-  if(typeof toggleEdit !== "undefined") window.toggleEdit = toggleEdit;
-  if(typeof logout !== "undefined") window.logout = logout;
 
   window.openAdminPanel = function(){
-    var _ap=document.getElementById('ADMIN'); _ap.style.cssText='display:flex!important;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+    var _ap = document.getElementById('ADMIN');
+    // Show panel (already position:fixed so it covers page without touching body)
+    _ap.style.cssText = 'display:flex!important;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;-webkit-overflow-scrolling:touch;';
+    // Prevent background scroll on iOS without causing layout shift
+    document.documentElement.style.overflow = 'hidden';
     if(!window._adminReady){
       window._adminReady = true;
       adminInit();
@@ -3127,18 +3082,85 @@ function toast(msg){
   };
 
   window.closeAdminPanel = function(){
-    var _ap2=document.getElementById('ADMIN'); if(_ap2) _ap2.style.display='none';
+    var _ap = document.getElementById('ADMIN');
+    if(_ap) _ap.style.display = 'none';
+    document.documentElement.style.overflow = '';
   };
 
-  // Fix quit button
+  // Attach quit button once DOM ready
   document.addEventListener('DOMContentLoaded', function(){
     var qb = document.querySelector('#ADMIN .hquit');
     if(qb) qb.onclick = window.closeAdminPanel;
+    // Also attach login Enter key
+    var li = document.getElementById('li');
+    if(li) li.addEventListener('keydown', function(e){ if(e.key==='Enter') tryLogin(); });
   });
 
 })();
 
 </script>
 
+
+
+<script>
+// ══ Firebase Realtime Database Store ══
+// Simple REST: GET/PUT/DELETE — works everywhere, no SDK needed
+(function(){
+  var DB = 'https://derbeste370-default-rtdb.europe-west1.firebasedatabase.app';
+
+  window.Store = {
+    async get(key) {
+      try {
+        var resp = await fetch(DB + '/config/' + key + '.json');
+        if (resp.ok) {
+          var data = await resp.json();
+          if (data !== null) {
+            var str = JSON.stringify(data);
+            localStorage.setItem(key, str);
+            return { value: str };
+          }
+        }
+      } catch(e) {
+        console.warn('RTDB GET failed:', e.message);
+      }
+      var cached = localStorage.getItem(key);
+      return cached ? { value: cached } : null;
+    },
+
+    async set(key, valueStr) {
+      try {
+        var resp = await fetch(DB + '/config/' + key + '.json', {
+          method : 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body   : valueStr
+        });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        localStorage.setItem(key, valueStr);
+        return true;
+      } catch(e) {
+        console.warn('RTDB SET failed:', e.message);
+        localStorage.setItem(key, valueStr);
+        throw new Error('Firebase: ' + e.message);
+      }
+    },
+
+    async delete(key) {
+      try {
+        await fetch(DB + '/config/' + key + '.json', { method: 'DELETE' });
+      } catch(e) { console.warn('RTDB DELETE failed:', e.message); }
+      localStorage.removeItem(key);
+    }
+  };
+
+  window._storeReady = true;
+  window.dispatchEvent(new Event('storeReady'));
+  console.log('✅ Realtime Database Store ready');
+
+  if (typeof window._pendingApply === 'function') {
+    window._pendingApply();
+    window._pendingApply = null;
+  }
+})();
+</script>
 </body>
 </html>
