@@ -1906,11 +1906,6 @@ window.addEventListener('scroll', () => {
         if(hb && S.heroBadge) hb.textContent = S.heroBadge;
       }
 
-      if(S.heroSub !== undefined){
-        const hs = document.getElementById('hero-sub');
-        if(hs && S.heroSub) hs.textContent = S.heroSub;
-      }
-
       if(S.minLivr !== undefined){
         const ml = document.getElementById('min-livr-text');
         if(ml) ml.innerHTML = `${S.minLivr}€ <span style="font-size:12px;color:var(--text-dim);font-weight:400;">en livraison</span>`;
@@ -2479,11 +2474,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
       <div class="slb">Section héro</div>
       <div class="card">
-        <div class="card-title">🖼️ Hero & Titre</div>
-        <div class="fg"><div class="fl">Sous-titre hero</div>
-          <input class="fi" id="s-herosub" placeholder="ex: Tours · Since 2020" type="text" oninput="markU()"></div>
-        <div class="fg"><div class="fl">Badge hero</div>
-          <input class="fi" id="s-herobadge" placeholder="ex: ✅ Disponible maintenant" type="text" oninput="markU()"></div>
+        <div class="card-title">🖼️ Badge hero</div>
+        <div class="fg"><div class="fl">Texte du badge (au-dessus du titre)</div>
+          <input class="fi" id="s-herobadge" placeholder="ex: ⭐ Since 2020" type="text" oninput="markU()"></div>
       </div>
     </div>
 
@@ -2701,7 +2694,6 @@ function buildUI(){
   document.getElementById('s-maintmsg').value=S.maintMsg;
   document.getElementById('s-ticker').value=S.ticker;
   document.getElementById('s-ticker-on').checked=S.tickerOn;
-  document.getElementById('s-herosub').value=S.heroSub;
   document.getElementById('s-herobadge').value=S.heroBadge;
   document.getElementById('s-minlivr').value=S.minLivr;
   document.getElementById('s-minmeet').value=S.minMeet;
@@ -2995,7 +2987,7 @@ function importData(input){
       const data=JSON.parse(e.target.result);
       if(data.products)P=data.products;
       if(data.settings)S={...S,...data.settings};
-      markU();render();buildUI();toast('⬆️ Import réussi');
+      window.S=S; window.P=P; markU();render();buildUI();toast('⬆️ Import réussi');
     }catch{toast('❌ Fichier invalide');}
   };
   reader.readAsText(file);
@@ -3033,7 +3025,6 @@ async function saveAll(){
   S.maintMsg=document.getElementById('s-maintmsg').value;
   S.ticker=document.getElementById('s-ticker').value;
   S.tickerOn=document.getElementById('s-ticker-on').checked;
-  S.heroSub=document.getElementById('s-herosub').value;
   S.heroBadge=document.getElementById('s-herobadge').value;
   S.minLivr=parseInt(document.getElementById('s-minlivr').value)||50;
   S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
@@ -3078,8 +3069,6 @@ function applySettingsToDOM(S){
   }
   // Hero badge
   if(S.heroBadge){ const hb=document.getElementById('hero-badge'); if(hb) hb.textContent=S.heroBadge; }
-  // Hero sub
-  if(S.heroSub){ const hs=document.getElementById('hero-sub'); if(hs) hs.textContent=S.heroSub; }
   // Min livraison
   if(S.minLivr !== undefined){
     const ml=document.getElementById('min-livr-text');
@@ -3092,6 +3081,23 @@ function applySettingsToDOM(S){
   if(S.horaireMsg){
     const hb2=document.getElementById('horaires-box');
     if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; }
+  }
+  // Ticker
+  if(S.tickerOn && S.ticker){
+    const tw=document.getElementById('ticker-wrap');
+    if(tw){ const tDiv=tw.querySelector('.ticker'); if(tDiv){ const sep='<span class="ticker-item">&nbsp;·&nbsp;</span>'; tDiv.innerHTML=`<span class="ticker-item">${S.ticker}</span>${sep}`.repeat(4); } }
+  }
+  // Zones on main page
+  if(S.zones && S.zones.length){
+    const livrBlock=document.querySelector('.info-block .block-text');
+    if(livrBlock && livrBlock.closest('.info-block')?.querySelector('.block-title')?.textContent?.includes('Livraison')){
+      livrBlock.innerHTML=S.zones.slice(0,6).join(' · ');
+    }
+  }
+  // Paiements on main page
+  if(S.paiements){
+    const pm=document.getElementById('pay-methods');
+    if(pm){ pm.querySelector('div:last-child').innerHTML=S.paiements.map(p=>`<span style="font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.15);color:#00e87a;">${p}</span>`).join(''); }
   }
 }
 
@@ -3190,7 +3196,7 @@ function toast(msg){
           }
         }
       } catch(e) {
-        console.info('ℹ️ RTDB GET (using local cache):', e.message);
+        console.log('ℹ️ RTDB GET (using local cache):', e.message);
       }
       var cached = localStorage.getItem(key);
       return cached ? { value: cached } : null;
@@ -3207,7 +3213,7 @@ function toast(msg){
         localStorage.setItem(key, valueStr);
         return true;
       } catch(e) {
-        console.info('ℹ️ RTDB SET failed:', e.message);
+        console.log('ℹ️ RTDB SET failed:', e.message);
         localStorage.setItem(key, valueStr);
         throw new Error('Firebase: ' + e.message);
       }
@@ -3216,7 +3222,7 @@ function toast(msg){
     async delete(key) {
       try {
         await fetch(DB + '/config/' + key + '.json', { method: 'DELETE' });
-      } catch(e) { console.info('ℹ️ RTDB DELETE failed:', e.message); }
+      } catch(e) { console.log('ℹ️ RTDB DELETE failed:', e.message); }
       localStorage.removeItem(key);
     }
   };
