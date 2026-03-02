@@ -2674,7 +2674,7 @@ let unsaved=false;
 function tryLogin(){
   const v=document.getElementById('li').value;
   if(v===S.password||v==='beste37'){
-    document.getElementById('LS').classList.add('gone');
+    document.getElementById('LS').style.display='none';
     document.getElementById('AU').style.display='block';
     adminInit();
   } else {
@@ -3083,8 +3083,41 @@ function toast(msg){
 
 
   // ── Expose globally ──
+
+  // ── Expose ALL onclick functions globally ──
+  if(typeof tryLogin !== "undefined") window.tryLogin = tryLogin;
+  if(typeof ST !== "undefined") window.ST = ST;
+  if(typeof TE !== "undefined") window.TE = TE;
+  if(typeof AP !== "undefined") window.AP = AP;
+  if(typeof DP !== "undefined") window.DP = DP;
+  if(typeof SP !== "undefined") window.SP = SP;
+  if(typeof SF !== "undefined") window.SF = SF;
+  if(typeof addPR !== "undefined") window.addPR = addPR;
+  if(typeof addProduct !== "undefined") window.addProduct = addProduct;
+  if(typeof addPromo !== "undefined") window.addPromo = addPromo;
+  if(typeof addZone !== "undefined") window.addZone = addZone;
+  if(typeof addNewPriceRow !== "undefined") window.addNewPriceRow = addNewPriceRow;
+  if(typeof catAction !== "undefined") window.catAction = catAction;
+  if(typeof changePass !== "undefined") window.changePass = changePass;
+  if(typeof confirmA !== "undefined") window.confirmA = confirmA;
+  if(typeof closeModal !== "undefined") window.closeModal = closeModal;
+  if(typeof delZone !== "undefined") window.delZone = delZone;
+  if(typeof exportData !== "undefined") window.exportData = exportData;
+  if(typeof importData !== "undefined") window.importData = importData;
+  if(typeof qAction !== "undefined") window.qAction = qAction;
+  if(typeof removePromo !== "undefined") window.removePromo = removePromo;
+  if(typeof saveAll !== "undefined") window.saveAll = saveAll;
+  if(typeof saveWaTpl !== "undefined") window.saveWaTpl = saveWaTpl;
+  if(typeof toggleMaint !== "undefined") window.toggleMaint = toggleMaint;
+  if(typeof togglePay !== "undefined") window.togglePay = togglePay;
+  if(typeof toast !== "undefined") window.toast = toast;
+  if(typeof buildUI !== "undefined") window.buildUI = buildUI;
+  if(typeof render !== "undefined") window.render = render;
+  if(typeof toggleEdit !== "undefined") window.toggleEdit = toggleEdit;
+  if(typeof logout !== "undefined") window.logout = logout;
+
   window.openAdminPanel = function(){
-    document.getElementById('ADMIN').style.display = 'flex';
+    var _ap=document.getElementById('ADMIN'); _ap.style.cssText='display:flex!important;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;';
     if(!window._adminReady){
       window._adminReady = true;
       adminInit();
@@ -3094,7 +3127,7 @@ function toast(msg){
   };
 
   window.closeAdminPanel = function(){
-    document.getElementById('ADMIN').style.display = 'none';
+    var _ap2=document.getElementById('ADMIN'); if(_ap2) _ap2.style.display='none';
   };
 
   // Fix quit button
