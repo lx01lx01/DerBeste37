@@ -1228,7 +1228,8 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
 
 /* ─── Admin trigger ─── */
 #admin-trigger {
-  display: block; text-align: center; padding: 20px 16px 8px;
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  z-index: 9001; padding: 6px 16px;
   font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase;
   color: rgba(255,255,255,0.12); cursor: pointer;
@@ -1245,6 +1246,8 @@ html { overflow-x:hidden; }
 </style>
 </head>
 <body>
+<!-- ─── Admin trigger ─── -->
+<span id="admin-trigger" onclick="window.openAdminPanel()">admin</span>
 
 <!-- SPLASH -->
 <div id="splash">
@@ -1769,20 +1772,18 @@ html { overflow-x:hidden; }
     <span class="block-icon">🛵</span>
     <div class="block-title">Minimum de commande</div>
     <div class="block-text" id="min-livr-text" style="color:var(--green); font-size:15px;">50€ <span style="font-size:12px; color:var(--text-dim); font-weight:400;">en livraison</span></div>
-    <div id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
+    <div id="min-detail-text" id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
   </div>
 
   <div class="horaires-box reveal" id="horaires-box">
     <div class="block-title">🕐 &nbsp;Horaires</div>
-    <div id="horaires-rows">
-      <div class="horaire-row">
-        <span class="horaire-day">Lundi — Vendredi</span>
-        <span class="horaire-time">11h00 – 23h00</span>
-      </div>
-      <div class="horaire-row">
-        <span class="horaire-day">Samedi — Dimanche</span>
-        <span class="horaire-time">12h00 – 00h00</span>
-      </div>
+    <div class="horaire-row">
+      <span class="horaire-day">Lundi — Vendredi</span>
+      <span class="horaire-time">11h00 – 23h00</span>
+    </div>
+    <div class="horaire-row">
+      <span class="horaire-day">Samedi — Dimanche</span>
+      <span class="horaire-time">12h00 – 00h00</span>
     </div>
   </div>
 
@@ -1908,24 +1909,17 @@ window.addEventListener('scroll', () => {
         if(hb && S.heroBadge) hb.textContent = S.heroBadge;
       }
 
+      if(S.heroSub !== undefined){
+        const hs = document.getElementById('hero-sub');
+        if(hs && S.heroSub) hs.textContent = S.heroSub;
+      }
+
       if(S.minLivr !== undefined){
         const ml = document.getElementById('min-livr-text');
         if(ml) ml.innerHTML = `${S.minLivr}€ <span style="font-size:12px;color:var(--text-dim);font-weight:400;">en livraison</span>`;
         const md = document.getElementById('min-detail-text');
         const meetTxt = (S.minMeet && S.minMeet > 0) ? `Meet-up à partir de ${S.minMeet}€` : 'Meet-up sans minimum';
         if(md) md.textContent = `${meetTxt} · Livraison à partir de ${S.minLivr}€`;
-      }
-
-      if(S.horaires){
-        const rowsEl = document.getElementById('horaires-rows');
-        if(rowsEl){
-          const days = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-          const dayNames = {Lun:'Lundi',Mar:'Mardi',Mer:'Mercredi',Jeu:'Jeudi',Ven:'Vendredi',Sam:'Samedi',Dim:'Dimanche'};
-          rowsEl.innerHTML = days.map(d => {
-            const time = S.horaires[d] || 'Fermé';
-            return `<div class="horaire-row"><span class="horaire-day">${dayNames[d]}</span><span class="horaire-time">${time}</span></div>`;
-          }).join('');
-        }
       }
 
       if(S.horaireMsg){
@@ -1955,10 +1949,11 @@ window.addEventListener('scroll', () => {
       }
 
       if(S.zones && S.zones.length){
-        const livrEl = document.getElementById('livraison-zones');
-        if(livrEl) livrEl.innerHTML = S.zones.slice(0,6).join('<br>');
-        const meetEl = document.getElementById('meetup-zones');
-        if(meetEl && S.zones[0]) meetEl.textContent = S.zones[0];
+        const livrBlock = document.getElementById('livraison-zones');
+        if(livrBlock){
+          livrBlock.innerHTML = S.zones.slice(0,6).join('<br>');
+        }
+        if(S.meetupZone){ const mz=document.getElementById('meetup-zones'); if(mz) mz.textContent=S.meetupZone; }
       }
 
       if(S.whatsapp){
@@ -2488,9 +2483,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
       <div class="slb">Section héro</div>
       <div class="card">
-        <div class="card-title">🖼️ Badge hero</div>
-        <div class="fg"><div class="fl">Texte du badge (au-dessus du titre)</div>
-          <input class="fi" id="s-herobadge" placeholder="ex: ⭐ Since 2020" type="text" oninput="markU()"></div>
+        <div class="card-title">🖼️ Hero & Titre</div>
+        <div class="fg"><div class="fl">Sous-titre hero</div>
+          <input class="fi" id="s-herosub" placeholder="ex: Tours · Since 2020" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Badge hero</div>
+          <input class="fi" id="s-herobadge" placeholder="ex: ✅ Disponible maintenant" type="text" oninput="markU()"></div>
       </div>
     </div>
 
@@ -2511,6 +2508,12 @@ window.addEventListener('DOMContentLoaded', () => {
           <input class="fi" id="s-minlivr" placeholder="50" type="number" oninput="markU()"></div>
         <div class="fg"><div class="fl">Minimum meet-up (€)</div>
           <input class="fi" id="s-minmeet" placeholder="0" type="number" oninput="markU()"></div>
+      </div>
+
+      <div class="slb">Lieu du meet-up</div>
+      <div class="card">
+        <div class="fg"><div class="fl">Texte affiché dans "Meet-up"</div>
+          <input class="fi" id="s-meetupzone" placeholder="ex: Tours 37000" type="text" oninput="markU()"></div>
       </div>
 
       <div class="slb">Zones de livraison</div>
@@ -2606,17 +2609,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 </div>
 
-<!-- ─── Admin trigger ─── -->
-<span id="admin-trigger" onclick="window.openAdminPanel()">admin</span>
+
 
 <script>
-// Safe console shim for Telegram WebView
-(function(){
-  var c = window.console = window.console || {};
-  ['log','warn','info','error','debug'].forEach(function(m){
-    if(typeof c[m] !== 'function') c[m] = function(){};
-  });
-})();
 
 (function(){
   'use strict';
@@ -2653,6 +2648,7 @@ let P=[], S={
   horaireMsg:'Livraison tous les jours 12h–22h',
   minLivr:50, minMeet:0,
   zones:['Tours centre','Joué-lès-Tours','Saint-Cyr-sur-Loire','La Riche'],
+  meetupZone:'Tours 37000',
   paiements:[],
   waTpl:"Bonjour, je souhaite commander :\n📦 Produit : {produit}\n⚖️ Grammage : {grammage}\n💰 Prix : {prix}\n🕐 Heure souhaitée :",
   waNotif:"Bonjour ! Je souhaite être prévenu du retour en stock de :\n📦 {produit}\n\nMerci 🙏",
@@ -2687,7 +2683,7 @@ async function adminInit(){
     if(sp) P=JSON.parse(sp.value); else P=JSON.parse(JSON.stringify(DEFS));
     const ss = await Store.get('admin-settings');
     if(ss) S={...S,...JSON.parse(ss.value)};
-  }catch(e){ console.log('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
+  }catch(e){ console.warn('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
   window.S = S; window.P = P;
   buildUI(); render();
 }
@@ -2715,10 +2711,12 @@ function buildUI(){
   document.getElementById('s-maintmsg').value=S.maintMsg;
   document.getElementById('s-ticker').value=S.ticker;
   document.getElementById('s-ticker-on').checked=S.tickerOn;
+  document.getElementById('s-herosub').value=S.heroSub;
   document.getElementById('s-herobadge').value=S.heroBadge;
   document.getElementById('s-minlivr').value=S.minLivr;
   document.getElementById('s-minmeet').value=S.minMeet;
   document.getElementById('s-horaireMsg').value=S.horaireMsg;
+  document.getElementById('s-meetupzone').value=S.meetupZone||'';
   if(S.ticker) document.getElementById('ticker-preview').textContent=S.ticker;
   if(S.maintenance){document.getElementById('maintBadge').style.display='block';}
 
@@ -3008,7 +3006,7 @@ function importData(input){
       const data=JSON.parse(e.target.result);
       if(data.products)P=data.products;
       if(data.settings)S={...S,...data.settings};
-      window.S=S; window.P=P; markU();render();buildUI();toast('⬆️ Import réussi');
+      markU();render();buildUI();toast('⬆️ Import réussi');
     }catch{toast('❌ Fichier invalide');}
   };
   reader.readAsText(file);
@@ -3046,10 +3044,12 @@ async function saveAll(){
   S.maintMsg=document.getElementById('s-maintmsg').value;
   S.ticker=document.getElementById('s-ticker').value;
   S.tickerOn=document.getElementById('s-ticker-on').checked;
+  S.heroSub=document.getElementById('s-herosub').value;
   S.heroBadge=document.getElementById('s-herobadge').value;
   S.minLivr=parseInt(document.getElementById('s-minlivr').value)||50;
   S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
   S.horaireMsg=document.getElementById('s-horaireMsg').value;
+  S.meetupZone=document.getElementById('s-meetupzone').value;
   ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(function(d){var el=document.getElementById('h-'+d);if(el)S.horaires[d]=el.value;});
   // Collect paiements from DOM (belt+suspenders)
   S.paiements=Array.from(document.querySelectorAll('.pay-tag.on')).map(function(el){return el.textContent;});
@@ -3090,6 +3090,8 @@ function applySettingsToDOM(S){
   }
   // Hero badge
   if(S.heroBadge){ const hb=document.getElementById('hero-badge'); if(hb) hb.textContent=S.heroBadge; }
+  // Hero sub
+  if(S.heroSub){ const hs=document.getElementById('hero-sub'); if(hs) hs.textContent=S.heroSub; }
   // Min livraison
   if(S.minLivr !== undefined){
     const ml=document.getElementById('min-livr-text');
@@ -3098,40 +3100,15 @@ function applySettingsToDOM(S){
     const meetTxt=(S.minMeet&&S.minMeet>0)?`Meet-up à partir de ${S.minMeet}€`:'Meet-up sans minimum';
     if(md) md.textContent=`${meetTxt} · Livraison à partir de ${S.minLivr}€`;
   }
-  // Horaire rows (par jour)
-  if(S.horaires){
-    const rowsEl=document.getElementById('horaires-rows');
-    if(rowsEl){
-      const days=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-      const dayNames={Lun:'Lundi',Mar:'Mardi',Mer:'Mercredi',Jeu:'Jeudi',Ven:'Vendredi',Sam:'Samedi',Dim:'Dimanche'};
-      rowsEl.innerHTML=days.map(d=>{
-        const time=S.horaires[d]||'Fermé';
-        return `<div class="horaire-row"><span class="horaire-day">${dayNames[d]}</span><span class="horaire-time">${time}</span></div>`;
-      }).join('');
-    }
-  }
   // Horaire message
   if(S.horaireMsg){
     const hb2=document.getElementById('horaires-box');
-    if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; else { const m=document.createElement('div'); m.className='horaire-msg'; m.style.cssText='font-size:12px;color:var(--text-dim);margin-top:8px;line-height:1.5;'; m.textContent=S.horaireMsg; hb2.appendChild(m); } }
+    if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; }
   }
-  // Ticker
-  if(S.tickerOn && S.ticker){
-    const tw=document.getElementById('ticker-wrap');
-    if(tw){ const tDiv=tw.querySelector('.ticker'); if(tDiv){ const sep='<span class="ticker-item">&nbsp;·&nbsp;</span>'; tDiv.innerHTML=`<span class="ticker-item">${S.ticker}</span>${sep}`.repeat(4); } }
-  }
-  // Zones on main page
-  if(S.zones && S.zones.length){
-    const livrEl=document.getElementById('livraison-zones');
-    if(livrEl) livrEl.innerHTML=S.zones.slice(0,6).join('<br>');
-    const meetEl=document.getElementById('meetup-zones');
-    if(meetEl && S.zones[0]) meetEl.textContent=S.zones[0];
-  }
-  // Paiements on main page
-  if(S.paiements){
-    const pm=document.getElementById('pay-methods');
-    if(pm){ pm.querySelector('div:last-child').innerHTML=S.paiements.map(p=>`<span style="font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.15);color:#00e87a;">${p}</span>`).join(''); }
-  }
+  // Meet-up zone
+  if(S.meetupZone){ const mz=document.getElementById('meetup-zones'); if(mz) mz.textContent=S.meetupZone; }
+  // Livraison zones
+  if(S.zones && S.zones.length){ const lz=document.getElementById('livraison-zones'); if(lz) lz.innerHTML=S.zones.join('<br>'); }
 }
 
 // ═══════════════════════════════════════
@@ -3229,7 +3206,7 @@ function toast(msg){
           }
         }
       } catch(e) {
-        console.log('ℹ️ RTDB GET (using local cache):', e.message);
+        console.info('ℹ️ RTDB GET (using local cache):', e.message);
       }
       var cached = localStorage.getItem(key);
       return cached ? { value: cached } : null;
@@ -3246,7 +3223,7 @@ function toast(msg){
         localStorage.setItem(key, valueStr);
         return true;
       } catch(e) {
-        console.log('ℹ️ RTDB SET failed:', e.message);
+        console.info('ℹ️ RTDB SET failed:', e.message);
         localStorage.setItem(key, valueStr);
         throw new Error('Firebase: ' + e.message);
       }
@@ -3255,7 +3232,7 @@ function toast(msg){
     async delete(key) {
       try {
         await fetch(DB + '/config/' + key + '.json', { method: 'DELETE' });
-      } catch(e) { console.log('ℹ️ RTDB DELETE failed:', e.message); }
+      } catch(e) { console.info('ℹ️ RTDB DELETE failed:', e.message); }
       localStorage.removeItem(key);
     }
   };
