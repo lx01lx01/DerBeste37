@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-
-<script>
-// 🔒 Console Fix for Telegram Mini App (safe fallback)
-(function () {
-  if (typeof window.console === "undefined") {
-    window.console = {};
-  }
-
-  const methods = ["log", "warn", "error", "info", "debug"];
-  methods.forEach(function (method) {
-    if (typeof console[method] !== "function") {
-      console[method] = function () {};
-    }
-  });
-})();
-</script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>DerBeste37</title>
@@ -1939,6 +1922,20 @@ window.addEventListener('scroll', () => {
         if(md) md.textContent = `${meetTxt} · Livraison à partir de ${S.minLivr}€`;
       }
 
+      if(S.horaires){
+        const hb2=document.getElementById('horaires-box');
+        if(hb2){
+          hb2.querySelectorAll('.horaire-row').forEach(r=>r.remove());
+          const days=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+          const dayLabels={Lun:'Lundi',Mar:'Mardi',Mer:'Mercredi',Jeu:'Jeudi',Ven:'Vendredi',Sam:'Samedi',Dim:'Dimanche'};
+          days.forEach(d=>{
+            const row=document.createElement('div');
+            row.className='horaire-row';
+            row.innerHTML='<span class="horaire-day">'+dayLabels[d]+'</span><span class="horaire-time">'+(S.horaires[d]||'Fermé')+'</span>';
+            hb2.appendChild(row);
+          });
+        }
+      }
       if(S.horaireMsg){
         const hb2 = document.getElementById('horaires-box');
         if(hb2){
@@ -2699,7 +2696,12 @@ async function adminInit(){
     const sp = await Store.get('admin-products');
     if(sp) P=JSON.parse(sp.value); else P=JSON.parse(JSON.stringify(DEFS));
     const ss = await Store.get('admin-settings');
-    if(ss) S={...S,...JSON.parse(ss.value)};
+    if(ss){
+      const loaded=JSON.parse(ss.value);
+      const mergedHoraires=Object.assign({},S.horaires,loaded.horaires||{});
+      S={...S,...loaded};
+      S.horaires=mergedHoraires;
+    }
   }catch(e){ console.warn('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
   window.S = S; window.P = P;
   buildUI(); render();
@@ -3067,6 +3069,7 @@ async function saveAll(){
   S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
   S.horaireMsg=document.getElementById('s-horaireMsg').value;
   S.meetupZone=document.getElementById('s-meetupzone').value;
+  if(!S.horaires) S.horaires={};
   ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(function(d){var el=document.getElementById('h-'+d);if(el)S.horaires[d]=el.value;});
   // Collect paiements from DOM (belt+suspenders)
   S.paiements=Array.from(document.querySelectorAll('.pay-tag.on')).map(function(el){return el.textContent;});
@@ -3117,10 +3120,25 @@ function applySettingsToDOM(S){
     const meetTxt=(S.minMeet&&S.minMeet>0)?`Meet-up à partir de ${S.minMeet}€`:'Meet-up sans minimum';
     if(md) md.textContent=`${meetTxt} · Livraison à partir de ${S.minLivr}€`;
   }
+  // Horaires par jour
+  if(S.horaires){
+    const hb2=document.getElementById('horaires-box');
+    if(hb2){
+      hb2.querySelectorAll('.horaire-row').forEach(r=>r.remove());
+      const days=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+      const dayLabels={Lun:'Lundi',Mar:'Mardi',Mer:'Mercredi',Jeu:'Jeudi',Ven:'Vendredi',Sam:'Samedi',Dim:'Dimanche'};
+      days.forEach(d=>{
+        const row=document.createElement('div');
+        row.className='horaire-row';
+        row.innerHTML='<span class="horaire-day">'+dayLabels[d]+'</span><span class="horaire-time">'+(S.horaires[d]||'Fermé')+'</span>';
+        hb2.appendChild(row);
+      });
+    }
+  }
   // Horaire message
   if(S.horaireMsg){
     const hb2=document.getElementById('horaires-box');
-    if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; }
+    if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; else { const m=document.createElement('div'); m.className='horaire-msg'; m.style.cssText='font-size:12px;color:var(--text-dim);margin-top:8px;line-height:1.5;'; m.textContent=S.horaireMsg; hb2.appendChild(m); } }
   }
   // Meet-up zone
   if(S.meetupZone){ const mz=document.getElementById('meetup-zones'); if(mz) mz.textContent=S.meetupZone; }
@@ -3223,7 +3241,7 @@ function toast(msg){
           }
         }
       } catch(e) {
-        console.info('ℹ️ RTDB GET (using local cache):', e.message);
+        console.log('ℹ️ RTDB GET (using local cache):', e.message);
       }
       var cached = localStorage.getItem(key);
       return cached ? { value: cached } : null;
@@ -3240,7 +3258,7 @@ function toast(msg){
         localStorage.setItem(key, valueStr);
         return true;
       } catch(e) {
-        console.info('ℹ️ RTDB SET failed:', e.message);
+        console.log('ℹ️ RTDB SET failed:', e.message);
         localStorage.setItem(key, valueStr);
         throw new Error('Firebase: ' + e.message);
       }
@@ -3249,7 +3267,7 @@ function toast(msg){
     async delete(key) {
       try {
         await fetch(DB + '/config/' + key + '.json', { method: 'DELETE' });
-      } catch(e) { console.info('ℹ️ RTDB DELETE failed:', e.message); }
+      } catch(e) { console.log('ℹ️ RTDB DELETE failed:', e.message); }
       localStorage.removeItem(key);
     }
   };
