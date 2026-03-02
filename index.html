@@ -39,9 +39,9 @@ body{
   background-image:
     radial-gradient(ellipse 140% 55% at 30% -5%, rgba(0,232,122,0.13), transparent 65%),
     radial-gradient(ellipse 120% 45% at 75% 20%, rgba(0,232,122,0.07), transparent 55%),
-    radial-gradient(ellipse 160% 70% at 60% 115%, rgba(0,130,255,0.22), transparent 65%),
-    radial-gradient(ellipse 100% 50% at 20% 100%, rgba(0,150,255,0.12), transparent 60%),
-    radial-gradient(ellipse 80% 40% at 90% 85%, rgba(0,120,255,0.1), transparent 55%);
+    radial-gradient(ellipse 200% 90% at 60% 115%, rgba(0,130,255,0.22), transparent 70%),
+    radial-gradient(ellipse 150% 70% at 20% 100%, rgba(0,150,255,0.15), transparent 65%),
+    radial-gradient(ellipse 130% 60% at 90% 95%, rgba(0,120,255,0.13), transparent 60%);
 }
 
 h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-serif; }
@@ -947,6 +947,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .cat-tab.nav-active-anon  { background:rgba(179,136,255,0.15); border-color:rgba(179,136,255,0.5); color:var(--anon); }
 .cat-tab.nav-active-olive { background:rgba(212,168,67,0.15);  border-color:rgba(212,168,67,0.5);  color:var(--olive); }
 .cat-tab.nav-active-info  { background:rgba(255,255,255,0.1);  border-color:rgba(255,255,255,0.25); color:var(--text); }
+.cat-tab.active-festive{ background:rgba(255,200,80,0.12); border-color:rgba(255,200,80,0.35); color:#ffbf47; }
 
 
 </style>
@@ -1036,11 +1037,12 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 <!-- CATEGORY NAV -->
 <nav class="cat-nav" id="catNav">
   <div class="cat-nav-inner">
-    <button class="cat-tab active-cali"  onclick="scrollToSection('sec-cali')">🌿 Cali</button>
+    <button class="cat-tab active-cali"  onclick="scrollToSection('sec-cali')">🌴 Cali</button>
     <button class="cat-tab active-frozen" onclick="scrollToSection('sec-frozen')">❄️ Frozen</button>
     <button class="cat-tab active-static" onclick="scrollToSection('sec-static')">⚡ Static</button>
     <button class="cat-tab active-anon"  onclick="scrollToSection('sec-anon')">🏴‍☠️ Anonymuz</button>
     <button class="cat-tab active-olive" onclick="scrollToSection('sec-olive')">🫒 Olive</button>
+    <button class="cat-tab active-festive" onclick="scrollToSection('sec-festif')">💎 Pure 96%</button>
     <button class="cat-tab" onclick="scrollToSection('sec-info')" style="margin-left:auto;">ℹ️ Info</button>
   </div>
 </nav>
@@ -1052,7 +1054,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   ══════════════════════════════ -->
   <div class="cat-section section-cali grid-2 reveal" id="sec-cali">
     <div class="cat-header">
-      <div class="cat-icon">🌿</div>
+      <div class="cat-icon">🌴</div>
       <div class="cat-header-text">
         <div class="cat-label">Catégorie</div>
         <div class="cat-name">Cali Hollandaise</div>
@@ -1069,7 +1071,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Gelato 🌈</h3>
-        <span class="product-tag tag-cali">🌿 Cali Hollandaise</span>
+        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
       </div>
       <p>Saveurs douces et fruitées, notes de vanille.</p>
       <div class="price">
@@ -1090,7 +1092,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Runtz 🍍</h3>
-        <span class="product-tag tag-cali">🌿 Cali Hollandaise</span>
+        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
       </div>
       <p>Saveurs d'agrumes, notes de bonbons.</p>
       <div class="price">
@@ -1111,9 +1113,9 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>Tropicanozz 🍹</h3>
-        <span class="product-tag tag-cali">🌿 Cali Hollandaise</span>
+        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
       </div>
-      <p>Notes exotiques et fraîches.</p>
+      <p>Notes exotiques d'ananas et d'agrumes.</p>
       <div class="price">
         <span class="price-pill cali-pill">2.5G / 40€</span>
         <span class="price-pill cali-pill">5G / 60€</span>
@@ -1131,7 +1133,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="product-header">
         <h3>GMO 🥞</h3>
-        <span class="product-tag tag-cali">🌿 Cali Hollandaise</span>
+        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
       </div>
       <p>Goût unique et puissant.</p>
       <div class="price">
@@ -1348,7 +1350,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
       </div>
       <div class="hubba-strains">
         <span>👺 Sultan Static</span>
-        <span>🍑 Tangie</span>
+        <span>🍊 Tangie</span>
         <span>🍋 Lemon Ice</span>
       </div>
     </div>
@@ -1383,13 +1385,13 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=tangie_fresh_fro_bwh1jv" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
       <div class="product-header">
-        <h3>Tangie 🍑</h3>
+        <h3>Tangie 🍊</h3>
         <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
           <span class="product-tag tag-olive">🫒 Olive</span>
           <span class="product-tag tag-frozen">❄️ Fresh Frozen</span>
         </div>
       </div>
-      <p>Fresh Frozen — Hubba Bubbatz Farm. Notes agrumes vives et fraîches. Finition irréprochable.</p>
+      <p>Fresh Frozen — Hubba Bubbatz Farm. Notes d'agrumes, orange vive et fraîche. Finition irréprochable.</p>
       <div class="price">
         <span class="price-pill olive-pill">5G / 100€</span>
         <span class="price-pill olive-pill">10G / 160€</span>
@@ -1516,7 +1518,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   <div class="produits-box reveal">
     <div class="block-title">Nos produits</div>
     <div class="produits-grid">
-      <span class="produit-tag">🌿 Cali Hollandaise</span>
+      <span class="produit-tag">🌴 Cali Hollandaise</span>
       <span class="produit-tag">❄️ Frozen Sift</span>
       <span class="produit-tag">⚡ Static Premium</span>
       <span class="produit-tag">🏴‍☠️ Anonymuz Farm</span>
