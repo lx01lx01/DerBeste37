@@ -1756,12 +1756,12 @@ html { overflow-x:hidden; }
     <div class="info-block">
       <span class="block-icon">🤝</span>
       <div class="block-title">Meet-up</div>
-      <div class="block-text">Tours 37000</div>
+      <div class="block-text" id="meetup-zones">Tours 37000</div>
     </div>
     <div class="info-block">
       <span class="block-icon">🛵</span>
       <div class="block-title">Livraison</div>
-      <div class="block-text">37 · 49 · 86<br>36 · 41 · 72</div>
+      <div class="block-text" id="livraison-zones">37 · 49 · 86<br>36 · 41 · 72</div>
     </div>
   </div>
 
@@ -1769,18 +1769,20 @@ html { overflow-x:hidden; }
     <span class="block-icon">🛵</span>
     <div class="block-title">Minimum de commande</div>
     <div class="block-text" id="min-livr-text" style="color:var(--green); font-size:15px;">50€ <span style="font-size:12px; color:var(--text-dim); font-weight:400;">en livraison</span></div>
-    <div id="min-detail-text" id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
+    <div id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
   </div>
 
   <div class="horaires-box reveal" id="horaires-box">
     <div class="block-title">🕐 &nbsp;Horaires</div>
-    <div class="horaire-row">
-      <span class="horaire-day">Lundi — Vendredi</span>
-      <span class="horaire-time">11h00 – 23h00</span>
-    </div>
-    <div class="horaire-row">
-      <span class="horaire-day">Samedi — Dimanche</span>
-      <span class="horaire-time">12h00 – 00h00</span>
+    <div id="horaires-rows">
+      <div class="horaire-row">
+        <span class="horaire-day">Lundi — Vendredi</span>
+        <span class="horaire-time">11h00 – 23h00</span>
+      </div>
+      <div class="horaire-row">
+        <span class="horaire-day">Samedi — Dimanche</span>
+        <span class="horaire-time">12h00 – 00h00</span>
+      </div>
     </div>
   </div>
 
@@ -1914,6 +1916,18 @@ window.addEventListener('scroll', () => {
         if(md) md.textContent = `${meetTxt} · Livraison à partir de ${S.minLivr}€`;
       }
 
+      if(S.horaires){
+        const rowsEl = document.getElementById('horaires-rows');
+        if(rowsEl){
+          const days = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+          const dayNames = {Lun:'Lundi',Mar:'Mardi',Mer:'Mercredi',Jeu:'Jeudi',Ven:'Vendredi',Sam:'Samedi',Dim:'Dimanche'};
+          rowsEl.innerHTML = days.map(d => {
+            const time = S.horaires[d] || 'Fermé';
+            return `<div class="horaire-row"><span class="horaire-day">${dayNames[d]}</span><span class="horaire-time">${time}</span></div>`;
+          }).join('');
+        }
+      }
+
       if(S.horaireMsg){
         const hb2 = document.getElementById('horaires-box');
         if(hb2){
@@ -1941,10 +1955,10 @@ window.addEventListener('scroll', () => {
       }
 
       if(S.zones && S.zones.length){
-        const livrBlock = document.querySelector('.info-block .block-text');
-        if(livrBlock && livrBlock.closest('.info-block')?.querySelector('.block-title')?.textContent?.includes('Livraison')){
-          livrBlock.innerHTML = S.zones.slice(0,6).join(' · ');
-        }
+        const livrEl = document.getElementById('livraison-zones');
+        if(livrEl) livrEl.innerHTML = S.zones.slice(0,6).join('<br>');
+        const meetEl = document.getElementById('meetup-zones');
+        if(meetEl && S.zones[0]) meetEl.textContent = S.zones[0];
       }
 
       if(S.whatsapp){
@@ -2596,6 +2610,13 @@ window.addEventListener('DOMContentLoaded', () => {
 <span id="admin-trigger" onclick="window.openAdminPanel()">admin</span>
 
 <script>
+// Safe console shim for Telegram WebView
+(function(){
+  var c = window.console = window.console || {};
+  ['log','warn','info','error','debug'].forEach(function(m){
+    if(typeof c[m] !== 'function') c[m] = function(){};
+  });
+})();
 
 (function(){
   'use strict';
@@ -2666,7 +2687,7 @@ async function adminInit(){
     if(sp) P=JSON.parse(sp.value); else P=JSON.parse(JSON.stringify(DEFS));
     const ss = await Store.get('admin-settings');
     if(ss) S={...S,...JSON.parse(ss.value)};
-  }catch(e){ console.warn('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
+  }catch(e){ console.log('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
   window.S = S; window.P = P;
   buildUI(); render();
 }
@@ -3077,10 +3098,22 @@ function applySettingsToDOM(S){
     const meetTxt=(S.minMeet&&S.minMeet>0)?`Meet-up à partir de ${S.minMeet}€`:'Meet-up sans minimum';
     if(md) md.textContent=`${meetTxt} · Livraison à partir de ${S.minLivr}€`;
   }
+  // Horaire rows (par jour)
+  if(S.horaires){
+    const rowsEl=document.getElementById('horaires-rows');
+    if(rowsEl){
+      const days=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+      const dayNames={Lun:'Lundi',Mar:'Mardi',Mer:'Mercredi',Jeu:'Jeudi',Ven:'Vendredi',Sam:'Samedi',Dim:'Dimanche'};
+      rowsEl.innerHTML=days.map(d=>{
+        const time=S.horaires[d]||'Fermé';
+        return `<div class="horaire-row"><span class="horaire-day">${dayNames[d]}</span><span class="horaire-time">${time}</span></div>`;
+      }).join('');
+    }
+  }
   // Horaire message
   if(S.horaireMsg){
     const hb2=document.getElementById('horaires-box');
-    if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; }
+    if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; else { const m=document.createElement('div'); m.className='horaire-msg'; m.style.cssText='font-size:12px;color:var(--text-dim);margin-top:8px;line-height:1.5;'; m.textContent=S.horaireMsg; hb2.appendChild(m); } }
   }
   // Ticker
   if(S.tickerOn && S.ticker){
@@ -3089,10 +3122,10 @@ function applySettingsToDOM(S){
   }
   // Zones on main page
   if(S.zones && S.zones.length){
-    const livrBlock=document.querySelector('.info-block .block-text');
-    if(livrBlock && livrBlock.closest('.info-block')?.querySelector('.block-title')?.textContent?.includes('Livraison')){
-      livrBlock.innerHTML=S.zones.slice(0,6).join(' · ');
-    }
+    const livrEl=document.getElementById('livraison-zones');
+    if(livrEl) livrEl.innerHTML=S.zones.slice(0,6).join('<br>');
+    const meetEl=document.getElementById('meetup-zones');
+    if(meetEl && S.zones[0]) meetEl.textContent=S.zones[0];
   }
   // Paiements on main page
   if(S.paiements){
