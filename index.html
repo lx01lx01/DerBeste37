@@ -1838,6 +1838,48 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
 
 </div>
 
+
+<script>
+// ══ Firebase Realtime Database Store ══
+(function(){
+  var DB = 'https://derbeste370-default-rtdb.europe-west1.firebasedatabase.app';
+
+  window.Store = {
+    async get(key) {
+      var resp = await fetch(DB + '/config/' + key + '.json', {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      var data = await resp.json();
+      if (data === null) return null;
+      return { value: JSON.stringify(data) };
+    },
+
+    async set(key, valueStr) {
+      var resp = await fetch(DB + '/config/' + key + '.json', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: valueStr
+      });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return true;
+    },
+
+    async delete(key) {
+      await fetch(DB + '/config/' + key + '.json', { method: 'DELETE' });
+    }
+  };
+
+  window._storeReady = true;
+  window.dispatchEvent(new Event('storeReady'));
+
+  if (typeof window._pendingApply === 'function') {
+    window._pendingApply();
+    window._pendingApply = null;
+  }
+})();
+</script>
 <script>
 // ─── Splash screen with orbs ───
 (function(){
@@ -1887,8 +1929,8 @@ window.addEventListener('scroll', () => {
 (async function applyAdminState(){
   try {
     const [sp, ss] = await Promise.allSettled([
-      window.storage.get('admin-products'),
-      window.storage.get('admin-settings')
+      window.Store.get('admin-products'),
+      window.Store.get('admin-settings')
     ]);
 
     // ══ SETTINGS ══
@@ -2690,9 +2732,9 @@ function tryLogin(){
 // ═══════════════════════════════════════
 async function adminInit(){
   try{
-    const sp=await window.storage.get('admin-products');
+    const sp=await window.Store.get('admin-products');
     if(sp)P=JSON.parse(sp.value); else P=JSON.parse(JSON.stringify(DEFS));
-    const ss=await window.storage.get('admin-settings');
+    const ss=await window.Store.get('admin-settings');
     if(ss)S={...S,...JSON.parse(ss.value)};
   }catch(e){P=JSON.parse(JSON.stringify(DEFS));}
   buildUI(); render();
@@ -3039,8 +3081,8 @@ function confirmA(action,id,title,text){
     if(action==='del'){P=P.filter(x=>x.id!==id);render();markU();toast('🗑️ Supprimé');}
     else if(action==='reset'){qAction('reset');}
     else if(action==='wipe'){
-      window.storage.delete('admin-products');
-      window.storage.delete('admin-settings');
+      window.Store.delete('admin-products');
+      window.Store.delete('admin-settings');
       toast('💣 Données effacées');setTimeout(()=>location.reload(),1500);
     }
   };
@@ -3066,8 +3108,8 @@ async function saveAll(){
   S.waTpl=document.getElementById('s-watpl').value;
   S.waNotif=document.getElementById('s-wanotif').value;
   try{
-    await window.storage.set('admin-products',JSON.stringify(P));
-    await window.storage.set('admin-settings',JSON.stringify(S));
+    await window.Store.set('admin-products',JSON.stringify(P));
+    await window.Store.set('admin-settings',JSON.stringify(S));
     unsaved=false;document.getElementById('GS').style.display='none';
     toast('✅ Tout sauvegardé — catalogue mis à jour');
   }catch(e){toast('❌ Erreur de sauvegarde');}
@@ -3140,6 +3182,8 @@ function toast(msg){
 })();
 
 </script>
+
+
 
 </body>
 </html>
