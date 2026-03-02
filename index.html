@@ -956,6 +956,282 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .cat-tab.active-festive{ background:rgba(255,200,80,0.12); border-color:rgba(255,200,80,0.35); color:#ffbf47; }
 
 
+
+#admin-btn {
+  display: block; text-align: center;
+  padding: 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.12);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+
+/* ─── ADMIN PANEL ─── */
+#ADMIN {
+  display: none;
+  position: fixed; inset: 0; z-index: 1000;
+  flex-direction: column;
+  background: #0d1a14;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: 'DM Sans', sans-serif;
+  color: #f0f0f0;
+}
+#ADMIN * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root{
+  --bg:#0d1a14; --sur:rgba(255,255,255,0.04); --sur2:rgba(255,255,255,0.07);
+  --bdr:rgba(255,255,255,0.08); --g:#00e87a; --gdim:rgba(0,232,122,0.08);
+  --txt:#f0f0f0; --dim:rgba(255,255,255,0.42); --red:#ff4545; --gold:#ffd200;
+  --blue:#64d8ff; --pur:#b388ff;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;
+  background-image:radial-gradient(ellipse 150% 60% at 20% -5%,rgba(0,232,122,0.1),transparent 60%),
+    radial-gradient(ellipse 130% 70% at 85% 110%,rgba(0,100,255,0.12),transparent 65%);}
+
+/* ── LOGIN ── */
+#LS{position:fixed;inset:0;z-index:999;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:18px;background:var(--bg);padding:24px;}
+.ll{font-family:'Syne',sans-serif;font-weight:800;font-size:30px;color:#fff;
+  letter-spacing:-1px;display:flex;align-items:baseline;gap:4px;}
+.ll span{font-size:46px;letter-spacing:-2px;background:linear-gradient(135deg,#fff 30%,var(--g));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.lsub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--g);}
+.li{width:100%;max-width:280px;background:rgba(255,255,255,0.06);border:1px solid var(--bdr);
+  border-radius:14px;padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:15px;
+  color:#fff;outline:none;letter-spacing:3px;transition:border-color .2s;text-align:center;}
+.li:focus{border-color:rgba(0,232,122,.4);}
+.lb{width:100%;max-width:280px;background:linear-gradient(135deg,var(--g),#00b85e);border:none;
+  border-radius:14px;padding:14px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;
+  color:#0d1a14;cursor:pointer;box-shadow:0 4px 20px rgba(0,232,122,.25);transition:transform .15s;}
+.lb:active{transform:scale(.97);}
+.lerr{font-size:12px;color:var(--red);opacity:0;transition:opacity .2s;}
+.lerr.on{opacity:1;}
+#LS.gone{display:none;}
+
+/* ── HEADER ── */
+.hdr{position:sticky;top:0;z-index:100;background:rgba(13,26,20,.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--bdr);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;}
+.hl{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;display:flex;align-items:baseline;gap:3px;}
+.hl span{color:var(--g);font-size:21px;}
+.hbadge{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--g);
+  background:var(--gdim);border:1px solid rgba(0,232,122,.2);padding:3px 9px;border-radius:20px;}
+.hquit{font-size:11px;color:var(--dim);background:none;border:1px solid var(--bdr);
+  padding:5px 10px;border-radius:10px;cursor:pointer;}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none;
+  border-bottom:1px solid var(--bdr);}
+.tabs::-webkit-scrollbar{display:none;}
+.tb{flex-shrink:0;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
+  padding:6px 12px;border-radius:20px;cursor:pointer;border:1px solid var(--bdr);
+  background:var(--sur);color:var(--dim);transition:all .2s;white-space:nowrap;}
+.tb.on{background:var(--gdim);border-color:rgba(0,232,122,.35);color:var(--g);}
+
+/* ── BODY ── */
+.body{padding:14px 16px;max-width:640px;margin:0 auto;padding-bottom:110px;}
+.pane{display:none;} .pane.on{display:block;}
+
+/* ── GENERIC ── */
+.slb{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);margin:16px 0 8px;font-weight:600;}
+.card{background:var(--sur);border:1px solid var(--bdr);border-radius:18px;padding:16px;margin-bottom:10px;}
+.card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;}
+.fl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:4px;font-weight:600;}
+.fi{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:10px;
+  padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--txt);outline:none;transition:border-color .2s;}
+.fi:focus{border-color:rgba(0,232,122,.35);}
+textarea.fi{resize:none;min-height:60px;line-height:1.5;}
+.fsel{appearance:none;background:rgba(255,255,255,.04);border:1px solid var(--bdr);border-radius:10px;
+  padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--txt);width:100%;cursor:pointer;}
+.fg{margin-bottom:10px;}
+
+/* ── STATS ── */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+.stat{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:12px;text-align:center;}
+.sn{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;}
+.sl{font-size:10px;color:var(--dim);margin-top:2px;}
+.sg .sn{color:var(--g);} .sr .sn{color:var(--red);} .so .sn{color:var(--gold);}
+
+/* ── PRODUCT CARD ── */
+.pc{background:var(--sur);border:1px solid var(--bdr);border-radius:18px;margin-bottom:10px;overflow:hidden;}
+.pc.oos{border-color:rgba(255,69,69,.3);}
+.pc.promo{border-color:rgba(255,210,0,.25);}
+.pch{display:flex;align-items:center;padding:12px 14px;gap:10px;cursor:pointer;}
+.pci{flex:1;min-width:0;}
+.pcn{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pc.oos .pcn{text-decoration:line-through;color:var(--dim);}
+.pcbg{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap;}
+.bge{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:600;letter-spacing:.5px;}
+.boos{background:rgba(255,69,69,.1);border:1px solid rgba(255,69,69,.25);color:var(--red);}
+.bnew{background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.2);color:var(--g);}
+.bhid{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--dim);}
+.bpro{background:rgba(255,210,0,.1);border:1px solid rgba(255,210,0,.25);color:var(--gold);}
+.pca{display:flex;gap:6px;}
+.ib{width:32px;height:32px;border-radius:9px;border:1px solid var(--bdr);background:var(--sur2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all .15s;}
+.ib:active{transform:scale(.9);}
+.ib.e:hover{background:rgba(0,232,122,.12);border-color:rgba(0,232,122,.3);}
+.ib.d:hover{background:rgba(255,69,69,.12);border-color:rgba(255,69,69,.3);}
+
+/* ── EDIT PANEL ── */
+.pce{display:none;padding:0 14px 14px;border-top:1px solid var(--bdr);flex-direction:column;gap:10px;}
+.pce.on{display:flex;}
+
+/* ── PRICES ── */
+.prl{display:flex;flex-direction:column;gap:6px;}
+.pr{display:flex;gap:6px;align-items:center;}
+.pr .fi{flex:1;font-size:12px;padding:8px 10px;}
+.pdel{width:28px;height:28px;border-radius:8px;background:rgba(255,69,69,.08);
+  border:1px solid rgba(255,69,69,.15);color:var(--red);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.apb{font-size:12px;color:var(--g);background:var(--gdim);border:1px dashed rgba(0,232,122,.3);
+  border-radius:10px;padding:8px;width:100%;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px;}
+
+/* ── TOGGLE ── */
+.trow{display:flex;gap:12px;flex-wrap:wrap;}
+.ti{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.ti input{display:none;}
+.tt{width:40px;height:22px;border-radius:11px;background:rgba(255,255,255,.08);
+  border:1px solid var(--bdr);position:relative;transition:all .25s;}
+.th{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;
+  background:rgba(255,255,255,.4);transition:all .25s;}
+.ti input:checked+.tt{background:var(--gdim);border-color:rgba(0,232,122,.4);}
+.ti input:checked+.tt .th{transform:translateX(18px);background:var(--g);}
+.ti.tr input:checked+.tt{background:rgba(255,69,69,.12);border-color:rgba(255,69,69,.35);}
+.ti.tr input:checked+.tt .th{background:var(--red);}
+.ti.to input:checked+.tt{background:rgba(255,210,0,.12);border-color:rgba(255,210,0,.35);}
+.ti.to input:checked+.tt .th{background:var(--gold);}
+.ti.tb input:checked+.tt{background:rgba(100,216,255,.12);border-color:rgba(100,216,255,.35);}
+.ti.tb input:checked+.tt .th{background:var(--blue);}
+.tl{font-size:12px;color:var(--dim);}
+
+/* ── QUICK ACTIONS ── */
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.qa{padding:14px 10px;border-radius:14px;border:1px solid var(--bdr);background:var(--sur2);
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;
+  text-align:center;line-height:1.4;transition:all .2s;color:var(--txt);}
+.qa:active{transform:scale(.96);}
+.qa.qr{border-color:rgba(255,69,69,.25);background:rgba(255,69,69,.07);color:var(--red);}
+.qa.qg{border-color:rgba(0,232,122,.25);background:var(--gdim);color:var(--g);}
+.qa.qo{border-color:rgba(255,210,0,.25);background:rgba(255,210,0,.07);color:var(--gold);}
+.qa.qb{border-color:rgba(100,216,255,.25);background:rgba(100,216,255,.07);color:var(--blue);}
+
+/* ── PROMO ── */
+.promo-row{display:flex;gap:8px;align-items:center;background:var(--sur2);border:1px solid var(--bdr);
+  border-radius:12px;padding:10px 12px;margin-bottom:8px;}
+.promo-info{flex:1;}
+.promo-name{font-size:13px;font-weight:600;}
+.promo-sub{font-size:11px;color:var(--dim);margin-top:2px;}
+.promo-del{width:28px;height:28px;border-radius:8px;background:rgba(255,69,69,.08);
+  border:1px solid rgba(255,69,69,.15);color:var(--red);font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+
+/* ── PAYMENT TAGS ── */
+.pay-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.pay-tag{padding:8px 14px;border-radius:20px;border:1px solid var(--bdr);background:var(--sur);
+  font-size:12px;cursor:pointer;transition:all .2s;color:var(--dim);}
+.pay-tag.on{background:var(--gdim);border-color:rgba(0,232,122,.35);color:var(--g);}
+
+/* ── ADD PRODUCT ── */
+.addsec{background:var(--sur);border:2px dashed rgba(0,232,122,.2);border-radius:18px;padding:16px;}
+.add-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:14px;color:var(--g);}
+.abtn{background:linear-gradient(135deg,var(--g),#00b85e);border:none;border-radius:14px;padding:13px;
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;color:#0d1a14;cursor:pointer;
+  width:100%;margin-top:4px;transition:transform .15s;}
+.abtn:active{transform:scale(.97);}
+
+/* ── GREEN BTN ── */
+.gbtn{background:linear-gradient(135deg,var(--g),#00b85e);border:none;border-radius:12px;padding:11px;
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;color:#0d1a14;cursor:pointer;width:100%;}
+.gbtn:active{transform:scale(.97);}
+
+/* ── DANGER ── */
+.dbtn{background:rgba(255,69,69,.1);border:1px solid rgba(255,69,69,.25);color:var(--red);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:10px 16px;
+  border-radius:12px;cursor:pointer;width:100%;margin-top:8px;}
+
+/* ── MAINTENANCE BADGE ── */
+.maint-banner{background:rgba(255,69,69,.08);border:1px solid rgba(255,69,69,.2);border-radius:14px;
+  padding:12px 14px;margin-bottom:12px;display:none;font-size:12px;color:var(--red);text-align:center;}
+.maint-banner.on{display:block;}
+
+/* ── GLOBAL SAVE ── */
+.gsave{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(13,26,20,.95);
+  backdrop-filter:blur(16px);border-top:1px solid var(--bdr);padding:12px 16px;}
+.gsbtn{width:100%;background:linear-gradient(135deg,var(--g),#00b85e);border:none;border-radius:14px;
+  padding:14px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;color:#0d1a14;
+  cursor:pointer;box-shadow:0 4px 20px rgba(0,232,122,.3);}
+.dot{display:inline-block;width:7px;height:7px;background:var(--gold);border-radius:50%;
+  margin-left:6px;animation:blink 1.2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:rgba(0,232,122,.15);border:1px solid rgba(0,232,122,.3);backdrop-filter:blur(12px);
+  border-radius:12px;padding:10px 20px;font-size:13px;font-weight:600;color:var(--g);
+  opacity:0;transition:all .3s;z-index:999;white-space:nowrap;pointer-events:none;}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── MODAL ── */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;
+  align-items:center;justify-content:center;padding:20px;}
+.mo.on{display:flex;}
+.mb{background:#0d2018;border:1px solid var(--bdr);border-radius:20px;padding:24px;
+  width:100%;max-width:320px;text-align:center;}
+.mt{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:8px;}
+.mx{font-size:13px;color:var(--dim);margin-bottom:20px;line-height:1.5;}
+.mbs{display:flex;gap:10px;}
+.mcan{flex:1;padding:12px;border-radius:12px;background:var(--sur);border:1px solid var(--bdr);
+  color:var(--txt);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;}
+.mcon{flex:1;padding:12px;border-radius:12px;background:rgba(255,69,69,.15);
+  border:1px solid rgba(255,69,69,.3);color:var(--red);font-family:'DM Sans',sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;}
+
+/* ── HORAIRES ── */
+.horaires-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.h-row{display:flex;flex-direction:column;gap:4px;}
+.h-day{font-size:10px;color:var(--dim);letter-spacing:.5px;}
+.h-inp{font-size:12px;padding:7px 10px;}
+
+/* ── ZONES ── */
+.zone-row{display:flex;gap:8px;align-items:center;background:var(--sur2);border:1px solid var(--bdr);
+  border-radius:12px;padding:9px 12px;margin-bottom:7px;}
+.zone-name{flex:1;font-size:13px;}
+.zone-del{width:26px;height:26px;border-radius:8px;background:rgba(255,69,69,.08);
+  border:1px solid rgba(255,69,69,.15);color:var(--red);font-size:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+.addzone{font-size:12px;color:var(--g);background:var(--gdim);border:1px dashed rgba(0,232,122,.3);
+  border-radius:10px;padding:8px;width:100%;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;}
+
+/* ── TICKER PREVIEW ── */
+.ticker-preview{background:rgba(0,232,122,.05);border:1px solid rgba(0,232,122,.15);
+  border-radius:10px;padding:8px 12px;font-size:11px;color:var(--g);margin-top:6px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* ── NOTIF ── */
+.notif-row{display:flex;align-items:center;justify-content:space-between;
+  background:var(--sur2);border:1px solid var(--bdr);border-radius:12px;padding:10px 14px;margin-bottom:8px;}
+.notif-name{font-size:13px;font-weight:600;}
+.notif-time{font-size:10px;color:var(--dim);margin-top:2px;}
+.notif-wa{padding:7px 12px;border-radius:10px;background:rgba(37,211,102,.15);
+  border:1px solid rgba(37,211,102,.25);color:#25d366;font-size:11px;font-weight:600;cursor:pointer;
+  text-decoration:none;display:flex;align-items:center;gap:5px;}
+
+
+/* ─── Admin trigger ─── */
+#admin-trigger {
+  display: block; text-align: center; padding: 20px 16px 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.12); cursor: pointer;
+  -webkit-tap-highlight-color: transparent; user-select: none;
+}
+
 </style>
 </head>
 <body>
@@ -994,14 +1270,14 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   <div class="hero-grain"></div>
   <div class="hero-particles" id="heroParticles"></div>
   <div class="hero-overlay">
-    <div class="hero-badge">⭐ Since 2020</div>
+    <div class="hero-badge" id="hero-badge">⭐ Since 2020</div>
     <h1><span class="hero-derbeste">DerBeste</span><span class="hero-num">37</span></h1>
     <p>Tours 37000</p>
   </div>
 </div>
 
 <!-- TICKER -->
-<div class="ticker-wrap">
+<div class="ticker-wrap" id="ticker-wrap">
   <div class="ticker">
     <span class="ticker-item">🛵 Livraison 37 · 49 · 86 · 36 · 41 · 72</span>
     <span class="ticker-item">&nbsp;·&nbsp;</span>
@@ -1070,7 +1346,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 
     <div class="products-grid">
     <!-- Produit 1 — Gelato -->
-    <div class="product cali-card reveal">
+    <div class="product cali-card reveal" data-pid="gelato">
       <div class="video-wrapper">
         <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Gelato -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=gelato_tkpg56" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
@@ -1091,7 +1367,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 2 — Runtz -->
-    <div class="product cali-card out-of-stock reveal">
+    <div class="product cali-card out-of-stock reveal" data-pid="runtz">
       <div class="video-wrapper">
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=runtz_hnzuyh" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
         <div class="oos-badge">Rupture</div>
@@ -1112,7 +1388,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 3 — Tropicanozz -->
-    <div class="product cali-card reveal">
+    <div class="product cali-card reveal" data-pid="tropi">
       <div class="video-wrapper">
         <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Tropicanozz -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=tropi_gchm6a" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
@@ -1133,7 +1409,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 4 — GMO -->
-    <div class="product cali-card reveal">
+    <div class="product cali-card reveal" data-pid="gmo">
       <div class="video-wrapper">
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=gmo_wedtc2" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
@@ -1169,7 +1445,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 
     <div class="products-grid">
     <!-- Produit 5 — Pannacotta -->
-    <div class="product frozen-card reveal">
+    <div class="product frozen-card reveal" data-pid="pannacotta">
       <div class="video-wrapper">
         <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Pannacotta -->
         <div class="video-placeholder">
@@ -1197,7 +1473,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 6 — Lemon Lobster -->
-    <div class="product frozen-card reveal">
+    <div class="product frozen-card reveal" data-pid="lobster">
       <div class="video-wrapper">
         <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Lemon Lobster -->
         <div class="video-placeholder">
@@ -1240,7 +1516,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 7 — Plata O' Plomo -->
-    <div class="product static-card reveal">
+    <div class="product static-card reveal" data-pid="plata">
       <div class="video-wrapper">
         <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Plata O'Plomo -->
         <div class="video-placeholder">
@@ -1290,7 +1566,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Carte unique Anonymuz Farm — 3 strains -->
-    <div class="product anon-card reveal">
+    <div class="product anon-card reveal" data-pid="anon">
       <div class="video-wrapper">
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=ano_u1eyxc" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </div>
@@ -1362,7 +1638,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 11 — Sultan Static (Hubba Bubbatz) -->
-    <div class="product olive-card reveal">
+    <div class="product olive-card reveal" data-pid="sultan">
       <div class="video-wrapper">
         <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Sultan Static -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=sultan_mshkhn" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
@@ -1385,7 +1661,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 12 — Tangie Fresh Frozen (Hubba Bubbatz) -->
-    <div class="product olive-card reveal">
+    <div class="product olive-card reveal" data-pid="tangie">
       <div class="video-wrapper">
         <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Tangie -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=tangie_fresh_fro_bwh1jv" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
@@ -1408,7 +1684,7 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
     </div>
 
     <!-- Produit 13 — Lemon Ice Static (Hubba Bubbatz) -->
-    <div class="product olive-card reveal">
+    <div class="product olive-card reveal" data-pid="lemon_ice">
       <div class="video-wrapper">
         <!-- REMPLACER public_id par l'ID Cloudinary de la vidéo Lemon Ice -->
         <iframe src="https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=lemon_ice_k5aatd" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
@@ -1505,11 +1781,11 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   <div class="info-block reveal" style="margin-bottom:10px; border-color:rgba(0,232,122,0.2);">
     <span class="block-icon">🛵</span>
     <div class="block-title">Minimum de commande</div>
-    <div class="block-text" style="color:var(--green); font-size:15px;">50€ <span style="font-size:12px; color:var(--text-dim); font-weight:400;">en livraison</span></div>
-    <div style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
+    <div class="block-text" id="min-livr-text" style="color:var(--green); font-size:15px;">50€ <span style="font-size:12px; color:var(--text-dim); font-weight:400;">en livraison</span></div>
+    <div id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
   </div>
 
-  <div class="horaires-box reveal">
+  <div class="horaires-box reveal" id="horaires-box">
     <div class="block-title">🕐 &nbsp;Horaires</div>
     <div class="horaire-row">
       <span class="horaire-day">Lundi — Vendredi</span>
@@ -1604,6 +1880,205 @@ window.addEventListener('scroll', () => {
   const btn = document.getElementById('backTop');
   if(btn) btn.classList.toggle('visible', window.scrollY > 300);
 }, { passive:true });
+
+// ─── Sync from Admin Panel ───
+(async function applyAdminState(){
+  try {
+    const [sp, ss] = await Promise.allSettled([
+      window.storage.get('admin-products'),
+      window.storage.get('admin-settings')
+    ]);
+
+    // ══ SETTINGS ══
+    if(ss.status==='fulfilled' && ss.value){
+      const S = JSON.parse(ss.value.value);
+
+      // Maintenance mode — full overlay
+      if(S.maintenance){
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#0d1a14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;';
+        overlay.innerHTML = `
+          <div style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:#fff;letter-spacing:-2px;">DerBeste<span style="color:#00e87a;">37</span></div>
+          <div style="font-size:28px;">🔐</div>
+          <div style="font-size:15px;color:rgba(255,255,255,.6);text-align:center;max-width:280px;line-height:1.6;">${S.maintMsg||'Boutique temporairement fermée. Revenez bientôt 🙏'}</div>
+        `;
+        document.body.appendChild(overlay);
+        return;
+      }
+
+      // Ticker personnalisé
+      if(S.tickerOn && S.ticker){
+        const tw = document.getElementById('ticker-wrap');
+        if(tw){
+          const tDiv = tw.querySelector('.ticker');
+          if(tDiv){
+            const sep = '<span class="ticker-item">&nbsp;·&nbsp;</span>';
+            tDiv.innerHTML = `<span class="ticker-item">${S.ticker}</span>${sep}`.repeat(4);
+          }
+        }
+      }
+
+      // Hero badge
+      if(S.heroBadge){
+        const hb = document.getElementById('hero-badge');
+        if(hb) hb.textContent = S.heroBadge;
+      }
+
+      // Minimum commande
+      if(S.minLivr !== undefined){
+        const ml = document.getElementById('min-livr-text');
+        if(ml) ml.innerHTML = `${S.minLivr}€ <span style="font-size:12px;color:var(--text-dim);font-weight:400;">en livraison</span>`;
+        const md = document.getElementById('min-detail-text');
+        if(md) md.textContent = `Meet-up sans minimum · Livraison à partir de ${S.minLivr}€`;
+      }
+
+      // Horaires message
+      if(S.horaireMsg){
+        const hb2 = document.getElementById('horaires-box');
+        if(hb2){
+          const existing = hb2.querySelector('.horaire-msg');
+          if(!existing){
+            const msg = document.createElement('div');
+            msg.className = 'horaire-msg';
+            msg.style.cssText = 'font-size:12px;color:var(--text-dim);margin-top:8px;line-height:1.5;';
+            msg.textContent = S.horaireMsg;
+            hb2.appendChild(msg);
+          } else { existing.textContent = S.horaireMsg; }
+        }
+      }
+
+      // Moyens de paiement — ajouter dans info si présents
+      if(S.paiements && S.paiements.length){
+        const hb2 = document.getElementById('horaires-box');
+        if(hb2 && !document.getElementById('pay-methods')){
+          const div = document.createElement('div');
+          div.id = 'pay-methods';
+          div.style.cssText = 'margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);';
+          div.innerHTML = `<div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;font-weight:600;">Paiement accepté</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">${S.paiements.map(p=>`<span style="font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.15);color:#00e87a;">${p}</span>`).join('')}</div>`;
+          hb2.appendChild(div);
+        }
+      }
+
+      // Zones de livraison
+      if(S.zones && S.zones.length){
+        const livrBlock = document.querySelector('.info-block .block-text');
+        if(livrBlock && livrBlock.closest('.info-block')?.querySelector('.block-title')?.textContent?.includes('Livraison')){
+          livrBlock.innerHTML = S.zones.slice(0,6).join(' · ');
+        }
+      }
+
+      // WA number — update all WhatsApp links
+      if(S.whatsapp){
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
+          a.href = a.href.replace(/wa\.me\/\d+/, `wa.me/${S.whatsapp}`);
+        });
+      }
+    }
+
+    // ══ PRODUCTS ══
+    if(sp.status!=='fulfilled' || !sp.value) return;
+    const products = JSON.parse(sp.value.value);
+    const wa = (() => { try{ return JSON.parse((ss.status==='fulfilled'&&ss.value)?ss.value.value:'{}').whatsapp||'33758464533'; }catch(e){return'33758464533';} })();
+
+    document.querySelectorAll('[data-pid]').forEach(card => {
+      const pid = card.dataset.pid;
+      const p = products.find(x => x.id === pid);
+      if(!p) return;
+
+      // ── Hidden ──
+      if(p.hidden){ card.style.display='none'; return; }
+
+      // ── Out of stock ──
+      const btnRow = card.querySelector('.btn-row');
+      const wasOos = card.classList.contains('out-of-stock');
+      if(p.oos && !wasOos){
+        card.classList.add('out-of-stock');
+        const vw = card.querySelector('.video-wrapper');
+        if(vw && !vw.querySelector('.oos-badge')){
+          const badge = document.createElement('div');
+          badge.className = 'oos-badge'; badge.textContent = '✕ Rupture';
+          vw.appendChild(badge);
+          const overlay = document.createElement('div');
+          overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.5);border-radius:16px;z-index:2;';
+          vw.insertBefore(overlay, vw.firstChild);
+        }
+        if(btnRow) btnRow.innerHTML = '<div class="btn-oos">❌ Indisponible</div>';
+      } else if(!p.oos && wasOos){
+        card.classList.remove('out-of-stock');
+        const vw = card.querySelector('.video-wrapper');
+        if(vw){
+          vw.querySelector('.oos-badge')?.remove();
+          vw.querySelector('div[style*="rgba(0,0,0,0.5)"]')?.remove();
+        }
+        if(btnRow){
+          const name = card.querySelector('h3')?.textContent || '';
+          const tpl = (()=>{ try{ return JSON.parse((ss.status==='fulfilled'&&ss.value)?ss.value.value:'{}').waTpl||null; }catch(e){return null;} })();
+          const msg = tpl
+            ? encodeURIComponent(tpl.replace('{produit}',name).replace('{grammage}','').replace('{prix}',''))
+            : encodeURIComponent(`Bonjour, je souhaite commander :\n📦 Produit : ${name}\n⚖️ Grammage :\n💰 Prix :\n🕐 Heure souhaitée :`);
+          btnRow.innerHTML = `<a class="buy-btn whatsapp" href="https://wa.me/${wa}?text=${msg}">💬 WhatsApp</a>`;
+        }
+      }
+
+      // ── Nom ──
+      if(p.name){ const h3 = card.querySelector('h3'); if(h3) h3.textContent = p.name; }
+
+      // ── Description ──
+      if(p.desc){
+        const desc = card.querySelector('p:not(.video-placeholder p)');
+        if(desc && !desc.closest('.video-placeholder')) desc.textContent = p.desc;
+      }
+
+      // ── Nouveauté badge ──
+      const header = card.querySelector('.product-header');
+      const existingNew = card.querySelector('.tag-new');
+      if(p.isNew && !existingNew && header){
+        const wrap = header.querySelector('div[style]') || header;
+        const span = document.createElement('span');
+        span.className = 'product-tag tag-new'; span.textContent = '✨ Nouveauté';
+        wrap.appendChild(span);
+      } else if(!p.isNew && existingNew){ existingNew.remove(); }
+
+      // ── Promo badge ──
+      const existingPromo = card.querySelector('.tag-promo');
+      if(p.promo && !existingPromo && header){
+        const wrap = header.querySelector('div[style]') || header;
+        const span = document.createElement('span');
+        span.className = 'product-tag tag-promo';
+        span.style.cssText = 'background:rgba(255,210,0,.1);border:1px solid rgba(255,210,0,.3);color:#ffd200;';
+        span.textContent = '🏷️ ' + p.promo;
+        wrap.appendChild(span);
+      } else if(!p.promo && existingPromo){ existingPromo.remove(); }
+
+      // ── Prices ──
+      if(p.prices && p.prices.length){
+        const priceEl = card.querySelector('.price');
+        if(priceEl){
+          const cls = priceEl.querySelector('.price-pill')?.className || 'price-pill';
+          priceEl.innerHTML = p.prices.map(pr=>`<span class="${cls}">${pr}</span>`).join('');
+        }
+      }
+
+      // ── Video ──
+      if(p.video){
+        const vw = card.querySelector('.video-wrapper');
+        if(vw && !vw.querySelector('iframe')){
+          const placeholder = vw.querySelector('.video-placeholder');
+          if(placeholder) placeholder.remove();
+          const iframe = document.createElement('iframe');
+          iframe.src = p.video;
+          iframe.setAttribute('allow','autoplay;fullscreen;encrypted-media;picture-in-picture');
+          iframe.setAttribute('allowfullscreen','');
+          iframe.setAttribute('frameborder','0');
+          iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
+          vw.appendChild(iframe);
+        }
+      }
+    });
+
+  } catch(e){ console.log('Admin sync error:', e); }
+})();
 
 // ─── Telegram WebApp ───
 try {
@@ -1877,6 +2352,759 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   draw();
 })();
+</script>
+
+<!-- ─── ADMIN PANEL ─── -->
+<div id="ADMIN">
+
+
+<!-- LOGIN -->
+<div id="LS">
+  <div class="ll">DerBeste<span>37</span></div>
+  <div class="lsub">🔒 Panel Admin</div>
+  <input class="li" type="password" id="li" placeholder="••••••••" maxlength="30">
+  <button class="lb" onclick="tryLogin()">Accéder</button>
+  <div class="lerr" id="lerr">Mot de passe incorrect</div>
+  <button onclick="window.closeAdminPanel()" style="margin-top:8px;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:rgba(255,255,255,0.3);cursor:pointer;display:flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.6)'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">← Retour</button>
+</div>
+
+<!-- ADMIN -->
+<div id="AU" style="display:none;">
+  <div class="hdr">
+    <div class="hl">DerBeste<span>37</span></div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="hbadge" id="maintBadge" style="display:none;background:rgba(255,69,69,.1);border-color:rgba(255,69,69,.3);color:var(--red);">🔴 Fermé</div>
+      <div class="hbadge">⚙️ Admin</div>
+      <button class="hquit" onclick="window.closeAdminPanel()">Fermer</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tb on" onclick="ST(this,'products')">📦 Produits</button>
+    <button class="tb" onclick="ST(this,'quick')">⚡ Rapide</button>
+    <button class="tb" onclick="ST(this,'add')">➕ Ajouter</button>
+    <button class="tb" onclick="ST(this,'promo')">🏷️ Promos</button>
+    <button class="tb" onclick="ST(this,'boutique')">🏪 Boutique</button>
+    <button class="tb" onclick="ST(this,'livraison')">🛵 Livraison</button>
+    <button class="tb" onclick="ST(this,'messages')">💬 Messages</button>
+    <button class="tb" onclick="ST(this,'settings')">⚙️ Config</button>
+  </div>
+
+  <div class="body">
+
+    <!-- ══ PRODUITS ══ -->
+    <div class="pane on" id="p-products">
+      <div class="slb" style="margin-top:6px;">Vue d'ensemble</div>
+      <div class="stats">
+        <div class="stat sg"><div class="sn" id="sT">0</div><div class="sl">Produits</div></div>
+        <div class="stat sr"><div class="sn" id="sO">0</div><div class="sl">Ruptures</div></div>
+        <div class="stat so"><div class="sn" id="sN">0</div><div class="sl">Nouveautés</div></div>
+      </div>
+      <div class="slb">Catalogue</div>
+      <div id="PL"></div>
+    </div>
+
+    <!-- ══ ACTIONS RAPIDES ══ -->
+    <div class="pane" id="p-quick">
+      <div class="slb" style="margin-top:6px;">Actions rapides</div>
+      <div class="qa-grid">
+        <div class="qa qr" onclick="qAction('allOos')">❌<br>Tout en rupture</div>
+        <div class="qa qg" onclick="qAction('allStock')">✅<br>Tout en stock</div>
+        <div class="qa qo" onclick="qAction('allNew')">✨<br>Tout nouveau</div>
+        <div class="qa" onclick="qAction('clearNew')">🚫<br>Retirer nouveautés</div>
+        <div class="qa qb" onclick="qAction('showAll')">👁️<br>Tout afficher</div>
+        <div class="qa" onclick="qAction('hideAll')">🙈<br>Tout masquer</div>
+        <div class="qa qo" onclick="qAction('clearPromo')">🔖<br>Retirer promos</div>
+        <div class="qa qr" onclick="confirmA('reset','','Réinitialiser le catalogue ?','Tous les produits seront remis par défaut.')">🔄<br>Réinitialiser</div>
+      </div>
+      <div class="slb">Par catégorie</div>
+      <div id="catActions"></div>
+    </div>
+
+    <!-- ══ AJOUTER ══ -->
+    <div class="pane" id="p-add">
+      <div class="slb" style="margin-top:6px;">Nouveau produit</div>
+      <div class="addsec">
+        <div class="add-title">➕ Ajouter un produit</div>
+        <div class="fg"><div class="fl">Nom du produit</div>
+          <input class="fi" id="nn" placeholder="ex: Gelato 🌈" type="text"></div>
+        <div class="fg"><div class="fl">Catégorie</div>
+          <select class="fsel" id="nc" id="nc"></select></div>
+        <div class="fg"><div class="fl">Description</div>
+          <textarea class="fi" id="nd" rows="2" placeholder="Arômes, notes..."></textarea></div>
+        <div class="fg"><div class="fl">URL Vidéo Cloudinary (optionnel)</div>
+          <input class="fi" id="nv" placeholder="https://player.cloudinary.com/..." type="text"></div>
+        <div class="fg"><div class="fl">Prix</div>
+          <div id="np-list" class="prl">
+            <div class="pr"><input class="fi" style="font-size:12px;padding:8px 10px;" placeholder="2.5G / 40€" type="text">
+              <button class="pdel" onclick="this.closest('.pr').remove()">✕</button></div>
+          </div>
+          <button class="apb" onclick="addPR('np-list')">+ Ajouter un tarif</button></div>
+        <div class="fg"><div class="fl">Statut</div>
+          <div class="trow">
+            <label class="ti"><input type="checkbox" id="ni"><div class="tt"><div class="th"></div></div><span class="tl">✨ Nouveauté</span></label>
+            <label class="ti tr"><input type="checkbox" id="no"><div class="tt"><div class="th"></div></div><span class="tl">❌ Rupture</span></label>
+            <label class="ti"><input type="checkbox" id="nh"><div class="tt"><div class="th"></div></div><span class="tl">🙈 Masqué</span></label>
+          </div></div>
+        <button class="abtn" onclick="addProduct()">✅ Ajouter au catalogue</button>
+      </div>
+    </div>
+
+    <!-- ══ PROMOS ══ -->
+    <div class="pane" id="p-promo">
+      <div class="slb" style="margin-top:6px;">Promotions actives</div>
+      <div id="promoList"><div style="font-size:13px;color:var(--dim);text-align:center;padding:20px;">Aucune promo active</div></div>
+      <div class="slb">Ajouter une promo</div>
+      <div class="card">
+        <div class="fg"><div class="fl">Produit</div><select class="fsel" id="promo-pid"></select></div>
+        <div class="fg"><div class="fl">Type</div>
+          <select class="fsel" id="promo-type">
+            <option value="pct">% Réduction</option>
+            <option value="fixed">Prix fixe</option>
+            <option value="badge">Badge promo</option>
+            <option value="lot">Offre lot (ex: 3 pour 2)</option>
+          </select></div>
+        <div class="fg"><div class="fl">Valeur / Texte</div>
+          <input class="fi" id="promo-val" placeholder="ex: -20% ou 2=1" type="text"></div>
+        <button class="abtn" style="margin-top:0;" onclick="addPromo()">✅ Appliquer la promo</button>
+      </div>
+    </div>
+
+    <!-- ══ BOUTIQUE ══ -->
+    <div class="pane" id="p-boutique">
+      <div class="slb" style="margin-top:6px;">Mode boutique</div>
+      <div class="card">
+        <div class="card-title">🏪 Statut de la boutique</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div><div style="font-size:13px;font-weight:600;">Mode maintenance</div>
+            <div style="font-size:11px;color:var(--dim);margin-top:3px;">Ferme la boutique aux clients</div></div>
+          <label class="ti tr"><input type="checkbox" id="s-maint" onchange="toggleMaint(this.checked)">
+            <div class="tt"><div class="th"></div></div></label>
+        </div>
+        <div class="fg"><div class="fl">Message de fermeture</div>
+          <input class="fi" id="s-maintmsg" value="Boutique temporairement fermée. Revenez bientôt 🙏" type="text"></div>
+      </div>
+
+      <div class="slb">Ticker / Annonce</div>
+      <div class="card">
+        <div class="card-title">📢 Bandeau défilant</div>
+        <div class="fg"><div class="fl">Texte du ticker</div>
+          <input class="fi" id="s-ticker" placeholder="ex: 🔥 Nouvelle arrivée cette semaine..." type="text" oninput="document.getElementById('ticker-preview').textContent=this.value||'Aperçu du ticker'"></div>
+        <div class="ticker-preview" id="ticker-preview">Aperçu du ticker</div>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
+          <label class="ti"><input type="checkbox" id="s-ticker-on"><div class="tt"><div class="th"></div></div></label>
+          <span style="font-size:12px;color:var(--dim);">Activer le ticker personnalisé</span>
+        </div>
+      </div>
+
+      <div class="slb">Section héro</div>
+      <div class="card">
+        <div class="card-title">🖼️ Hero & Titre</div>
+        <div class="fg"><div class="fl">Sous-titre hero</div>
+          <input class="fi" id="s-herosub" placeholder="ex: Tours · Since 2020" type="text"></div>
+        <div class="fg"><div class="fl">Badge hero</div>
+          <input class="fi" id="s-herobadge" placeholder="ex: ✅ Disponible maintenant" type="text"></div>
+      </div>
+    </div>
+
+    <!-- ══ LIVRAISON ══ -->
+    <div class="pane" id="p-livraison">
+      <div class="slb" style="margin-top:6px;">Horaires de livraison</div>
+      <div class="card">
+        <div class="card-title">🕐 Plages horaires</div>
+        <div class="horaires-grid" id="horaires-grid"></div>
+        <div style="margin-top:12px;">
+          <div class="fl">Message horaire affiché</div>
+          <input class="fi" id="s-horaireMsg" placeholder="ex: Livraison 12h–22h tous les jours" type="text"></div>
+      </div>
+
+      <div class="slb">Commande minimum</div>
+      <div class="card">
+        <div class="fg"><div class="fl">Minimum livraison (€)</div>
+          <input class="fi" id="s-minlivr" placeholder="50" type="number"></div>
+        <div class="fg"><div class="fl">Minimum meet-up (€)</div>
+          <input class="fi" id="s-minmeet" placeholder="0" type="number"></div>
+      </div>
+
+      <div class="slb">Zones de livraison</div>
+      <div class="card">
+        <div id="zones-list"></div>
+        <input class="fi" id="zone-inp" placeholder="ex: Tours centre, Joué-lès-Tours..." type="text" style="margin-top:4px;">
+        <button class="apb" onclick="addZone()">+ Ajouter une zone</button>
+      </div>
+
+      <div class="slb">Moyens de paiement</div>
+      <div class="card">
+        <div class="fl" style="margin-bottom:10px;">Sélectionne les moyens acceptés</div>
+        <div class="pay-grid" id="pay-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ MESSAGES ══ -->
+    <div class="pane" id="p-messages">
+      <div class="slb" style="margin-top:6px;">Templates WhatsApp</div>
+      <div class="card">
+        <div class="card-title">📋 Message de commande</div>
+        <div class="fg"><div class="fl">Template (utilise {produit} {grammage} {prix})</div>
+          <textarea class="fi" id="s-watpl" rows="5"></textarea></div>
+        <button class="gbtn" onclick="saveWaTpl()">💾 Enregistrer le template</button>
+      </div>
+
+      <div class="slb">Message rupture de stock</div>
+      <div class="card">
+        <div class="card-title">❌ Message "Me prévenir"</div>
+        <div class="fg"><div class="fl">Message automatique</div>
+          <textarea class="fi" id="s-wanotif" rows="4"></textarea></div>
+        <button class="gbtn" onclick="saveWaTpl()">💾 Enregistrer</button>
+      </div>
+
+      <div class="slb">Numéros de contact</div>
+      <div class="card">
+        <div class="fg"><div class="fl">Numéro WhatsApp</div>
+          <input class="fi" id="s-wa" placeholder="33758464533" type="text"></div>
+        <div class="fg"><div class="fl">Telegram SAV</div>
+          <input class="fi" id="s-tg" placeholder="@DerBeste37" type="text"></div>
+      </div>
+    </div>
+
+    <!-- ══ CONFIG ══ -->
+    <div class="pane" id="p-settings">
+      <div class="slb" style="margin-top:6px;">Sécurité</div>
+      <div class="card">
+        <div class="card-title">🔒 Mot de passe admin</div>
+        <div class="fg"><div class="fl">Nouveau mot de passe</div>
+          <input class="fi" id="s-np" placeholder="Nouveau" type="password"></div>
+        <div class="fg"><div class="fl">Confirmer</div>
+          <input class="fi" id="s-cp" placeholder="Confirmer" type="password"></div>
+        <button class="gbtn" onclick="changePass()">💾 Changer</button>
+      </div>
+
+      <div class="slb">Export / Import</div>
+      <div class="card">
+        <div class="card-title">📦 Sauvegarde des données</div>
+        <div style="display:flex;gap:8px;">
+          <button class="gbtn" style="flex:1;" onclick="exportData()">⬇️ Exporter JSON</button>
+          <button class="gbtn" style="flex:1;background:var(--sur2);color:var(--txt);" onclick="document.getElementById('import-inp').click()">⬆️ Importer</button>
+          <input type="file" id="import-inp" accept=".json" style="display:none;" onchange="importData(this)">
+        </div>
+      </div>
+
+      <div class="slb">Danger</div>
+      <div class="card">
+        <button class="dbtn" onclick="confirmA('reset','','Réinitialiser ?','Catalogue remis par défaut. Irréversible.')">🔄 Remettre catalogue par défaut</button>
+        <button class="dbtn" onclick="confirmA('wipe','','Tout effacer ?','TOUTES les données admin seront supprimées. Irréversible.')">💣 Effacer toutes les données</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="gsave" id="GS" style="display:none;">
+    <button class="gsbtn" onclick="saveAll()">💾 Sauvegarder les modifications <span class="dot"></span></button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="mo" id="modal">
+  <div class="mb">
+    <div class="mt" id="m-title">Confirmer</div>
+    <div class="mx" id="m-text">Êtes-vous sûr ?</div>
+    <div class="mbs">
+      <button class="mcan" onclick="document.getElementById('modal').classList.remove('on')">Annuler</button>
+      <button class="mcon" id="m-ok">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+<!-- ─── Admin trigger ─── -->
+
+<!-- ─── Admin trigger ─── -->
+<span id="admin-trigger" onclick="window.openAdminPanel()">admin</span>
+
+<script>
+
+(function(){
+  'use strict';
+
+
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const CATS={cali:'🌴 Cali Hollandaise',frozen:'❄️ Frozen Sift',static:'⚡ Static Premium',anon:'🏴‍☠️ Anonymuz Farm',olive:'🫒 Olive',festif:'💎 Pure 96%'};
+const PAYS=['💵 Cash','📱 Lydia','💸 Virement','🪙 Crypto'];
+const DAYS=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+
+const DEFS=[
+  {id:'gelato',name:'Gelato 🌈',cat:'cali',desc:"Saveurs douces et fruitées, notes de vanille.",prices:['2.5G / 40€','5G / 60€','10G / 100€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
+  {id:'runtz',name:'Runtz 🍍',cat:'cali',desc:"Saveurs d'agrumes, notes de bonbons.",prices:['2.5G / 40€','5G / 60€','10G / 100€'],oos:true,isNew:false,hidden:false,promo:null,video:''},
+  {id:'tropi',name:'Tropicanozz 🍹',cat:'cali',desc:"Notes exotiques d'ananas et d'agrumes.",prices:['2.5G / 40€','5G / 60€','10G / 100€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
+  {id:'gmo',name:'GMO 🧄',cat:'cali',desc:'Goût unique et puissant.',prices:['2.5G / 40€','5G / 60€','10G / 100€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
+  {id:'pannacotta',name:'Pannacotta ☄️',cat:'frozen',desc:'Frozen Sift Alec 220/90. Arôme de vanille, notes sucrées.',prices:['2G / 30€','5G / 70€','10G / 120€'],oos:false,isNew:true,hidden:false,promo:null,video:''},
+  {id:'lobster',name:'Lemon Lobster 🪐',cat:'frozen',desc:"Frozen Sift Alec 220/90. Arôme de citron et d'agrumes.",prices:['2G / 30€','5G / 70€','10G / 120€'],oos:false,isNew:true,hidden:false,promo:null,video:''},
+  {id:'plata',name:"Plata O' Plomo 🚀",cat:'static',desc:"Gaz Boof 💣 — Plata O' Plomo Farm.",prices:['2G / 35€','5G / 80€','10G / 150€'],oos:false,isNew:true,hidden:false,promo:null,video:''},
+  {id:'anon',name:'Anonymuz Farm 🏴‍☠️',cat:'anon',desc:'Weeding Cake · Gelato 41 · Ice Cream',prices:['2G / 35€','5G / 80€','10G / 150€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
+  {id:'sultan',name:'Sultan Drop Cherry 👺',cat:'olive',desc:'Drop Cherry 🍒 — Hubba Bubbatz. Finition cristalline.',prices:['2G / 35€','5G / 80€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
+  {id:'tangie',name:'Tangie 🍊',cat:'olive',desc:"Fresh Frozen — Hubba Bubbatz. Notes d'agrumes, orange vive.",prices:['2G / 35€','5G / 80€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
+  {id:'lemon_ice',name:'Lemon Ice 🧊',cat:'olive',desc:'Lemon Ice — Hubba Bubbatz. Citron glacé, puissance.',prices:['2G / 35€','5G / 80€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
+  {id:'ecaille',name:'Écaille 💎',cat:'festif',desc:"La pureté à l'état brut. 96% — Sélection d'exception.",prices:['0.5G / 30€','1G / 50€','5G / 240€','10G / 460€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
+];
+
+let P=[], S={
+  whatsapp:'33758464533', telegram:'@DerBeste37', password:'beste37',
+  maintenance:false, maintMsg:'Boutique temporairement fermée. Revenez bientôt 🙏',
+  ticker:'', tickerOn:false,
+  heroSub:'Tours · Since 2020', heroBadge:'✅ Disponible maintenant',
+  horaires:{Lun:'12h–22h',Mar:'12h–22h',Mer:'12h–22h',Jeu:'12h–22h',Ven:'12h–22h',Sam:'12h–22h',Dim:'Fermé'},
+  horaireMsg:'Livraison tous les jours 12h–22h',
+  minLivr:50, minMeet:0,
+  zones:['Tours centre','Joué-lès-Tours','Saint-Cyr-sur-Loire','La Riche'],
+  paiements:['💵 Cash','📱 Lydia'],
+  waTpl:"Bonjour, je souhaite commander :\n📦 Produit : {produit}\n⚖️ Grammage : {grammage}\n💰 Prix : {prix}\n🕐 Heure souhaitée :",
+  waNotif:"Bonjour ! Je souhaite être prévenu du retour en stock de :\n📦 {produit}\n\nMerci 🙏",
+  promos:[]
+};
+let unsaved=false;
+
+// ═══════════════════════════════════════
+// LOGIN
+// ═══════════════════════════════════════
+function tryLogin(){
+  const v=document.getElementById('li').value;
+  if(v===S.password||v==='beste37'){
+    document.getElementById('LS').classList.add('gone');
+    document.getElementById('AU').style.display='block';
+    adminInit();
+  } else {
+    const e=document.getElementById('lerr');e.classList.add('on');
+    document.getElementById('li').value='';
+    setTimeout(()=>e.classList.remove('on'),2000);
+  }
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+async function adminInit(){
+  try{
+    const sp=await window.storage.get('admin-products');
+    if(sp)P=JSON.parse(sp.value); else P=JSON.parse(JSON.stringify(DEFS));
+    const ss=await window.storage.get('admin-settings');
+    if(ss)S={...S,...JSON.parse(ss.value)};
+  }catch(e){P=JSON.parse(JSON.stringify(DEFS));}
+  buildUI(); render();
+}
+
+function buildUI(){
+  // Cat select for add
+  const nc=document.getElementById('nc');
+  nc.innerHTML=Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+
+  // Horaires
+  const hg=document.getElementById('horaires-grid');
+  hg.innerHTML=DAYS.map(d=>`<div class="h-row">
+    <div class="h-day">${d}</div>
+    <input class="fi h-inp" id="h-${d}" value="${S.horaires[d]||'Fermé'}" type="text" oninput="S.horaires['${d}']=this.value;markU()">
+  </div>`).join('');
+
+  // Zones
+  renderZones();
+
+  // Paiements
+  const pg=document.getElementById('pay-grid');
+  pg.innerHTML=PAYS.map(p=>`<div class="pay-tag${S.paiements.includes(p)?' on':''}" onclick="togglePay(this,'${p}')">${p}</div>`).join('');
+
+  // WA templates
+  document.getElementById('s-watpl').value=S.waTpl;
+  document.getElementById('s-wanotif').value=S.waNotif;
+  document.getElementById('s-wa').value=S.whatsapp;
+  document.getElementById('s-tg').value=S.telegram;
+  document.getElementById('s-maint').checked=S.maintenance;
+  document.getElementById('s-maintmsg').value=S.maintMsg;
+  document.getElementById('s-ticker').value=S.ticker;
+  document.getElementById('s-ticker-on').checked=S.tickerOn;
+  document.getElementById('s-herosub').value=S.heroSub;
+  document.getElementById('s-herobadge').value=S.heroBadge;
+  document.getElementById('s-minlivr').value=S.minLivr;
+  document.getElementById('s-minmeet').value=S.minMeet;
+  document.getElementById('s-horaireMsg').value=S.horaireMsg;
+  if(S.ticker) document.getElementById('ticker-preview').textContent=S.ticker;
+  if(S.maintenance){document.getElementById('maintBadge').style.display='block';}
+
+  // Promo product select
+  const pp=document.getElementById('promo-pid');
+  pp.innerHTML=P.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+
+  // Cat actions
+  const ca=document.getElementById('catActions');
+  ca.innerHTML=Object.entries(CATS).map(([k,v])=>`
+    <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
+      <div style="flex:1;font-size:13px;">${v}</div>
+      <button class="qa qr" style="flex:0 0 auto;font-size:11px;padding:7px 10px;border-radius:10px;" onclick="catAction('${k}','oos')">❌ Rupture</button>
+      <button class="qa qg" style="flex:0 0 auto;font-size:11px;padding:7px 10px;border-radius:10px;" onclick="catAction('${k}','stock')">✅ Stock</button>
+    </div>`).join('');
+}
+
+function renderZones(){
+  const zl=document.getElementById('zones-list');
+  zl.innerHTML=S.zones.map((z,i)=>`<div class="zone-row">
+    <div class="zone-name">${z}</div>
+    <button class="zone-del" onclick="delZone(${i})">✕</button>
+  </div>`).join('');
+}
+
+// ═══════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════
+function ST(btn,name){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+name).classList.add('on');
+  btn.classList.add('on');
+}
+
+// ═══════════════════════════════════════
+// RENDER PRODUCTS
+// ═══════════════════════════════════════
+function render(){
+  const list=document.getElementById('PL');
+  list.innerHTML='';
+  let oos=0,nw=0;
+  const grp={};
+  P.forEach(p=>{if(!grp[p.cat])grp[p.cat]=[];grp[p.cat].push(p);});
+
+  Object.entries(CATS).forEach(([k,v])=>{
+    const ps=grp[k];if(!ps||!ps.length)return;
+    const l=document.createElement('div');l.className='slb';l.textContent=v;list.appendChild(l);
+    ps.forEach(p=>{
+      if(p.oos)oos++;if(p.isNew)nw++;
+      const c=document.createElement('div');
+      c.className='pc'+(p.oos?' oos':'')+(p.promo?' promo':'');c.id='c-'+p.id;
+      c.innerHTML=`<div class="pch" onclick="TE('${p.id}')">
+        <div class="pci">
+          <div class="pcn">${p.name}</div>
+          <div class="pcbg">
+            ${p.oos?'<span class="bge boos">❌ Rupture</span>':''}
+            ${p.isNew?'<span class="bge bnew">✨ Nouveau</span>':''}
+            ${p.hidden?'<span class="bge bhid">🙈 Masqué</span>':''}
+            ${p.promo?`<span class="bge bpro">🏷️ ${p.promo}</span>`:''}
+          </div>
+        </div>
+        <div class="pca">
+          <div class="ib e" onclick="event.stopPropagation();TE('${p.id}')">✏️</div>
+          <div class="ib d" onclick="event.stopPropagation();confirmA('del','${p.id}','Supprimer ?','&quot;${p.name}&quot; sera supprimé définitivement.')">🗑️</div>
+        </div></div>
+      <div class="pce" id="e-${p.id}">
+        <div class="fg"><div class="fl">Nom</div>
+          <input class="fi" value="${p.name}" oninput="SF('${p.id}','name',this.value)" type="text"></div>
+        <div class="fg"><div class="fl">Catégorie</div>
+          <select class="fsel" onchange="SF('${p.id}','cat',this.value)">
+            ${Object.entries(CATS).map(([ck,cv])=>`<option value="${ck}"${p.cat===ck?' selected':''}>${cv}</option>`).join('')}
+          </select></div>
+        <div class="fg"><div class="fl">Description</div>
+          <textarea class="fi" rows="2" oninput="SF('${p.id}','desc',this.value)">${p.desc}</textarea></div>
+        <div class="fg"><div class="fl">Vidéo Cloudinary URL</div>
+          <input class="fi" value="${p.video||''}" oninput="SF('${p.id}','video',this.value)" placeholder="https://player.cloudinary.com/..." type="text"></div>
+        <div class="fg"><div class="fl">Prix</div>
+          <div class="prl" id="pr-${p.id}">
+            ${p.prices.map((pr,i)=>`<div class="pr">
+              <input class="fi" style="font-size:12px;padding:8px 10px;" value="${pr}" type="text" oninput="SP('${p.id}',${i},this.value)">
+              <button class="pdel" onclick="DP('${p.id}',${i})">✕</button>
+            </div>`).join('')}
+          </div>
+          <button class="apb" onclick="AP('${p.id}')">+ Tarif</button></div>
+        <div class="fg"><div class="fl">Statut</div>
+          <div class="trow">
+            <label class="ti"><input type="checkbox" ${p.isNew?'checked':''} onchange="SF('${p.id}','isNew',this.checked)">
+              <div class="tt"><div class="th"></div></div><span class="tl">✨ Nouveauté</span></label>
+            <label class="ti tr"><input type="checkbox" ${p.oos?'checked':''} onchange="SF('${p.id}','oos',this.checked)">
+              <div class="tt"><div class="th"></div></div><span class="tl">❌ Rupture</span></label>
+            <label class="ti"><input type="checkbox" ${p.hidden?'checked':''} onchange="SF('${p.id}','hidden',this.checked)">
+              <div class="tt"><div class="th"></div></div><span class="tl">🙈 Masqué</span></label>
+          </div></div>
+      </div>`;
+      list.appendChild(c);
+    });
+  });
+
+  document.getElementById('sT').textContent=P.length;
+  document.getElementById('sO').textContent=oos;
+  document.getElementById('sN').textContent=nw;
+
+  // Update promo select
+  const pp=document.getElementById('promo-pid');
+  if(pp) pp.innerHTML=P.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+
+  renderPromos();
+}
+
+function TE(id){document.getElementById('e-'+id).classList.toggle('on');}
+
+// ═══════════════════════════════════════
+// FIELD UPDATES
+// ═══════════════════════════════════════
+function SF(id,f,v){
+  const p=P.find(x=>x.id===id);if(!p)return;
+  p[f]=v;markU();
+  const c=document.getElementById('c-'+id);
+  if(c){
+    c.className='pc'+(p.oos?' oos':'')+(p.promo?' promo':'');
+    c.querySelector('.pcn').textContent=p.name;
+    c.querySelector('.pcbg').innerHTML=
+      (p.oos?'<span class="bge boos">❌ Rupture</span>':'')+
+      (p.isNew?'<span class="bge bnew">✨ Nouveau</span>':'')+
+      (p.hidden?'<span class="bge bhid">🙈 Masqué</span>':'')+
+      (p.promo?`<span class="bge bpro">🏷️ ${p.promo}</span>`:'');
+  }
+}
+function SP(id,i,v){const p=P.find(x=>x.id===id);if(p){p.prices[i]=v;markU();}}
+function AP(id){
+  const p=P.find(x=>x.id===id);if(!p)return;
+  const i=p.prices.length;p.prices.push('');
+  const el=document.getElementById('pr-'+id);
+  const row=document.createElement('div');row.className='pr';
+  row.innerHTML=`<input class="fi" style="font-size:12px;padding:8px 10px;" value="" type="text" oninput="SP('${id}',${i},this.value)"><button class="pdel" onclick="DP('${id}',${i})">✕</button>`;
+  el.appendChild(row);markU();
+}
+function DP(id,i){
+  const p=P.find(x=>x.id===id);if(!p)return;
+  p.prices.splice(i,1);render();
+  document.getElementById('e-'+id).classList.add('on');markU();
+}
+
+// ═══════════════════════════════════════
+// QUICK ACTIONS
+// ═══════════════════════════════════════
+function qAction(t){
+  switch(t){
+    case 'allOos':    P.forEach(p=>p.oos=true); toast('❌ Tous en rupture'); break;
+    case 'allStock':  P.forEach(p=>p.oos=false); toast('✅ Tous en stock'); break;
+    case 'allNew':    P.forEach(p=>p.isNew=true); toast('✨ Tous marqués nouveauté'); break;
+    case 'clearNew':  P.forEach(p=>p.isNew=false); toast('🚫 Nouveautés retirées'); break;
+    case 'showAll':   P.forEach(p=>p.hidden=false); toast('👁️ Tous visibles'); break;
+    case 'hideAll':   P.forEach(p=>p.hidden=true); toast('🙈 Tous masqués'); break;
+    case 'clearPromo':P.forEach(p=>p.promo=null); S.promos=[]; toast('🔖 Promos retirées'); break;
+    case 'reset':     P=JSON.parse(JSON.stringify(DEFS)); toast('🔄 Catalogue réinitialisé'); break;
+  }
+  render(); markU();
+}
+function catAction(cat,t){
+  P.filter(p=>p.cat===cat).forEach(p=>p.oos=(t==='oos'));
+  toast(t==='oos'?`❌ ${CATS[cat]} — rupture`:`✅ ${CATS[cat]} — en stock`);
+  render(); markU();
+}
+
+// ═══════════════════════════════════════
+// ADD PRODUCT
+// ═══════════════════════════════════════
+function addPR(lid){
+  const l=document.getElementById(lid);
+  const r=document.createElement('div');r.className='pr';
+  r.innerHTML=`<input class="fi" style="font-size:12px;padding:8px 10px;" placeholder="5G / 60€" type="text"><button class="pdel" onclick="this.closest('.pr').remove()">✕</button>`;
+  l.appendChild(r);
+}
+function addProduct(){
+  const name=document.getElementById('nn').value.trim();
+  if(!name){toast('❌ Nom obligatoire');return;}
+  const prices=Array.from(document.querySelectorAll('#np-list input')).map(i=>i.value.trim()).filter(Boolean);
+  P.push({id:'p_'+Date.now(),name,cat:document.getElementById('nc').value,
+    desc:document.getElementById('nd').value.trim(),
+    video:document.getElementById('nv').value.trim(),
+    prices,oos:document.getElementById('no').checked,
+    isNew:document.getElementById('ni').checked,
+    hidden:document.getElementById('nh').checked,promo:null});
+  ['nn','nd','nv'].forEach(id=>document.getElementById(id).value='');
+  ['ni','no','nh'].forEach(id=>document.getElementById(id).checked=false);
+  document.getElementById('np-list').innerHTML='<div class="pr"><input class="fi" style="font-size:12px;padding:8px 10px;" placeholder="2.5G / 40€" type="text"><button class="pdel" onclick="this.closest(\'.pr\').remove()">✕</button></div>';
+  toast('✅ Produit ajouté');markU();
+  document.querySelectorAll('.tb')[0].click();render();
+}
+
+// ═══════════════════════════════════════
+// PROMOS
+// ═══════════════════════════════════════
+function addPromo(){
+  const pid=document.getElementById('promo-pid').value;
+  const type=document.getElementById('promo-type').value;
+  const val=document.getElementById('promo-val').value.trim();
+  if(!val){toast('❌ Valeur requise');return;}
+  const p=P.find(x=>x.id===pid);if(!p)return;
+  const label=type==='pct'?`-${val}%`:type==='fixed'?`${val}€`:type==='lot'?val:val;
+  p.promo=label;
+  if(!S.promos)S.promos=[];
+  S.promos=S.promos.filter(x=>x.id!==pid);
+  S.promos.push({id:pid,name:p.name,type,val,label});
+  document.getElementById('promo-val').value='';
+  toast(`🏷️ Promo appliquée sur ${p.name}`);markU();render();
+}
+function removePromo(pid){
+  const p=P.find(x=>x.id===pid);if(p)p.promo=null;
+  S.promos=(S.promos||[]).filter(x=>x.id!==pid);
+  markU();render();toast('🗑️ Promo retirée');
+}
+function renderPromos(){
+  const pl=document.getElementById('promoList');
+  const active=(S.promos||[]).filter(pr=>P.find(p=>p.id===pr.id&&p.promo));
+  pl.innerHTML=active.length?active.map(pr=>`
+    <div class="promo-row">
+      <div class="promo-info">
+        <div class="promo-name">${pr.name}</div>
+        <div class="promo-sub">🏷️ ${pr.label}</div>
+      </div>
+      <button class="promo-del" onclick="removePromo('${pr.id}')">✕</button>
+    </div>`).join(''):'<div style="font-size:13px;color:var(--dim);text-align:center;padding:20px;">Aucune promo active</div>';
+}
+
+// ═══════════════════════════════════════
+// BOUTIQUE
+// ═══════════════════════════════════════
+function toggleMaint(v){
+  S.maintenance=v;
+  document.getElementById('maintBadge').style.display=v?'block':'none';
+  markU();
+}
+
+// ═══════════════════════════════════════
+// LIVRAISON
+// ═══════════════════════════════════════
+function addZone(){
+  const v=document.getElementById('zone-inp').value.trim();
+  if(!v){toast('❌ Zone vide');return;}
+  S.zones.push(v);document.getElementById('zone-inp').value='';
+  renderZones();markU();
+}
+function delZone(i){ S.zones.splice(i,1);renderZones();markU(); }
+function togglePay(el,p){
+  el.classList.toggle('on');
+  if(el.classList.contains('on'))S.paiements.push(p);
+  else S.paiements=S.paiements.filter(x=>x!==p);
+  markU();
+}
+
+// ═══════════════════════════════════════
+// MESSAGES
+// ═══════════════════════════════════════
+function saveWaTpl(){
+  S.waTpl=document.getElementById('s-watpl').value;
+  S.waNotif=document.getElementById('s-wanotif').value;
+  markU();toast('💬 Templates sauvegardés');
+}
+
+// ═══════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════
+function changePass(){
+  const np=document.getElementById('s-np').value;
+  const cp=document.getElementById('s-cp').value;
+  if(!np){toast('❌ Mot de passe vide');return;}
+  if(np!==cp){toast('❌ Mots de passe différents');return;}
+  S.password=np;
+  document.getElementById('s-np').value='';
+  document.getElementById('s-cp').value='';
+  markU();toast('🔒 Mot de passe changé');
+}
+
+function exportData(){
+  const data={products:P,settings:S,exportedAt:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`DerBeste37-backup-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();toast('⬇️ Export téléchargé');
+}
+function importData(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(data.products)P=data.products;
+      if(data.settings)S={...S,...data.settings};
+      markU();render();buildUI();toast('⬆️ Import réussi');
+    }catch{toast('❌ Fichier invalide');}
+  };
+  reader.readAsText(file);
+}
+
+// ═══════════════════════════════════════
+// CONFIRM MODAL
+// ═══════════════════════════════════════
+function confirmA(action,id,title,text){
+  document.getElementById('m-title').textContent=title;
+  document.getElementById('m-text').innerHTML=text;
+  document.getElementById('m-ok').onclick=()=>{
+    document.getElementById('modal').classList.remove('on');
+    if(action==='del'){P=P.filter(x=>x.id!==id);render();markU();toast('🗑️ Supprimé');}
+    else if(action==='reset'){qAction('reset');}
+    else if(action==='wipe'){
+      window.storage.delete('admin-products');
+      window.storage.delete('admin-settings');
+      toast('💣 Données effacées');setTimeout(()=>location.reload(),1500);
+    }
+  };
+  document.getElementById('modal').classList.add('on');
+}
+
+// ═══════════════════════════════════════
+// SAVE
+// ═══════════════════════════════════════
+function markU(){unsaved=true;document.getElementById('GS').style.display='block';}
+async function saveAll(){
+  // Collect settings from UI
+  S.whatsapp=document.getElementById('s-wa').value;
+  S.telegram=document.getElementById('s-tg').value;
+  S.maintMsg=document.getElementById('s-maintmsg').value;
+  S.ticker=document.getElementById('s-ticker').value;
+  S.tickerOn=document.getElementById('s-ticker-on').checked;
+  S.heroSub=document.getElementById('s-herosub').value;
+  S.heroBadge=document.getElementById('s-herobadge').value;
+  S.minLivr=parseInt(document.getElementById('s-minlivr').value)||50;
+  S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
+  S.horaireMsg=document.getElementById('s-horaireMsg').value;
+  S.waTpl=document.getElementById('s-watpl').value;
+  S.waNotif=document.getElementById('s-wanotif').value;
+  try{
+    await window.storage.set('admin-products',JSON.stringify(P));
+    await window.storage.set('admin-settings',JSON.stringify(S));
+    unsaved=false;document.getElementById('GS').style.display='none';
+    toast('✅ Tout sauvegardé — catalogue mis à jour');
+  }catch(e){toast('❌ Erreur de sauvegarde');}
+}
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+let _t;
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');
+  clearTimeout(_t);_t=setTimeout(()=>t.classList.remove('on'),2800);
+}
+
+
+  // ── Expose globally ──
+  window.openAdminPanel = function(){
+    document.getElementById('ADMIN').style.display = 'flex';
+    if(!window._adminReady){
+      window._adminReady = true;
+      adminInit();
+      var li = document.getElementById('li');
+      if(li) li.addEventListener('keydown', function(e){ if(e.key==='Enter') tryLogin(); });
+    }
+  };
+
+  window.closeAdminPanel = function(){
+    document.getElementById('ADMIN').style.display = 'none';
+  };
+
+  // Fix quit button
+  document.addEventListener('DOMContentLoaded', function(){
+    var qb = document.querySelector('#ADMIN .hquit');
+    if(qb) qb.onclick = window.closeAdminPanel;
+  });
+
+})();
+
 </script>
 
 </body>
