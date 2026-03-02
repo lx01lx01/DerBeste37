@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
+<script>
+// 🔒 Console Fix for Telegram Mini App (safe fallback)
+(function () {
+  if (typeof window.console === "undefined") {
+    window.console = {};
+  }
+
+  const methods = ["log", "warn", "error", "info", "debug"];
+  methods.forEach(function (method) {
+    if (typeof console[method] !== "function") {
+      console[method] = function () {};
+    }
+  });
+})();
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>DerBeste37</title>
