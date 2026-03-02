@@ -1281,7 +1281,7 @@ html { overflow-x:hidden; }
   <div class="hero-overlay">
     <div class="hero-badge" id="hero-badge">⭐ Since 2020</div>
     <h1><span class="hero-derbeste">DerBeste</span><span class="hero-num">37</span></h1>
-    <p>Tours 37000</p>
+    <p id="hero-sub">Tours · Since 2020</p>
   </div>
 </div>
 
@@ -1768,7 +1768,7 @@ html { overflow-x:hidden; }
     <span class="block-icon">🛵</span>
     <div class="block-title">Minimum de commande</div>
     <div class="block-text" id="min-livr-text" style="color:var(--green); font-size:15px;">50€ <span style="font-size:12px; color:var(--text-dim); font-weight:400;">en livraison</span></div>
-    <div id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
+    <div id="min-detail-text" id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
   </div>
 
   <div class="horaires-box reveal" id="horaires-box">
@@ -1900,16 +1900,22 @@ window.addEventListener('scroll', () => {
         }
       }
 
-      if(S.heroBadge){
+      if(S.heroBadge !== undefined){
         const hb = document.getElementById('hero-badge');
-        if(hb) hb.textContent = S.heroBadge;
+        if(hb && S.heroBadge) hb.textContent = S.heroBadge;
+      }
+
+      if(S.heroSub !== undefined){
+        const hs = document.getElementById('hero-sub');
+        if(hs && S.heroSub) hs.textContent = S.heroSub;
       }
 
       if(S.minLivr !== undefined){
         const ml = document.getElementById('min-livr-text');
         if(ml) ml.innerHTML = `${S.minLivr}€ <span style="font-size:12px;color:var(--text-dim);font-weight:400;">en livraison</span>`;
         const md = document.getElementById('min-detail-text');
-        if(md) md.textContent = `Meet-up sans minimum · Livraison à partir de ${S.minLivr}€`;
+        const meetTxt = (S.minMeet && S.minMeet > 0) ? `Meet-up à partir de ${S.minMeet}€` : 'Meet-up sans minimum';
+        if(md) md.textContent = `${meetTxt} · Livraison à partir de ${S.minLivr}€`;
       }
 
       if(S.horaireMsg){
@@ -1949,6 +1955,18 @@ window.addEventListener('scroll', () => {
         document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
           a.href = a.href.replace(/wa\.me\/\d+/, `wa.me/${S.whatsapp}`);
         });
+      }
+
+      if(S.telegram){
+        const tgHandle = S.telegram.replace(/^@/, '');
+        document.querySelectorAll('a[href*="t.me"]').forEach(a=>{
+          a.href = `https://t.me/${tgHandle}`;
+        });
+      }
+
+      if(S.minMeet !== undefined){
+        const mmEl = document.getElementById('min-meet-text');
+        if(mmEl) mmEl.textContent = S.minMeet === 0 ? 'Sans minimum' : `${S.minMeet}€ minimum`;
       }
     }
 
@@ -2612,7 +2630,7 @@ let P=[], S={
   whatsapp:'33758464533', telegram:'@DerBeste37', password:'beste37',
   maintenance:false, maintMsg:'Boutique temporairement fermée. Revenez bientôt 🙏',
   ticker:'', tickerOn:false,
-  heroSub:'Tours · Since 2020', heroBadge:'✅ Disponible maintenant',
+  heroSub:'Tours · Since 2020', heroBadge:'⭐ Since 2020',
   horaires:{Lun:'12h–22h',Mar:'12h–22h',Mer:'12h–22h',Jeu:'12h–22h',Ven:'12h–22h',Sam:'12h–22h',Dim:'Fermé'},
   horaireMsg:'Livraison tous les jours 12h–22h',
   minLivr:50, minMeet:0,
@@ -3001,6 +3019,7 @@ function confirmA(action,id,title,text){
 // ═══════════════════════════════════════
 function markU(){unsaved=true;document.getElementById('GS').style.display='block';}
 async function saveAll(){
+  S.maintenance=document.getElementById('s-maint').checked;
   S.whatsapp=document.getElementById('s-wa').value;
   S.telegram=document.getElementById('s-tg').value;
   S.maintMsg=document.getElementById('s-maintmsg').value;
@@ -3025,7 +3044,7 @@ async function saveAll(){
     localStorage.setItem('admin-products', JSON.stringify(P));
     localStorage.setItem('admin-settings', JSON.stringify(S));
     unsaved=false;document.getElementById('GS').style.display='none';
-    toast('⚠️ Sauvé localement (Firebase hors ligne)');
+    toast('⚠️ Sauvegardé localement — vérifie ta connexion');
   }
 }
 
@@ -3121,7 +3140,7 @@ function toast(msg){
           }
         }
       } catch(e) {
-        console.warn('RTDB GET failed:', e.message);
+        console.info('ℹ️ RTDB GET (using local cache):', e.message);
       }
       var cached = localStorage.getItem(key);
       return cached ? { value: cached } : null;
@@ -3138,7 +3157,7 @@ function toast(msg){
         localStorage.setItem(key, valueStr);
         return true;
       } catch(e) {
-        console.warn('RTDB SET failed:', e.message);
+        console.info('ℹ️ RTDB SET failed:', e.message);
         localStorage.setItem(key, valueStr);
         throw new Error('Firebase: ' + e.message);
       }
@@ -3147,7 +3166,7 @@ function toast(msg){
     async delete(key) {
       try {
         await fetch(DB + '/config/' + key + '.json', { method: 'DELETE' });
-      } catch(e) { console.warn('RTDB DELETE failed:', e.message); }
+      } catch(e) { console.info('ℹ️ RTDB DELETE failed:', e.message); }
       localStorage.removeItem(key);
     }
   };
