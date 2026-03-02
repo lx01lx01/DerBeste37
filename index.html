@@ -1163,8 +1163,9 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
 .maint-banner.on{display:block;}
 
 /* ── GLOBAL SAVE ── */
-.gsave{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(13,26,20,.95);
-  backdrop-filter:blur(16px);border-top:1px solid var(--bdr);padding:12px 16px;}
+.gsave{position:sticky;bottom:0;left:0;right:0;z-index:200;background:rgba(13,26,20,.97);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--bdr);
+  padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));}
 .gsbtn{width:100%;background:linear-gradient(135deg,var(--g),#00b85e);border:none;border-radius:14px;
   padding:14px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;color:#0d1a14;
   cursor:pointer;box-shadow:0 4px 20px rgba(0,232,122,.3);}
@@ -1281,7 +1282,7 @@ html { overflow-x:hidden; }
   <div class="hero-overlay">
     <div class="hero-badge" id="hero-badge">⭐ Since 2020</div>
     <h1><span class="hero-derbeste">DerBeste</span><span class="hero-num">37</span></h1>
-    <p id="hero-sub">Tours · Since 2020</p>
+    
   </div>
 </div>
 
@@ -1805,11 +1806,11 @@ html { overflow-x:hidden; }
   <!-- CONTACT -->
   <div class="section-title reveal" style="margin-top:24px;">Contact</div>
 
-  <a class="contact-item reveal" href="https://t.me/DerBeste37" style="border-color:rgba(42,171,238,0.2);">
+  <a class="contact-item reveal" id="contact-tg-link" href="https://t.me/DerBeste37" style="border-color:rgba(42,171,238,0.2);">
     <div class="contact-icon-wrap tg">🛠️</div>
     <div>
       <div class="contact-label" style="color:rgba(42,171,238,0.7);">SAV — Service client</div>
-      <div class="contact-value">@DerBeste37</div>
+      <div class="contact-value" id="contact-tg-handle">@DerBeste37</div>
     </div>
   </a>
 
@@ -1959,9 +1960,12 @@ window.addEventListener('scroll', () => {
 
       if(S.telegram){
         const tgHandle = S.telegram.replace(/^@/, '');
+        const tgDisplay = S.telegram.startsWith('@') ? S.telegram : '@' + S.telegram;
         document.querySelectorAll('a[href*="t.me"]').forEach(a=>{
           a.href = `https://t.me/${tgHandle}`;
         });
+        const tgTxt = document.getElementById('contact-tg-handle');
+        if(tgTxt) tgTxt.textContent = tgDisplay;
       }
 
       if(S.minMeet !== undefined){
@@ -2458,7 +2462,7 @@ window.addEventListener('DOMContentLoaded', () => {
             <div class="tt"><div class="th"></div></div></label>
         </div>
         <div class="fg"><div class="fl">Message de fermeture</div>
-          <input class="fi" id="s-maintmsg" value="Boutique temporairement fermée. Revenez bientôt 🙏" type="text"></div>
+          <input class="fi" id="s-maintmsg" value="Boutique temporairement fermée. Revenez bientôt 🙏" type="text" oninput="markU()"></div>
       </div>
 
       <div class="slb">Ticker / Annonce</div>
@@ -2477,9 +2481,9 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="card">
         <div class="card-title">🖼️ Hero & Titre</div>
         <div class="fg"><div class="fl">Sous-titre hero</div>
-          <input class="fi" id="s-herosub" placeholder="ex: Tours · Since 2020" type="text"></div>
+          <input class="fi" id="s-herosub" placeholder="ex: Tours · Since 2020" type="text" oninput="markU()"></div>
         <div class="fg"><div class="fl">Badge hero</div>
-          <input class="fi" id="s-herobadge" placeholder="ex: ✅ Disponible maintenant" type="text"></div>
+          <input class="fi" id="s-herobadge" placeholder="ex: ✅ Disponible maintenant" type="text" oninput="markU()"></div>
       </div>
     </div>
 
@@ -2491,15 +2495,15 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="horaires-grid" id="horaires-grid"></div>
         <div style="margin-top:12px;">
           <div class="fl">Message horaire affiché</div>
-          <input class="fi" id="s-horaireMsg" placeholder="ex: Livraison 12h–22h tous les jours" type="text"></div>
+          <input class="fi" id="s-horaireMsg" placeholder="ex: Livraison 12h–22h tous les jours" type="text" oninput="markU()"></div>
       </div>
 
       <div class="slb">Commande minimum</div>
       <div class="card">
         <div class="fg"><div class="fl">Minimum livraison (€)</div>
-          <input class="fi" id="s-minlivr" placeholder="50" type="number"></div>
+          <input class="fi" id="s-minlivr" placeholder="50" type="number" oninput="markU()"></div>
         <div class="fg"><div class="fl">Minimum meet-up (€)</div>
-          <input class="fi" id="s-minmeet" placeholder="0" type="number"></div>
+          <input class="fi" id="s-minmeet" placeholder="0" type="number" oninput="markU()"></div>
       </div>
 
       <div class="slb">Zones de livraison</div>
@@ -2522,7 +2526,7 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="card">
         <div class="card-title">📋 Message de commande</div>
         <div class="fg"><div class="fl">Template (utilise {produit} {grammage} {prix})</div>
-          <textarea class="fi" id="s-watpl" rows="5"></textarea></div>
+          <textarea class="fi" id="s-watpl" rows="5" oninput="markU()"></textarea></div>
         <button class="gbtn" onclick="saveWaTpl()">💾 Enregistrer le template</button>
       </div>
 
@@ -2530,16 +2534,16 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="card">
         <div class="card-title">❌ Message "Me prévenir"</div>
         <div class="fg"><div class="fl">Message automatique</div>
-          <textarea class="fi" id="s-wanotif" rows="4"></textarea></div>
+          <textarea class="fi" id="s-wanotif" rows="4" oninput="markU()"></textarea></div>
         <button class="gbtn" onclick="saveWaTpl()">💾 Enregistrer</button>
       </div>
 
       <div class="slb">Numéros de contact</div>
       <div class="card">
         <div class="fg"><div class="fl">Numéro WhatsApp</div>
-          <input class="fi" id="s-wa" placeholder="33758464533" type="text"></div>
+          <input class="fi" id="s-wa" placeholder="33758464533" type="text" oninput="markU()"></div>
         <div class="fg"><div class="fl">Telegram SAV</div>
-          <input class="fi" id="s-tg" placeholder="@DerBeste37" type="text"></div>
+          <input class="fi" id="s-tg" placeholder="@DerBeste37" type="text" oninput="markU()"></div>
       </div>
     </div>
 
@@ -2574,8 +2578,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   </div>
 
-  <div class="gsave" id="GS" style="display:none;">
-    <button class="gsbtn" onclick="saveAll()">💾 Sauvegarder les modifications <span class="dot"></span></button>
+  <div class="gsave" id="GS">
+    <button class="gsbtn" onclick="saveAll()">💾 Sauvegarder les modifications</button>
   </div>
 </div>
 
@@ -2635,7 +2639,7 @@ let P=[], S={
   horaireMsg:'Livraison tous les jours 12h–22h',
   minLivr:50, minMeet:0,
   zones:['Tours centre','Joué-lès-Tours','Saint-Cyr-sur-Loire','La Riche'],
-  paiements:['💵 Cash','📱 Lydia'],
+  paiements:[],
   waTpl:"Bonjour, je souhaite commander :\n📦 Produit : {produit}\n⚖️ Grammage : {grammage}\n💰 Prix : {prix}\n🕐 Heure souhaitée :",
   waNotif:"Bonjour ! Je souhaite être prévenu du retour en stock de :\n📦 {produit}\n\nMerci 🙏",
   promos:[]
@@ -2670,6 +2674,7 @@ async function adminInit(){
     const ss = await Store.get('admin-settings');
     if(ss) S={...S,...JSON.parse(ss.value)};
   }catch(e){ console.warn('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
+  window.S = S; window.P = P;
   buildUI(); render();
 }
 
@@ -2680,7 +2685,7 @@ function buildUI(){
   const hg=document.getElementById('horaires-grid');
   hg.innerHTML=DAYS.map(d=>`<div class="h-row">
     <div class="h-day">${d}</div>
-    <input class="fi h-inp" id="h-${d}" value="${S.horaires[d]||'Fermé'}" type="text" oninput="S.horaires['${d}']=this.value;markU()">
+    <input class="fi h-inp" id="h-${d}" value="${S.horaires[d]||'Fermé'}" type="text" oninput="window.S.horaires['${d}']=this.value;window.markU()">
   </div>`).join('');
 
   renderZones();
@@ -2957,7 +2962,8 @@ function togglePay(el,p){
 function saveWaTpl(){
   S.waTpl=document.getElementById('s-watpl').value;
   S.waNotif=document.getElementById('s-wanotif').value;
-  markU();toast('💬 Templates sauvegardés');
+  markU();
+  saveAll();
 }
 
 // ═══════════════════════════════════════
@@ -3017,8 +3023,10 @@ function confirmA(action,id,title,text){
 // ═══════════════════════════════════════
 // SAVE
 // ═══════════════════════════════════════
-function markU(){unsaved=true;document.getElementById('GS').style.display='block';}
+function markU(){unsaved=true;}
 async function saveAll(){
+  // Dismiss iOS keyboard before saving
+  if(document.activeElement) document.activeElement.blur();
   S.maintenance=document.getElementById('s-maint').checked;
   S.whatsapp=document.getElementById('s-wa').value;
   S.telegram=document.getElementById('s-tg').value;
@@ -3030,6 +3038,9 @@ async function saveAll(){
   S.minLivr=parseInt(document.getElementById('s-minlivr').value)||50;
   S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
   S.horaireMsg=document.getElementById('s-horaireMsg').value;
+  ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(function(d){var el=document.getElementById('h-'+d);if(el)S.horaires[d]=el.value;});
+  // Collect paiements from DOM (belt+suspenders)
+  S.paiements=Array.from(document.querySelectorAll('.pay-tag.on')).map(function(el){return el.textContent;});
   S.waTpl=document.getElementById('s-watpl').value;
   S.waNotif=document.getElementById('s-wanotif').value;
   try{
@@ -3037,14 +3048,50 @@ async function saveAll(){
     if(!Store) throw new Error('Firebase non disponible');
     await Store.set('admin-products', JSON.stringify(P));
     await Store.set('admin-settings', JSON.stringify(S));
-    unsaved=false;document.getElementById('GS').style.display='none';
+    unsaved=false;
     toast('✅ Sauvegardé — visible par tous !');
+    applySettingsToDOM(S);
   }catch(e){
-    // Fallback: save to localStorage so changes aren't lost
     localStorage.setItem('admin-products', JSON.stringify(P));
     localStorage.setItem('admin-settings', JSON.stringify(S));
-    unsaved=false;document.getElementById('GS').style.display='none';
+    unsaved=false;
     toast('⚠️ Sauvegardé localement — vérifie ta connexion');
+    applySettingsToDOM(S);
+  }
+}
+
+// Apply settings to live DOM immediately (called after save)
+function applySettingsToDOM(S){
+  // Telegram contact
+  if(S.telegram){
+    const tgHandle = S.telegram.replace(/^@/, '');
+    const tgDisplay = S.telegram.startsWith('@') ? S.telegram : '@' + S.telegram;
+    document.querySelectorAll('a[href*="t.me"]').forEach(a=>{ a.href = `https://t.me/${tgHandle}`; });
+    const tgTxt = document.getElementById('contact-tg-handle');
+    if(tgTxt) tgTxt.textContent = tgDisplay;
+  }
+  // WhatsApp links
+  if(S.whatsapp){
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
+      a.href = a.href.replace(/wa\.me\/\d+/, `wa.me/${S.whatsapp}`);
+    });
+  }
+  // Hero badge
+  if(S.heroBadge){ const hb=document.getElementById('hero-badge'); if(hb) hb.textContent=S.heroBadge; }
+  // Hero sub
+  if(S.heroSub){ const hs=document.getElementById('hero-sub'); if(hs) hs.textContent=S.heroSub; }
+  // Min livraison
+  if(S.minLivr !== undefined){
+    const ml=document.getElementById('min-livr-text');
+    if(ml) ml.innerHTML=`${S.minLivr}€ <span style="font-size:12px;color:var(--text-dim);font-weight:400;">en livraison</span>`;
+    const md=document.getElementById('min-detail-text');
+    const meetTxt=(S.minMeet&&S.minMeet>0)?`Meet-up à partir de ${S.minMeet}€`:'Meet-up sans minimum';
+    if(md) md.textContent=`${meetTxt} · Livraison à partir de ${S.minLivr}€`;
+  }
+  // Horaire message
+  if(S.horaireMsg){
+    const hb2=document.getElementById('horaires-box');
+    if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; }
   }
 }
 
@@ -3059,6 +3106,9 @@ function toast(msg){
 
 
   // ── Expose globally ──
+  window.S = S;
+  window.P = P;
+  if(typeof markU !== "undefined") window.markU = markU;
   if(typeof tryLogin !== "undefined") window.tryLogin = tryLogin;
   if(typeof ST !== "undefined") window.ST = ST;
   if(typeof TE !== "undefined") window.TE = TE;
