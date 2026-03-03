@@ -1688,6 +1688,69 @@ body {
 }
 </style>
 
+
+<!-- ===== SMOOTH SCROLL REVEAL ENHANCEMENT ===== -->
+<style>
+.reveal{
+  will-change: transform, opacity;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 0.9s cubic-bezier(.16,1,.3,1),
+    transform 0.9s cubic-bezier(.16,1,.3,1);
+}
+
+.js-ready .reveal{
+  opacity:0;
+  transform: translate3d(0, 32px, 0);
+}
+
+.js-ready .reveal.visible{
+  opacity:1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Prevent harsh reflow when scrolling fast */
+.product,
+.why-card,
+.cat-header,
+.info-block,
+.contact-item{
+  will-change: transform, opacity;
+}
+</style>
+
+
+<!-- ===== ANTIALIASING ENHANCEMENT ===== -->
+<style>
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-num,
+.hero-overlay h1,
+.product h3,
+.cat-name,
+.info-name {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* Prevent subpixel jitter during transform */
+.product,
+.why-card,
+.cat-header,
+.buy-btn,
+.cat-tab {
+  transform: translate3d(0,0,0);
+}
+</style>
+
 </head>
 <body>
 <!-- ─── Admin trigger ─── -->
