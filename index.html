@@ -3211,9 +3211,30 @@ function toast(msg){
   document.addEventListener('DOMContentLoaded', function(){
     var qb = document.querySelector('#ADMIN .hquit');
     if(qb) qb.onclick = window.closeAdminPanel;
-    // Also attach login Enter key
     var li = document.getElementById('li');
     if(li) li.addEventListener('keydown', function(e){ if(e.key==='Enter') tryLogin(); });
+
+    // ── Fermer clavier iOS en tapant dans le vide ──
+    var adminPanel = document.getElementById('ADMIN');
+    if(adminPanel){
+      adminPanel.addEventListener('touchstart', function(e){
+        if(e.target.closest('input, textarea, select, button, label, a')) return;
+        if(document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')){
+          document.activeElement.blur();
+        }
+      }, { passive: true });
+    }
+
+    // ── Bouton "Retour" iOS ferme le clavier sur les inputs (pas textareas) ──
+    document.querySelectorAll('#ADMIN input').forEach(function(el){
+      el.setAttribute('enterkeyhint', 'done');
+      el.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){ e.preventDefault(); el.blur(); }
+      });
+    });
+    document.querySelectorAll('#ADMIN textarea').forEach(function(el){
+      el.setAttribute('enterkeyhint', 'done');
+    });
   });
 
 })();
