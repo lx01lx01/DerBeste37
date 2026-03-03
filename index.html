@@ -1632,6 +1632,62 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
 /* ─── Prevent layout shift on admin open/close ─── */
 html { overflow-x:hidden; }
 </style>
+
+<!-- ===== PERFORMANCE BOOST TELEGRAM IOS ===== -->
+<style>
+.product,
+.cat-tab,
+.buy-btn,
+.why-card,
+.cat-header,
+.video-wrapper,
+.hero img,
+.ticker,
+.festive-teaser,
+.info-block {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* GPU safe animation replacement */
+.hero-num{
+  animation:num-breathe 4s ease-in-out infinite;
+}
+
+@keyframes num-breathe{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.04); }
+}
+
+/* Smooth scroll iOS */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+.ticker{
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+
+.video-wrapper iframe{
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.product:hover,
+.product.lit,
+.why-card:hover,
+.festive-notify-btn:hover {
+  will-change: transform;
+}
+</style>
+
 </head>
 <body>
 <!-- ─── Admin trigger ─── -->
@@ -3704,5 +3760,16 @@ function toast(msg){
   }
 })();
 </script>
+
+<script>
+if (window.Telegram && Telegram.WebApp) {
+  Telegram.WebApp.expand();
+  Telegram.WebApp.enableClosingConfirmation();
+}
+
+document.addEventListener("touchstart", function(){}, {passive:true});
+document.addEventListener("touchmove", function(){}, {passive:true});
+</script>
+
 </body>
 </html>
