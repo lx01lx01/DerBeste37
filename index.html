@@ -3473,7 +3473,6 @@ function confirmA(action,id,title,text){
     else if(action==='reset'){qAction('reset');}
     else if(action==='wipe'){
       if(window.Store){ await window.Store.delete('admin-products'); await window.Store.delete('admin-settings'); }
-      else { localStorage.removeItem('admin-products'); localStorage.removeItem('admin-settings'); }
       toast('💣 Données effacées');setTimeout(()=>location.reload(),1500);
     }
   };
@@ -3514,8 +3513,6 @@ async function saveAll(){
     toast('✅ Sauvegardé — visible par tous !');
     applySettingsToDOM(S);
   }catch(e){
-    localStorage.setItem('admin-products', JSON.stringify(P));
-    localStorage.setItem('admin-settings', JSON.stringify(S));
     unsaved=false;
     toast('⚠️ Sauvegardé localement — vérifie ta connexion');
     applySettingsToDOM(S);
@@ -3666,14 +3663,12 @@ function toast(msg){
           var data = await resp.json();
           if (data !== null) {
             var str = JSON.stringify(data);
-            localStorage.setItem(key, str);
             return { value: str };
           }
         }
       } catch(e) {
         console.log('ℹ️ RTDB GET (using local cache):', e.message);
       }
-      var cached = localStorage.getItem(key);
       return cached ? { value: cached } : null;
     },
 
@@ -3685,11 +3680,9 @@ function toast(msg){
           body   : valueStr
         });
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        localStorage.setItem(key, valueStr);
         return true;
       } catch(e) {
         console.log('ℹ️ RTDB SET failed:', e.message);
-        localStorage.setItem(key, valueStr);
         throw new Error('Firebase: ' + e.message);
       }
     },
@@ -3698,7 +3691,6 @@ function toast(msg){
       try {
         await fetch(DB + '/config/' + key + '.json', { method: 'DELETE' });
       } catch(e) { console.log('ℹ️ RTDB DELETE failed:', e.message); }
-      localStorage.removeItem(key);
     }
   };
 
