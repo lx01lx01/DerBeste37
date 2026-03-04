@@ -3969,17 +3969,33 @@ function toast(msg){
 <script>
 // ── Lazy video loader ──
 function loadVid(thumb, src){
-  var wrapper = thumb.parentElement;
+  var modal = document.getElementById('vidModal');
+  var inner = document.getElementById('vidModalInner');
+  // Clear previous iframe
+  inner.innerHTML = '';
   var iframe = document.createElement('iframe');
   iframe.src = src;
   iframe.allow = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
   iframe.allowFullscreen = true;
   iframe.frameBorder = '0';
   iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
-  wrapper.appendChild(iframe);
-  thumb.style.cssText = 'opacity:0;pointer-events:none;transition:opacity 0.3s;';
-  setTimeout(function(){ thumb.style.display='none'; }, 320);
+  inner.appendChild(iframe);
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
+
+// Close modal
+(function(){
+  var modal = document.getElementById('vidModal');
+  var closeBtn = document.getElementById('vidModalClose');
+  function closeModal(){
+    modal.classList.remove('open');
+    document.getElementById('vidModalInner').innerHTML = '';
+    document.body.style.overflow = '';
+  }
+  if(closeBtn) closeBtn.addEventListener('click', closeModal);
+  if(modal) modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+})();
 </script>
 
 <script>
