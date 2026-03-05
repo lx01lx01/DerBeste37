@@ -2526,8 +2526,16 @@ window.addEventListener('scroll', () => {
         if(tw){
           const tDiv = tw.querySelector('.ticker');
           if(tDiv){
-            const sep = '<span class="ticker-item">&nbsp;·&nbsp;</span>';
-            tDiv.innerHTML = `<span class="ticker-item">${S.ticker}</span>${sep}`.repeat(4);
+            const sep = '<span class="ticker-dot"></span>';
+            const item = `<span class="ticker-item">${S.ticker}</span>${sep}`;
+            // Repeat enough times to fill 200vw+ for seamless loop
+            const repeated = item.repeat(12);
+            // Two copies side by side for infinite CSS scroll
+            tDiv.innerHTML = repeated + repeated;
+            // Adjust speed based on text length (shorter = faster)
+            const charLen = S.ticker.length;
+            const duration = Math.max(45, Math.min(75, charLen * 4.1));
+            tDiv.style.animation = `ticker ${duration}s linear infinite`;
           }
         }
       }
@@ -3813,6 +3821,21 @@ function applySettingsToDOM(S){
   if(S.meetupZone){ const mz=document.getElementById('meetup-zones'); if(mz) mz.textContent=S.meetupZone; }
   // Livraison zones
   if(S.zones && S.zones.length){ const lz=document.getElementById('livraison-zones'); if(lz) lz.innerHTML=S.zones.join('<br>'); }
+  // Ticker
+  const tw=document.getElementById('ticker-wrap');
+  if(tw){
+    const tDiv=tw.querySelector('.ticker');
+    if(tDiv){
+      if(S.tickerOn && S.ticker){
+        const sep='<span class="ticker-dot"></span>';
+        const item=`<span class="ticker-item">${S.ticker}</span>${sep}`;
+        const repeated=item.repeat(12);
+        tDiv.innerHTML=repeated+repeated;
+        const duration=Math.max(45,Math.min(75,S.ticker.length*4.1));
+        tDiv.style.animation=`ticker ${duration}s linear infinite`;
+      }
+    }
+  }
 }
 
 // ═══════════════════════════════════════
