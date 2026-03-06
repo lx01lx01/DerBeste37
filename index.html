@@ -3756,7 +3756,7 @@ async function saveAll(){
   S.waNotif=document.getElementById('s-wanotif').value;
   try{
     var Store = window.Store;
-    if(!Store) throw new Error('Firebase non disponible');
+    if(!Store) throw new Error('Store non disponible');
     await Store.set('admin-products', JSON.stringify(P));
     await Store.set('admin-settings', JSON.stringify(S));
     unsaved=false;
@@ -3915,53 +3915,94 @@ function toast(msg){
 
 
 <script>
-// ══ Firebase Realtime Database Store ══
-// Simple REST: GET/PUT/DELETE — works everywhere, no SDK needed
+// ══ GitHub Gist Store ══
+// Simple REST: GET/PATCH — works everywhere, no SDK needed
 (function(){
-  var DB = 'https://derbeste370-default-rtdb.europe-west1.firebasedatabase.app';
+  var GIST_ID  = '2b848b6b09d4c91e57e82399358a5c3f';
+  var GH_TOKEN = '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'; // ⚠️ Remplace par ton nouveau token si tu en crées un
+  var FILE     = 'config.json';
+  var API      = 'https://api.github.com/gists/' + GIST_ID;
+  var HEADERS  = {
+    'Authorization': 'Bearer ' + GH_TOKEN,
+    'Accept'       : 'application/vnd.github+json',
+    'Content-Type' : 'application/json'
+  };
+
+  // Cache local en mémoire
+  var _cache = null;
 
   window.Store = {
+
     async get(key) {
       try {
-        var resp = await fetch(DB + '/config/' + key + '.json');
+        var resp = await fetch(API, { headers: HEADERS });
         if (resp.ok) {
-          var data = await resp.json();
-          if (data !== null) {
-            var str = JSON.stringify(data);
-            return { value: str };
+          var gist = await resp.json();
+          var raw  = gist.files[FILE] && gist.files[FILE].content;
+          if (raw) {
+            var all = JSON.parse(raw);
+            _cache  = all;
+            return all[key] !== undefined ? { value: JSON.stringify(all[key]) } : null;
           }
         }
       } catch(e) {
-        console.log('ℹ️ RTDB GET (using local cache):', e.message);
+        console.log('ℹ️ Gist GET (fallback cache):', e.message);
+        if (_cache && _cache[key] !== undefined)
+          return { value: JSON.stringify(_cache[key]) };
       }
-      return cached ? { value: cached } : null;
+      return null;
     },
 
     async set(key, valueStr) {
       try {
-        var resp = await fetch(DB + '/config/' + key + '.json', {
-          method : 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body   : valueStr
+        // Lire d'abord pour merger avec les données existantes
+        var current = _cache || {};
+        if (!_cache) {
+          var resp0 = await fetch(API, { headers: HEADERS });
+          if (resp0.ok) {
+            var gist0 = await resp0.json();
+            var raw0  = gist0.files[FILE] && gist0.files[FILE].content;
+            if (raw0) current = JSON.parse(raw0);
+          }
+        }
+
+        current[key] = JSON.parse(valueStr);
+        _cache = current;
+
+        var resp = await fetch(API, {
+          method : 'PATCH',
+          headers: HEADERS,
+          body   : JSON.stringify({
+            files: { [FILE]: { content: JSON.stringify(current, null, 2) } }
+          })
         });
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         return true;
       } catch(e) {
-        console.log('ℹ️ RTDB SET failed:', e.message);
-        throw new Error('Firebase: ' + e.message);
+        console.log('ℹ️ Gist SET failed:', e.message);
+        throw new Error('GitHub Gist: ' + e.message);
       }
     },
 
     async delete(key) {
       try {
-        await fetch(DB + '/config/' + key + '.json', { method: 'DELETE' });
-      } catch(e) { console.log('ℹ️ RTDB DELETE failed:', e.message); }
+        var current = _cache || {};
+        delete current[key];
+        _cache = current;
+        await fetch(API, {
+          method : 'PATCH',
+          headers: HEADERS,
+          body   : JSON.stringify({
+            files: { [FILE]: { content: JSON.stringify(current, null, 2) } }
+          })
+        });
+      } catch(e) { console.log('ℹ️ Gist DELETE failed:', e.message); }
     }
   };
 
   window._storeReady = true;
   window.dispatchEvent(new Event('storeReady'));
-  console.log('✅ Realtime Database Store ready');
+  console.log('✅ GitHub Gist Store ready');
 
   if (typeof window._pendingApply === 'function') {
     window._pendingApply();
