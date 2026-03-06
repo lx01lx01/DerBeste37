@@ -644,7 +644,13 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
   border:1px solid rgba(255,255,255,0.1);
   font-size:12px; color:var(--text);
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+  cursor:pointer; user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
+.price-pill:active{ transform:scale(0.93); }
+.price-pill::after{ content:' +'; font-size:10px; font-weight:800; opacity:0.4; margin-left:2px; }
+.price-pill.pill-selected::after{ content:' ✓'; opacity:0.9; }
 .price-pill.cali-pill   { border-color:rgba(0,232,122,0.35);   color:var(--cali);   background:rgba(0,232,122,0.06);   box-shadow:0 0 8px rgba(0,232,122,0.1); }
 .price-pill.frozen-pill { border-color:rgba(100,216,255,0.35); color:var(--frozen); background:rgba(100,216,255,0.06); box-shadow:0 0 8px rgba(100,216,255,0.1); }
 .price-pill.static-pill { border-color:rgba(255,107,53,0.35);  color:var(--static); background:rgba(255,107,53,0.06);  box-shadow:0 0 8px rgba(255,107,53,0.1); }
@@ -1734,6 +1740,66 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
 }
 /* ─── Prevent layout shift on admin open/close ─── */
 html { overflow-x:hidden; }
+
+/* ─── SELECTED PILL STATE ─── */
+.price-pill.pill-selected{ transform:scale(1.07); font-weight:700; }
+.price-pill.cali-pill.pill-selected{ background:rgba(0,232,122,0.22); box-shadow:0 0 0 2px var(--cali), 0 6px 18px rgba(0,232,122,0.3); }
+.price-pill.frozen-pill.pill-selected{ background:rgba(100,216,255,0.22); box-shadow:0 0 0 2px var(--frozen), 0 6px 18px rgba(100,216,255,0.3); }
+.price-pill.static-pill.pill-selected{ background:rgba(255,107,53,0.22); box-shadow:0 0 0 2px var(--static), 0 6px 18px rgba(255,107,53,0.3); }
+.price-pill.anon-pill.pill-selected{ background:rgba(179,136,255,0.22); box-shadow:0 0 0 2px var(--anon), 0 6px 18px rgba(179,136,255,0.3); }
+.price-pill.olive-pill.pill-selected{ background:rgba(212,168,67,0.22); box-shadow:0 0 0 2px var(--olive), 0 6px 18px rgba(212,168,67,0.3); }
+.price-pill.pill-selected:not(.cali-pill):not(.frozen-pill):not(.static-pill):not(.anon-pill):not(.olive-pill){ background:rgba(255,191,71,0.22); box-shadow:0 0 0 2px #ffbf47, 0 6px 18px rgba(255,191,71,0.3); }
+
+/* ─── ÉCAILLE VISUAL ─── */
+.ecaille-visual{ position:relative; padding-top:56.25%; border-radius:16px; overflow:hidden; margin-bottom:14px; background:linear-gradient(135deg, #0a1a2e 0%, #0d2040 40%, #0a1525 100%); }
+.ecaille-bg-grid{ position:absolute; inset:0; background-image:linear-gradient(rgba(100,216,255,0.06) 1px, transparent 1px),linear-gradient(90deg, rgba(100,216,255,0.06) 1px, transparent 1px); background-size:28px 28px; }
+.ecaille-glow{ position:absolute; top:-40%; left:20%; right:20%; bottom:-40%; background:radial-gradient(ellipse 70% 60% at 50% 50%, rgba(100,216,255,0.18), rgba(0,180,255,0.08) 50%, transparent 75%); animation:ecaille-pulse 4s ease-in-out infinite; }
+@keyframes ecaille-pulse{ 0%,100%{ opacity:0.7; transform:scale(1); } 50%{ opacity:1; transform:scale(1.08); } }
+.ecaille-inner{ position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; z-index:2; }
+.ecaille-crystal{ font-size:54px; line-height:1; filter:drop-shadow(0 0 18px rgba(100,216,255,0.8)) drop-shadow(0 0 40px rgba(0,200,255,0.4)); animation:crystal-spin 8s ease-in-out infinite; }
+@keyframes crystal-spin{ 0%,100%{ transform:rotate(-6deg) scale(1); } 25%{ transform:rotate(4deg) scale(1.06); } 75%{ transform:rotate(-3deg) scale(0.96); } }
+.ecaille-badge{ font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#64d8ff; background:rgba(100,216,255,0.12); border:1px solid rgba(100,216,255,0.35); padding:5px 14px; border-radius:20px; box-shadow:0 0 12px rgba(100,216,255,0.2); }
+.ecaille-purity{ display:flex; flex-direction:column; align-items:center; gap:5px; }
+.ecaille-purity-bar{ width:110px; height:4px; border-radius:4px; background:rgba(100,216,255,0.12); overflow:hidden; }
+.ecaille-purity-fill{ height:100%; width:0; border-radius:4px; background:linear-gradient(90deg, #64d8ff, #00e8f0); box-shadow:0 0 8px rgba(100,216,255,0.6); animation:fill-bar 2.5s cubic-bezier(.4,0,.2,1) 0.5s forwards; }
+@keyframes fill-bar{ 0%{ width:0; } 100%{ width:96%; } }
+.ecaille-purity-label{ font-size:10px; font-weight:600; letter-spacing:1.5px; color:rgba(100,216,255,0.6); text-transform:uppercase; }
+.ecaille-shimmer{ position:absolute; inset:0; z-index:3; pointer-events:none; background:linear-gradient(105deg, transparent 40%, rgba(100,216,255,0.06) 50%, transparent 60%); background-size:200% 100%; animation:ecaille-shim 3.5s ease-in-out infinite; }
+@keyframes ecaille-shim{ 0%{ background-position:200% 0; } 100%{ background-position:-200% 0; } }
+
+/* ─── PANIER ─── */
+#cart-btn{ position:fixed; bottom:calc(24px + env(safe-area-inset-bottom)); right:18px; z-index:400; background:linear-gradient(145deg,#25d366,#1aab4f); color:white; border:none; border-radius:20px; padding:13px 20px; font-family:'DM Sans',sans-serif; font-weight:700; font-size:14px; display:flex; align-items:center; gap:9px; box-shadow:0 6px 28px rgba(37,211,102,0.4), inset 0 1px 0 rgba(255,255,255,0.2); cursor:pointer; -webkit-tap-highlight-color:transparent; transform:translateY(100px); opacity:0; transition:transform 0.4s cubic-bezier(.2,.8,.3,1), opacity 0.3s ease; }
+#cart-btn.visible{ transform:translateY(0); opacity:1; }
+#cart-btn:active{ transform:scale(0.95) translateY(0); }
+#cart-count{ background:rgba(255,255,255,0.25); border-radius:10px; padding:1px 7px; font-size:12px; font-weight:800; min-width:20px; text-align:center; }
+.cart-sheet{ position:fixed; inset:0; z-index:500; display:flex; align-items:flex-end; background:rgba(0,0,0,0); pointer-events:none; transition:background 0.3s ease; }
+.cart-sheet.open{ background:rgba(0,0,0,0.6); pointer-events:all; }
+.cart-panel{ width:100%; max-height:88vh; background:#0d1a14; border-radius:24px 24px 0 0; border-top:1px solid rgba(0,232,122,0.2); padding:0 0 calc(24px + env(safe-area-inset-bottom)); transform:translateY(100%); transition:transform 0.4s cubic-bezier(.2,.8,.3,1); overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.cart-sheet.open .cart-panel{ transform:translateY(0); }
+.cart-handle{ width:36px; height:4px; border-radius:4px; background:rgba(255,255,255,0.15); margin:12px auto 0; }
+.cart-header{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px 12px; border-bottom:1px solid rgba(255,255,255,0.06); }
+.cart-title{ font-family:'Syne',sans-serif; font-size:17px; font-weight:800; display:flex; align-items:center; gap:8px; }
+.cart-clear{ font-size:11px; color:rgba(255,255,255,0.35); background:none; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:5px 10px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.cart-items{ padding:10px 18px; }
+.cart-item{ display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid rgba(255,255,255,0.05); gap:10px; }
+.cart-item:last-child{ border-bottom:none; }
+.cart-item-name{ font-size:14px; font-weight:600; }
+.cart-item-gram{ font-size:11px; margin-top:2px; color:var(--green); font-weight:600; }
+.cart-item-remove{ background:none; border:none; color:rgba(255,255,255,0.25); font-size:16px; cursor:pointer; padding:4px 8px; -webkit-tap-highlight-color:transparent; }
+.cart-item-remove:active{ color:rgba(255,60,60,0.7); }
+.cart-footer{ padding:12px 18px 0; }
+.cart-mode-label{ font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.35); font-weight:600; margin-bottom:10px; }
+.cart-mode-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+.cart-mode-btn{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:14px 10px; background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.1); border-radius:16px; cursor:pointer; font-family:'DM Sans',sans-serif; -webkit-tap-highlight-color:transparent; transition:all 0.2s; }
+.cart-mode-btn:active{ transform:scale(0.95); }
+.cart-mode-btn.selected{ background:rgba(0,232,122,0.1); border-color:rgba(0,232,122,0.5); box-shadow:0 0 16px rgba(0,232,122,0.15); }
+.cart-mode-icon{ font-size:22px; }
+.cart-mode-name{ font-size:12px; font-weight:700; color:rgba(255,255,255,0.7); letter-spacing:0.5px; }
+.cart-mode-btn.selected .cart-mode-name{ color:var(--green); }
+.cart-send-btn{ display:flex; align-items:center; justify-content:center; gap:9px; width:100%; padding:16px; background:linear-gradient(145deg,#25d366,#1aab4f); color:white; border:none; border-radius:16px; font-family:'DM Sans',sans-serif; font-weight:700; font-size:15px; cursor:pointer; -webkit-tap-highlight-color:transparent; box-shadow:0 4px 20px rgba(37,211,102,0.3), inset 0 1px 0 rgba(255,255,255,0.2); transition:transform 0.15s, box-shadow 0.15s, opacity 0.2s; letter-spacing:0.3px; }
+.cart-send-btn:active{ transform:scale(0.97); }
+.cart-empty{ text-align:center; padding:30px; color:rgba(255,255,255,0.3); font-size:13px; }
+
 </style>
 
 <!-- ===== PERFORMANCE BOOST TELEGRAM IOS ===== -->
@@ -1867,7 +1933,7 @@ html, body {
       <span class="splash-logo-text">DerBeste</span>
       <span class="splash-logo-num">37</span>
     </div>
-    <div class="splash-sub">Tours · Since 2020</div>
+    <div class="splash-sub">Tours & Région</div>
     <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
   </div>
 </div>
@@ -1893,7 +1959,7 @@ html, body {
   <div class="hero-grain"></div>
   <div class="hero-particles" id="heroParticles"></div>
   <div class="hero-overlay">
-    <div class="hero-badge" id="hero-badge">⭐ Since 2020</div>
+    <div class="hero-badge" id="hero-badge">🟢 Disponible maintenant</div>
     <h1><span class="hero-derbeste">DerBeste</span><span class="hero-num">37</span></h1>
     
   </div>
@@ -1903,7 +1969,7 @@ html, body {
 <div class="ticker-wrap" id="ticker-wrap">
   <div class="ticker-fade-l"></div>
   <div class="ticker-fade-r"></div>
-  <div class="ticker">
+  <div class="ticker" id="ticker-inner">
     <span class="ticker-item">🛵 Livraison express</span><span class="ticker-dot"></span>
     <span class="ticker-item">37 · 49 · 86 · 36 · 41 · 72</span><span class="ticker-dot"></span>
     <span class="ticker-item">🤝 Meet-up Tours 37000</span><span class="ticker-dot"></span>
@@ -1943,7 +2009,7 @@ html, body {
     <button class="cat-tab active-static" onclick="scrollToSection('sec-static')"><span class="t-ico">⚡</span><span class="t-lbl">Static</span></button>
     <button class="cat-tab active-anon"   onclick="scrollToSection('sec-anon')"><span class="t-ico">🏴‍☠️</span><span class="t-lbl">Anonymuz</span></button>
     <button class="cat-tab active-olive"  onclick="scrollToSection('sec-olive')"><span class="t-ico">🫒</span><span class="t-lbl">Olive</span></button>
-    <button class="cat-tab active-festive" onclick="scrollToSection('sec-festif')"><span class="t-ico">💎</span><span class="t-lbl">Pure 96%</span></button>
+    <button class="cat-tab active-festive" onclick="scrollToSection('sec-festif')"><span class="t-ico">💎</span><span class="t-lbl">Écaille 💎</span></button>
     <div class="cat-sep"></div>
     <button class="cat-tab"              onclick="scrollToSection('sec-info')"><span class="t-ico">ℹ️</span><span class="t-lbl">Info</span></button>
   </div>
@@ -2351,17 +2417,23 @@ html, body {
        💎 PURE 96%
   ══════════════════════════════ -->
   <div class="festive-section reveal" id="sec-festif">
-    <div class="section-title" style="color:#ffbf47;">Pure 96%</div>
+    <div class="section-title" style="color:#ffbf47;">Écaille ❄️</div>
 
     <div class="festive-teaser">
-      <div class="festive-teaser-strip">❄️ &nbsp; Pure 96% — Écaille</div>
+      <div class="festive-teaser-strip">💎 &nbsp; Sélection d'exception — Pure 96%</div>
       <div class="festive-teaser-body">
-        <div class="festive-placeholder">
-          <div class="festive-placeholder-inner">
-            <span class="big-emoji">❄️</span>
-            <span class="label">Vidéo à venir</span>
-            <span class="sublabel">Bientôt disponible</span>
+        <div class="ecaille-visual">
+          <div class="ecaille-bg-grid"></div>
+          <div class="ecaille-glow"></div>
+          <div class="ecaille-inner">
+            <div class="ecaille-crystal">❄️</div>
+            <div class="ecaille-badge">💎 Pure 96%</div>
+            <div class="ecaille-purity">
+              <div class="ecaille-purity-bar"><div class="ecaille-purity-fill"></div></div>
+              <span class="ecaille-purity-label">Pureté 96%</span>
+            </div>
           </div>
+          <div class="ecaille-shimmer"></div>
         </div>
         <div class="festive-info-row">
           <div class="festive-name">Écaille ❄️</div>
@@ -2397,7 +2469,7 @@ html, body {
 
   <div class="info-header reveal">
     <div class="info-name">Der Beste Coffee</div>
-    <div class="info-sub">Numéro 🥇 dans le 37000 · Since 2020 👌</div>
+    <div class="info-sub">Numéro 🥇 dans le 37000 · Tours & Région</div>
   </div>
 
   <div class="info-row reveal">
@@ -2417,7 +2489,7 @@ html, body {
     <span class="block-icon">🛵</span>
     <div class="block-title">Minimum de commande</div>
     <div class="block-text" id="min-livr-text" style="color:var(--green); font-size:15px;">50€ <span style="font-size:12px; color:var(--text-dim); font-weight:400;">en livraison</span></div>
-    <div id="min-detail-text" id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
+    <div id="min-detail-text" style="font-size:11px; color:var(--text-dim); margin-top:6px; font-weight:300; line-height:1.6;">Meet-up sans minimum · Livraison à partir de 50€</div>
   </div>
 
   <div class="horaires-box reveal" id="horaires-box">
@@ -2521,21 +2593,22 @@ window.addEventListener('scroll', () => {
         return;
       }
 
-      if(S.tickerOn && S.ticker){
-        const tw = document.getElementById('ticker-wrap');
-        if(tw){
-          const tDiv = tw.querySelector('.ticker');
-          if(tDiv){
-            const sep = '<span class="ticker-dot"></span>';
+      {
+        const tDiv2 = document.getElementById('ticker-inner');
+        if(tDiv2){
+          const sep = '<span class="ticker-dot"></span>';
+          if(S.tickerOn && S.ticker){
             const item = `<span class="ticker-item">${S.ticker}</span>${sep}`;
-            // Repeat enough times to fill 200vw+ for seamless loop
-            const repeated = item.repeat(12);
-            // Two copies side by side for infinite CSS scroll
-            tDiv.innerHTML = repeated + repeated;
-            // Adjust speed based on text length (shorter = faster)
-            const charLen = S.ticker.length;
-            const duration = Math.max(45, Math.min(75, charLen * 4.1));
-            tDiv.style.animation = `ticker ${duration}s linear infinite`;
+            tDiv2.innerHTML = item.repeat(12) + item.repeat(12);
+            const dur = Math.max(45, Math.min(75, S.ticker.length * 4.1));
+            tDiv2.style.animation = `ticker ${dur}s linear infinite`;
+          } else {
+            const zonesStr = (S.zones && S.zones.length) ? S.zones.slice(0,6).join(' · ') : '37 · 49 · 86 · 36 · 41 · 72';
+            const meetStr  = S.meetupZone || 'Tours 37000';
+            const items = ['🛵 Livraison express', zonesStr, '🤝 Meet-up '+meetStr, '⭐ Since 2020', '🔒 100% Discret', '✦ Qualité Premium'];
+            const innerH = items.map(t => `<span class="ticker-item">${t}</span>${sep}`).join('');
+            tDiv2.innerHTML = innerH + innerH;
+            tDiv2.style.animation = 'ticker 55s linear infinite';
           }
         }
       }
@@ -2543,11 +2616,6 @@ window.addEventListener('scroll', () => {
       if(S.heroBadge !== undefined){
         const hb = document.getElementById('hero-badge');
         if(hb && S.heroBadge) hb.textContent = S.heroBadge;
-      }
-
-      if(S.heroSub !== undefined){
-        const hs = document.getElementById('hero-sub');
-        if(hs && S.heroSub) hs.textContent = S.heroSub;
       }
 
       if(S.minLivr !== undefined){
@@ -2631,6 +2699,11 @@ window.addEventListener('scroll', () => {
     if(sp.status!=='fulfilled' || !sp.value) return;
     const products = JSON.parse(sp.value.value);
     const wa = (() => { try{ return JSON.parse((ss.status==='fulfilled'&&ss.value)?ss.value.value:'{}').whatsapp||'33758464533'; }catch(e){return'33758464533';} })();
+    try{
+      var _s2 = JSON.parse((ss.status==='fulfilled'&&ss.value)?ss.value.value:'{}');
+      window._waTpl = _s2.waTpl||null;
+      window._cartSettings = { meetupZone:_s2.meetupZone||'Tours 37000', minLivr:_s2.minLivr||50, minMeet:_s2.minMeet||0, waNum:_s2.whatsapp||'33758464533' };
+    }catch(e){}
 
     document.querySelectorAll('[data-pid]').forEach(card => {
       const pid = card.dataset.pid;
@@ -2968,6 +3041,13 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Cacher les btn-row WA (bouton reste dans DOM pour le cart)
+  document.querySelectorAll('.btn-row').forEach(function(row){
+    if(row.querySelector('.buy-btn.whatsapp') && !row.querySelector('.btn-oos')){
+      row.style.display = 'none';
+    }
+  });
+
 });
 </script>
 
@@ -3167,10 +3247,10 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="card">
         <div class="card-title">📢 Bandeau défilant</div>
         <div class="fg"><div class="fl">Texte du ticker</div>
-          <input class="fi" id="s-ticker" placeholder="ex: 🔥 Nouvelle arrivée cette semaine..." type="text" oninput="document.getElementById('ticker-preview').textContent=this.value||'Aperçu du ticker'"></div>
+          <input class="fi" id="s-ticker" placeholder="ex: 🔥 Nouvelle arrivée cette semaine..." type="text" oninput="document.getElementById('ticker-preview').textContent=this.value||'Aperçu du ticker';window.markU()"></div>
         <div class="ticker-preview" id="ticker-preview">Aperçu du ticker</div>
         <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
-          <label class="ti"><input type="checkbox" id="s-ticker-on"><div class="tt"><div class="th"></div></div></label>
+          <label class="ti"><input type="checkbox" id="s-ticker-on" onchange="markU()"><div class="tt"><div class="th"></div></div></label>
           <span style="font-size:12px;color:var(--dim);">Activer le ticker personnalisé</span>
         </div>
       </div>
@@ -3178,8 +3258,6 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="slb">Section héro</div>
       <div class="card">
         <div class="card-title">🖼️ Hero & Titre</div>
-        <div class="fg"><div class="fl">Sous-titre hero</div>
-          <input class="fi" id="s-herosub" placeholder="ex: Tours · Since 2020" type="text" oninput="markU()"></div>
         <div class="fg"><div class="fl">Badge hero</div>
           <input class="fi" id="s-herobadge" placeholder="ex: ✅ Disponible maintenant" type="text" oninput="markU()"></div>
       </div>
@@ -3307,6 +3385,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <script>
 
+// Safe console shim — Telegram WebView
+(function(){
+  var c=window.console=window.console||{};
+  ['log','warn','info','error','debug'].forEach(function(m){if(typeof c[m]!=='function')c[m]=function(){};});
+})();
+
 (function(){
   'use strict';
 
@@ -3337,7 +3421,7 @@ let P=[], S={
   whatsapp:'33758464533', telegram:'@DerBeste37', password:'beste37',
   maintenance:false, maintMsg:'Boutique temporairement fermée. Revenez bientôt 🙏',
   ticker:'', tickerOn:false,
-  heroSub:'Tours · Since 2020', heroBadge:'⭐ Since 2020',
+  heroSub:'Tours & Région', heroBadge:'🟢 Disponible maintenant',
   horaires:{Lun:'12h–22h',Mar:'12h–22h',Mer:'12h–22h',Jeu:'12h–22h',Ven:'12h–22h',Sam:'12h–22h',Dim:'Fermé'},
   horaireMsg:'Livraison tous les jours 12h–22h',
   minLivr:50, minMeet:0,
@@ -3382,7 +3466,7 @@ async function adminInit(){
       S={...S,...loaded};
       S.horaires=mergedHoraires;
     }
-  }catch(e){ console.warn('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
+  }catch(e){ console.log('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
   window.S = S; window.P = P;
   buildUI(); render();
 }
@@ -3410,7 +3494,6 @@ function buildUI(){
   document.getElementById('s-maintmsg').value=S.maintMsg;
   document.getElementById('s-ticker').value=S.ticker;
   document.getElementById('s-ticker-on').checked=S.tickerOn;
-  document.getElementById('s-herosub').value=S.heroSub;
   document.getElementById('s-herobadge').value=S.heroBadge;
   document.getElementById('s-minlivr').value=S.minLivr;
   document.getElementById('s-minmeet').value=S.minMeet;
@@ -3687,7 +3770,7 @@ function changePass(){
   S.password=np;
   document.getElementById('s-np').value='';
   document.getElementById('s-cp').value='';
-  markU();toast('🔒 Mot de passe changé');
+  markU(); saveAll(); toast('🔒 Mot de passe changé');
 }
 
 function exportData(){
@@ -3705,7 +3788,7 @@ function importData(input){
       const data=JSON.parse(e.target.result);
       if(data.products)P=data.products;
       if(data.settings)S={...S,...data.settings};
-      markU();render();buildUI();toast('⬆️ Import réussi');
+      window.S=S; window.P=P; markU();render();buildUI();toast('⬆️ Import réussi');
     }catch{toast('❌ Fichier invalide');}
   };
   reader.readAsText(file);
@@ -3742,7 +3825,6 @@ async function saveAll(){
   S.maintMsg=document.getElementById('s-maintmsg').value;
   S.ticker=document.getElementById('s-ticker').value;
   S.tickerOn=document.getElementById('s-ticker-on').checked;
-  S.heroSub=document.getElementById('s-herosub').value;
   S.heroBadge=document.getElementById('s-herobadge').value;
   S.minLivr=parseInt(document.getElementById('s-minlivr').value)||50;
   S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
@@ -3763,6 +3845,8 @@ async function saveAll(){
     toast('✅ Sauvegardé — visible par tous !');
     applySettingsToDOM(S);
   }catch(e){
+    localStorage.setItem('admin-products', JSON.stringify(P));
+    localStorage.setItem('admin-settings', JSON.stringify(S));
     unsaved=false;
     toast('⚠️ Sauvegardé localement — vérifie ta connexion');
     applySettingsToDOM(S);
@@ -3771,6 +3855,9 @@ async function saveAll(){
 
 // Apply settings to live DOM immediately (called after save)
 function applySettingsToDOM(S){
+  // Store for cart
+  window._waTpl = S.waTpl||null;
+  window._cartSettings = { meetupZone:S.meetupZone||'Tours 37000', minLivr:S.minLivr||50, minMeet:S.minMeet||0, waNum:S.whatsapp||'33758464533' };
   // Telegram contact
   if(S.telegram){
     const tgHandle = S.telegram.replace(/^@/, '');
@@ -3787,8 +3874,6 @@ function applySettingsToDOM(S){
   }
   // Hero badge
   if(S.heroBadge){ const hb=document.getElementById('hero-badge'); if(hb) hb.textContent=S.heroBadge; }
-  // Hero sub
-  if(S.heroSub){ const hs=document.getElementById('hero-sub'); if(hs) hs.textContent=S.heroSub; }
   // Min livraison
   if(S.minLivr !== undefined){
     const ml=document.getElementById('min-livr-text');
@@ -3817,23 +3902,28 @@ function applySettingsToDOM(S){
     const hb2=document.getElementById('horaires-box');
     if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(ex) ex.textContent=S.horaireMsg; else { const m=document.createElement('div'); m.className='horaire-msg'; m.style.cssText='font-size:12px;color:var(--text-dim);margin-top:8px;line-height:1.5;'; m.textContent=S.horaireMsg; hb2.appendChild(m); } }
   }
+  // Maintenance badge
+  const mb=document.getElementById('maintBadge');
+  if(mb) mb.style.display=S.maintenance?'block':'none';
   // Meet-up zone
   if(S.meetupZone){ const mz=document.getElementById('meetup-zones'); if(mz) mz.textContent=S.meetupZone; }
   // Livraison zones
   if(S.zones && S.zones.length){ const lz=document.getElementById('livraison-zones'); if(lz) lz.innerHTML=S.zones.join('<br>'); }
-  // Ticker
-  const tw=document.getElementById('ticker-wrap');
-  if(tw){
-    const tDiv=tw.querySelector('.ticker');
-    if(tDiv){
-      if(S.tickerOn && S.ticker){
-        const sep='<span class="ticker-dot"></span>';
-        const item=`<span class="ticker-item">${S.ticker}</span>${sep}`;
-        const repeated=item.repeat(12);
-        tDiv.innerHTML=repeated+repeated;
-        const duration=Math.max(45,Math.min(75,S.ticker.length*4.1));
-        tDiv.style.animation=`ticker ${duration}s linear infinite`;
-      }
+  // Ticker — custom ou auto depuis zones
+  const tDiv2=document.getElementById('ticker-inner');
+  if(tDiv2){
+    var sep2='<span class="ticker-dot"></span>';
+    if(S.tickerOn && S.ticker){
+      var item2='<span class="ticker-item">'+S.ticker+'</span>'+sep2;
+      tDiv2.innerHTML=item2.repeat(12)+item2.repeat(12);
+      var dur2=Math.max(45,Math.min(75,S.ticker.length*4.1));
+      tDiv2.style.animation='ticker '+dur2+'s linear infinite';
+    } else {
+      var z2=(S.zones&&S.zones.length)?S.zones.slice(0,6).join(' · '):'37 · 49 · 86 · 36 · 41 · 72';
+      var m2=S.meetupZone||'Tours 37000';
+      var items2=['🛵 Livraison express',z2,'🤝 Meet-up '+m2,'⭐ Since 2020','🔒 100% Discret','✦ Qualité Premium'];
+      tDiv2.innerHTML=items2.map(function(t){return'<span class="ticker-item">'+t+'</span>'+sep2;}).join('')+items2.map(function(t){return'<span class="ticker-item">'+t+'</span>'+sep2;}).join('');
+      tDiv2.style.animation='ticker 55s linear infinite';
     }
   }
 }
@@ -4052,6 +4142,218 @@ if (window.Telegram && Telegram.WebApp) {
 
 document.addEventListener("touchstart", function(){}, {passive:true});
 document.addEventListener("touchmove", function(){}, {passive:true});
+</script>
+
+
+<!-- PANIER -->
+<button id="cart-btn" onclick="openCart()">
+  🛒 <span id="cart-label">Panier</span>
+  <span id="cart-count">0</span>
+</button>
+
+<div class="cart-sheet" id="cart-sheet" onclick="closeCartOutside(event)">
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-handle"></div>
+    <div class="cart-header">
+      <div class="cart-title">🛒 Ma commande</div>
+      <button class="cart-clear" onclick="clearCart()">Vider</button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-mode-label">Mode de réception</div>
+      <div class="cart-mode-row">
+        <button class="cart-mode-btn" id="cart-mode-meetup" onclick="selectMode('meetup')">
+          <span class="cart-mode-icon">🤝</span>
+          <span class="cart-mode-name">Meet-up</span>
+        </button>
+        <button class="cart-mode-btn" id="cart-mode-livraison" onclick="selectMode('livraison')">
+          <span class="cart-mode-icon">🛵</span>
+          <span class="cart-mode-name">Livraison</span>
+        </button>
+      </div>
+      <button class="cart-send-btn" id="cart-send-btn" onclick="sendCart()" disabled style="opacity:0.4;pointer-events:none;">
+        💬 Choisir un mode d'abord
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ── Panier + Sélecteur de grammage ──
+(function(){
+  var cart = {};
+  var selectedMode = null;
+
+  function getWaNumber(){
+    var cs = window._cartSettings;
+    if(cs && cs.waNum) return cs.waNum;
+    var btn = document.querySelector('.buy-btn.whatsapp');
+    if(btn){ var m = btn.href.match(/wa\.me\/(\d+)/); if(m) return m[1]; }
+    return '33758464533';
+  }
+
+  function getCardRoot(el){
+    return el.closest('[data-pid]') || el.closest('.festive-teaser-body');
+  }
+
+  function getProductName(card){
+    var h3 = card.querySelector('h3');
+    if(h3) return h3.textContent.trim();
+    var fn = card.querySelector('.festive-name');
+    if(fn) return fn.textContent.trim();
+    return '?';
+  }
+
+  function getPid(card){
+    if(card.dataset && card.dataset.pid) return card.dataset.pid;
+    return 'ecaille';
+  }
+
+  // ── Clic sur une pill ──
+  document.addEventListener('click', function(e){
+    var pill = e.target.closest('.price-pill');
+    if(!pill) return;
+    var card = getCardRoot(pill);
+    if(!card) return;
+    if(card.classList && card.classList.contains('out-of-stock')) return;
+
+    card.querySelectorAll('.price-pill').forEach(function(p){ p.classList.remove('pill-selected'); });
+    pill.classList.add('pill-selected');
+
+    try{ window.Telegram.WebApp.HapticFeedback.selectionChanged(); }catch(ex){}
+
+    var text = pill.textContent.replace(/[+✓]/g,'').trim();
+    var parts = text.split('/');
+    var grammage = parts[0] ? parts[0].trim() : text;
+    var prix = parts[1] ? parts[1].trim() : '';
+    var pid = getPid(card);
+    var name = getProductName(card);
+    var waBtn = card.querySelector('.buy-btn.whatsapp');
+    var waNum = waBtn ? (function(){ var m = waBtn.href.match(/wa\.me\/(\d+)/); return m ? m[1] : getWaNumber(); })() : getWaNumber();
+
+    cart[pid] = { name:name, grammage:grammage, prix:prix, waNum:waNum };
+    updateCartUI();
+  });
+
+  function updateCartUI(){
+    var keys = Object.keys(cart);
+    var btn = document.getElementById('cart-btn');
+    var countEl = document.getElementById('cart-count');
+    if(!btn) return;
+    if(keys.length === 0){
+      btn.classList.remove('visible');
+    } else {
+      btn.classList.add('visible');
+      countEl.textContent = keys.length;
+    }
+    renderCartItems();
+  }
+
+  function renderCartItems(){
+    var el = document.getElementById('cart-items');
+    if(!el) return;
+    var keys = Object.keys(cart);
+    if(keys.length === 0){
+      el.innerHTML = '<div class="cart-empty">Sélectionne un grammage sur un produit pour l\'ajouter</div>';
+      return;
+    }
+    el.innerHTML = keys.map(function(pid){
+      var item = cart[pid];
+      return '<div class="cart-item">' +
+        '<div class="cart-item-info">' +
+          '<div class="cart-item-name">' + item.name + '</div>' +
+          '<div class="cart-item-gram">' + item.grammage + (item.prix ? ' — ' + item.prix : '') + '</div>' +
+        '</div>' +
+        '<button class="cart-item-remove" onclick="removeCartItem(\'' + pid + '\')">✕</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  window.removeCartItem = function(pid){
+    delete cart[pid];
+    var card = document.querySelector('[data-pid="' + pid + '"]') ||
+               (pid === 'ecaille' ? document.querySelector('.festive-teaser-body') : null);
+    if(card) card.querySelectorAll('.price-pill').forEach(function(p){ p.classList.remove('pill-selected'); });
+    updateCartUI();
+    try{ window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); }catch(ex){}
+  };
+
+  window.clearCart = function(){
+    Object.keys(cart).forEach(function(pid){ window.removeCartItem(pid); });
+  };
+
+  window.selectMode = function(mode){
+    selectedMode = mode;
+    document.getElementById('cart-mode-meetup').classList.toggle('selected', mode==='meetup');
+    document.getElementById('cart-mode-livraison').classList.toggle('selected', mode==='livraison');
+    var sendBtn = document.getElementById('cart-send-btn');
+    if(sendBtn){
+      sendBtn.disabled = false;
+      sendBtn.style.opacity = '1';
+      sendBtn.style.pointerEvents = 'auto';
+      sendBtn.innerHTML = mode === 'meetup' ? '🤝 Confirmer le meet-up' : '🛵 Confirmer la livraison';
+    }
+    try{ window.Telegram.WebApp.HapticFeedback.selectionChanged(); }catch(ex){}
+  };
+
+  window.openCart = function(){
+    if(Object.keys(cart).length === 0) return;
+    selectedMode = null;
+    document.getElementById('cart-mode-meetup').classList.remove('selected');
+    document.getElementById('cart-mode-livraison').classList.remove('selected');
+    var sendBtn = document.getElementById('cart-send-btn');
+    if(sendBtn){
+      sendBtn.disabled = true;
+      sendBtn.style.opacity = '0.4';
+      sendBtn.style.pointerEvents = 'none';
+      sendBtn.innerHTML = '💬 Choisir un mode d\'abord';
+    }
+    renderCartItems();
+    document.getElementById('cart-sheet').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    try{ window.Telegram.WebApp.HapticFeedback.impactOccurred('medium'); }catch(ex){}
+  };
+
+  window.closeCartOutside = function(e){
+    if(e.target === document.getElementById('cart-sheet')){
+      document.getElementById('cart-sheet').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  };
+
+  window.sendCart = function(){
+    var keys = Object.keys(cart);
+    if(keys.length === 0 || !selectedMode) return;
+    var cs = window._cartSettings || {};
+    var waNum = cs.waNum || cart[keys[0]].waNum || getWaNumber();
+    var isMeetup = selectedMode === 'meetup';
+
+    var lines = ['Bonjour, je souhaite commander 🛒', ''];
+    keys.forEach(function(pid, i){
+      var item = cart[pid];
+      lines.push((i+1) + '. 📦 ' + item.name);
+      lines.push('   ⚖️ ' + item.grammage + (item.prix ? '  💰 ' + item.prix : ''));
+    });
+    lines.push('');
+    if(isMeetup){
+      lines.push('🤝 Mode : Meet-up');
+      lines.push('📍 ' + (cs.meetupZone || 'Tours 37000') + (cs.minMeet > 0 ? ' — Min. ' + cs.minMeet + '€' : ' — Sans minimum'));
+    } else {
+      lines.push('🛵 Mode : Livraison');
+      lines.push('📍 Dép. 37 · 49 · 86 · 36 · 41 · 72 — Min. ' + (cs.minLivr || 50) + '€');
+    }
+    lines.push('🕐 Heure souhaitée :');
+
+    var msg = lines.join('\n');
+    window.location.href = 'https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg);
+    document.getElementById('cart-sheet').classList.remove('open');
+    document.body.style.overflow = '';
+    try{ window.Telegram.WebApp.HapticFeedback.notificationOccurred('success'); }catch(ex){}
+  };
+
+})();
+
 </script>
 
 </body>
