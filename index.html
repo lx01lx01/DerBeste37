@@ -228,17 +228,18 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .ticker-fade-l{ left:0; background:linear-gradient(to right, var(--bg), transparent); }
 .ticker-fade-r{ right:0; background:linear-gradient(to left, var(--bg), transparent); }
 
-.ticker{ display:flex; width:max-content; animation:ticker 18s linear infinite; }
+.ticker{ display:flex; width:max-content; animation:ticker 12s linear infinite; align-items:center; }
 .ticker-item{
   white-space:nowrap; padding:0 20px;
   font-size:10.5px; font-weight:700; letter-spacing:2px;
   text-transform:uppercase; color:var(--green);
-  opacity:0.85;
+  opacity:0.85; vertical-align:middle; line-height:1;
+  display:inline-flex; align-items:center;
 }
 .ticker-dot{
   display:inline-block; width:4px; height:4px;
   background:var(--green); border-radius:50%;
-  opacity:0.5; margin:0 4px; vertical-align:middle;
+  opacity:0.5; margin:0 4px; vertical-align:middle; flex-shrink:0;
 }
 @keyframes ticker{
   0%{ transform:translateX(0); }
@@ -2027,11 +2028,11 @@ html, body {
     <span class="ticker-item">🛵 Livraison express</span><span class="ticker-dot"></span>
     <span class="ticker-item">⭐ Since 2020</span><span class="ticker-dot"></span>
     <span class="ticker-item">🔒 100% Discret</span><span class="ticker-dot"></span>
-    <span class="ticker-item">✦ Qualité Premium</span><span class="ticker-dot"></span>
+    <span class="ticker-item">★ Qualité Premium</span><span class="ticker-dot"></span>
     <span class="ticker-item">🛵 Livraison express</span><span class="ticker-dot"></span>
     <span class="ticker-item">⭐ Since 2020</span><span class="ticker-dot"></span>
     <span class="ticker-item">🔒 100% Discret</span><span class="ticker-dot"></span>
-    <span class="ticker-item">✦ Qualité Premium</span><span class="ticker-dot"></span>
+    <span class="ticker-item">★ Qualité Premium</span><span class="ticker-dot"></span>
   </div>
 </div>
 
@@ -2653,10 +2654,10 @@ window.addEventListener('scroll', () => {
             const dur = Math.max(45, Math.min(75, S.ticker.length * 4.1));
             tDiv2.style.animation = `ticker ${dur}s linear infinite`;
           } else {
-            const items = ['🛵 Livraison express', '⭐ Since 2020', '🔒 100% Discret', '✦ Qualité Premium'];
+            const items = ['🛵 Livraison express', '⭐ Since 2020', '🔒 100% Discret', '★ Qualité Premium'];
             const innerH = items.map(t => `<span class="ticker-item">${t}</span>${sep}`).join('');
             tDiv2.innerHTML = innerH + innerH;
-            tDiv2.style.animation = 'ticker 18s linear infinite';
+            tDiv2.style.animation = 'ticker 12s linear infinite';
           }
         }
       }
@@ -4423,9 +4424,9 @@ function applySettingsToDOM(S){
       var dur2=Math.max(45,Math.min(75,S.ticker.length*4.1));
       tDiv2.style.animation='ticker '+dur2+'s linear infinite';
     } else {
-      var items2=['🛵 Livraison express','⭐ Since 2020','🔒 100% Discret','✦ Qualité Premium'];
+      var items2=['🛵 Livraison express','⭐ Since 2020','🔒 100% Discret','★ Qualité Premium'];
       tDiv2.innerHTML=items2.map(function(t){return'<span class="ticker-item">'+t+'</span>'+sep2;}).join('')+items2.map(function(t){return'<span class="ticker-item">'+t+'</span>'+sep2;}).join('');
-      tDiv2.style.animation='ticker 18s linear infinite';
+      tDiv2.style.animation='ticker 12s linear infinite';
     }
   }
 }
