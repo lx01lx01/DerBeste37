@@ -651,6 +651,66 @@ h1,h2,h3,.hero-badge,.section-title,.price,.info-name{ font-family:'Syne',sans-s
 .price-pill.anon-pill   { border-color:rgba(179,136,255,0.35); color:var(--anon);   background:rgba(179,136,255,0.06); box-shadow:0 0 8px rgba(179,136,255,0.1); }
 .price-pill.olive-pill  { border-color:rgba(212,168,67,0.35);  color:var(--olive);  background:rgba(212,168,67,0.06);  box-shadow:0 0 8px rgba(212,168,67,0.1); }
 
+/* ─── PRICE PILL SELECTABLE ─── */
+.price-pill{
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.price-pill:active{ transform:scale(0.94); }
+
+.price-pill.selected{
+  transform:scale(1.06);
+  font-weight:800;
+}
+.price-pill.cali-pill.selected  { background:rgba(0,232,122,0.22);   border-color:rgba(0,232,122,0.8);   box-shadow:0 0 16px rgba(0,232,122,0.35),   inset 0 1px 0 rgba(255,255,255,0.12); }
+.price-pill.frozen-pill.selected{ background:rgba(100,216,255,0.22); border-color:rgba(100,216,255,0.8); box-shadow:0 0 16px rgba(100,216,255,0.35), inset 0 1px 0 rgba(255,255,255,0.12); }
+.price-pill.static-pill.selected{ background:rgba(255,107,53,0.22);  border-color:rgba(255,107,53,0.8);  box-shadow:0 0 16px rgba(255,107,53,0.35),  inset 0 1px 0 rgba(255,255,255,0.12); }
+.price-pill.anon-pill.selected  { background:rgba(179,136,255,0.22); border-color:rgba(179,136,255,0.8); box-shadow:0 0 16px rgba(179,136,255,0.35), inset 0 1px 0 rgba(255,255,255,0.12); }
+.price-pill.olive-pill.selected { background:rgba(212,168,67,0.22);  border-color:rgba(212,168,67,0.8);  box-shadow:0 0 16px rgba(212,168,67,0.35),  inset 0 1px 0 rgba(255,255,255,0.12); }
+
+/* ─── BUY BTN STATE : sélection requise ─── */
+.buy-btn.needs-select{
+  background:rgba(255,255,255,0.05) !important;
+  border:1px solid rgba(255,255,255,0.12) !important;
+  box-shadow:none !important;
+  color:rgba(255,255,255,0.4) !important;
+  cursor:default;
+  pointer-events:none;
+}
+.buy-btn.needs-select .btn-hint{
+  display:block;
+}
+.btn-hint{
+  display:none;
+  font-size:10px;
+  font-weight:400;
+  opacity:0.6;
+  letter-spacing:0.5px;
+}
+
+/* ─── PRICE LABEL ─── */
+.price-label{
+  width:100%;
+  font-size:10px;
+  color:var(--text-dim);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:6px;
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.price-label::before{
+  content:'';
+  display:inline-block;
+  width:10px; height:1px;
+  background:currentColor;
+  opacity:0.4;
+}
+
 .btn-row{ display:flex; gap:10px; margin-top:auto; padding-top:4px; }
 
 .buy-btn{
@@ -1615,14 +1675,22 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
 .qa.qb{border-color:rgba(100,216,255,.25);background:rgba(100,216,255,.07);color:var(--blue);}
 
 /* ── PROMO ── */
-.promo-row{display:flex;gap:8px;align-items:center;background:var(--sur2);border:1px solid var(--bdr);
-  border-radius:12px;padding:10px 12px;margin-bottom:8px;}
-.promo-info{flex:1;}
+.promo-row{display:flex;gap:8px;align-items:center;background:var(--sur2);border:1px solid rgba(255,210,0,.15);
+  border-radius:12px;padding:12px;margin-bottom:8px;position:relative;}
+.promo-info{flex:1;padding-left:4px;}
 .promo-name{font-size:13px;font-weight:600;}
 .promo-sub{font-size:11px;color:var(--dim);margin-top:2px;}
-.promo-del{width:28px;height:28px;border-radius:8px;background:rgba(255,69,69,.08);
+.promo-meta{font-size:10px;color:rgba(255,210,0,.6);margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;}
+.promo-meta span{background:rgba(255,210,0,.08);border:1px solid rgba(255,210,0,.15);border-radius:6px;padding:2px 7px;}
+.promo-del{width:32px;height:32px;border-radius:8px;background:rgba(255,69,69,.08);
   border:1px solid rgba(255,69,69,.15);color:var(--red);font-size:13px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;}
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.promo-save-btn{width:100%;padding:12px;background:linear-gradient(135deg,rgba(255,210,0,.15),rgba(255,160,0,.1));
+  border:1px solid rgba(255,210,0,.3);border-radius:12px;color:#ffd200;font-size:13px;font-weight:600;
+  cursor:pointer;margin-top:4px;transition:all .2s;}
+.promo-empty{font-size:13px;color:var(--dim);text-align:center;padding:20px;background:var(--sur);border-radius:12px;border:1px dashed var(--bdr);}
+.promo-count{font-size:11px;color:rgba(255,210,0,.7);padding:4px 10px;background:rgba(255,210,0,.08);
+  border-radius:20px;border:1px solid rgba(255,210,0,.15);display:inline-block;margin-bottom:10px;}
 
 /* ── PAYMENT TAGS ── */
 .pay-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
@@ -1728,12 +1796,304 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
 }
 
 
+/* ─── SKELETON CHARGEMENT ─── */
+#catalogue-skeleton {
+  padding: 0 4px;
+}
+.cat-skeleton-block { margin-bottom: 32px; }
+.skel-cat-header {
+  height: 60px; border-radius: 16px;
+  background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.04) 75%);
+  background-size: 200% 100%;
+  animation: skel-shine 1.4s infinite;
+  margin-bottom: 14px;
+}
+.skel-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.skel-card {
+  height: 260px; border-radius: 20px;
+  background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.07) 50%, rgba(255,255,255,.04) 75%);
+  background-size: 200% 100%;
+  animation: skel-shine 1.4s infinite;
+}
+.skel-card:nth-child(2) { animation-delay: .2s; }
+@keyframes skel-shine {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* ─── iOS: prevent zoom on input focus ─── */
 @media screen and (-webkit-min-device-pixel-ratio:0){
   select:focus, textarea:focus, input:focus { font-size:16px !important; }
 }
 /* ─── Prevent layout shift on admin open/close ─── */
 html { overflow-x:hidden; }
+
+/* ════════════════════════════════
+   🛒 PANIER
+════════════════════════════════ */
+
+/* Bulle flottante */
+#cart-bubble{
+  position:fixed; bottom:28px; right:20px; z-index:8000;
+  width:54px; height:54px; border-radius:50%;
+  background:linear-gradient(145deg,#00e87a,#00c866);
+  box-shadow:0 4px 20px rgba(0,232,122,0.4), 0 0 0 0 rgba(0,232,122,0.3);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  transition:transform 0.2s, box-shadow 0.2s;
+  -webkit-tap-highlight-color:transparent;
+}
+#cart-bubble svg{ width:22px; height:22px; color:white; stroke:white; }
+#cart-bubble:active{ transform:scale(0.92); }
+#cart-bubble.has-items{
+  animation:cart-pulse 2.5s ease-in-out infinite;
+}
+#cart-bubble.bounce{
+  animation:cart-bounce 0.45s cubic-bezier(.36,.07,.19,.97) both !important;
+}
+@keyframes cart-pulse{
+  0%,100%{ box-shadow:0 4px 20px rgba(0,232,122,0.4), 0 0 0 0 rgba(0,232,122,0.35); }
+  60%{ box-shadow:0 4px 20px rgba(0,232,122,0.4), 0 0 0 10px rgba(0,232,122,0); }
+}
+@keyframes cart-bounce{
+  0%,100%{ transform:scale(1); }
+  30%{ transform:scale(1.22); }
+  60%{ transform:scale(0.92); }
+  80%{ transform:scale(1.06); }
+}
+
+/* Badge compteur */
+#cart-count{
+  position:absolute; top:-4px; right:-4px;
+  min-width:20px; height:20px; border-radius:10px;
+  background:#ff4545; color:white;
+  font-size:11px; font-weight:800; font-family:'Syne',sans-serif;
+  display:flex; align-items:center; justify-content:center;
+  padding:0 5px;
+  border:2px solid var(--bg);
+  opacity:0; transform:scale(0);
+  transition:opacity 0.2s, transform 0.2s;
+}
+#cart-bubble.has-items #cart-count{
+  opacity:1; transform:scale(1);
+}
+
+/* Overlay */
+#cart-overlay{
+  position:fixed; inset:0; z-index:8001;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  opacity:0; pointer-events:none;
+  transition:opacity 0.3s;
+}
+#cart-overlay.open{ opacity:1; pointer-events:all; }
+
+/* Drawer */
+#cart-drawer{
+  position:fixed; bottom:0; left:0; right:0; z-index:8002;
+  background:linear-gradient(180deg,#111f17 0%,#0d1a14 100%);
+  border-top:1px solid rgba(0,232,122,0.2);
+  border-radius:24px 24px 0 0;
+  padding:0 0 env(safe-area-inset-bottom,0px);
+  max-height:82vh;
+  transform:translateY(100%);
+  transition:transform 0.38s cubic-bezier(.2,.8,.3,1);
+  display:flex; flex-direction:column;
+  box-shadow:0 -8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset;
+}
+#cart-drawer::before{
+  content:''; display:block; width:36px; height:4px;
+  background:rgba(255,255,255,0.15); border-radius:2px;
+  margin:12px auto 0; flex-shrink:0;
+}
+#cart-drawer.open{ transform:translateY(0); }
+
+/* Header */
+.cart-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 20px 12px; flex-shrink:0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.cart-title{
+  font-family:'Syne',sans-serif; font-size:17px; font-weight:800;
+  color:white;
+}
+.cart-close{
+  width:30px; height:30px; border-radius:50%;
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.5); font-size:13px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* Items list */
+#cart-items{
+  overflow-y:auto; flex:1; padding:8px 16px;
+  -webkit-overflow-scrolling:touch;
+}
+.cart-item{
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:14px; margin-bottom:8px;
+  animation:cart-item-in 0.28s cubic-bezier(.2,.8,.3,1) both;
+}
+@keyframes cart-item-in{
+  from{ opacity:0; transform:translateX(16px); }
+  to{ opacity:1; transform:translateX(0); }
+}
+.cart-item-info{ flex:1; min-width:0; }
+.cart-item-name{
+  font-family:'Syne',sans-serif; font-size:14px; font-weight:700;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  color:rgba(255,255,255,0.92);
+}
+.cart-item-gram{
+  font-size:12px; color:var(--green); margin-top:3px; font-weight:500;
+}
+.cart-item-del{
+  width:28px; height:28px; border-radius:8px; flex-shrink:0;
+  background:rgba(255,69,69,0.08); border:1px solid rgba(255,69,69,0.18);
+  color:rgba(255,100,100,0.8); font-size:12px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.cart-item-del:active{ background:rgba(255,69,69,0.2); transform:scale(0.9); }
+
+/* Footer */
+#cart-footer{ padding:12px 16px 16px; flex-shrink:0; border-top:1px solid rgba(255,255,255,0.06); }
+.cart-total-row{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:10px;
+}
+.cart-total-label{ font-size:12px; color:rgba(255,255,255,0.45); letter-spacing:0.5px; }
+.cart-total-val{ font-family:'Syne',sans-serif; font-size:18px; font-weight:800; color:var(--green); }
+.cart-note{ font-size:11px; color:rgba(255,255,255,0.3); margin-bottom:12px; line-height:1.5; }
+.cart-wa-btn{
+  display:flex; align-items:center; justify-content:center; gap:9px;
+  width:100%; padding:15px; border-radius:16px;
+  background:linear-gradient(145deg,#25d366,#1aab4f);
+  color:white; font-family:'DM Sans',sans-serif; font-weight:700; font-size:15px;
+  text-decoration:none; cursor:pointer;
+  box-shadow:0 4px 20px rgba(37,211,102,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+  transition:filter 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.cart-wa-btn:active{ transform:scale(0.97); filter:brightness(0.95); }
+.cart-clear-btn{
+  width:100%; padding:10px; margin-top:8px;
+  background:transparent; border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px; color:rgba(255,255,255,0.3);
+  font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;
+  transition:color 0.2s, border-color 0.2s;
+}
+.cart-clear-btn:active{ color:rgba(255,100,100,0.7); border-color:rgba(255,69,69,0.25); }
+
+/* État vide */
+#cart-empty{
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:32px 20px; gap:8px;
+}
+.cart-empty-icon{ font-size:44px; opacity:0.25; }
+.cart-empty-txt{ font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:rgba(255,255,255,0.35); }
+.cart-empty-sub{ font-size:12px; color:rgba(255,255,255,0.2); text-align:center; line-height:1.5; max-width:240px; }
+
+/* Bouton "Ajouter au panier" sur les cartes produits */
+.add-to-cart-btn{
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:11px 14px; border-radius:14px; flex-shrink:0;
+  background:rgba(0,232,122,0.1); border:1px solid rgba(0,232,122,0.3);
+  color:var(--green); font-size:13px; font-weight:600;
+  cursor:pointer; font-family:'DM Sans',sans-serif;
+  transition:background 0.18s, transform 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.add-to-cart-btn:active{ transform:scale(0.93); background:rgba(0,232,122,0.2); }
+.add-to-cart-btn.added{
+  background:rgba(0,232,122,0.18); border-color:rgba(0,232,122,0.6);
+  color:var(--green);
+}
+.add-to-cart-btn svg{ width:16px; height:16px; }
+
+/* ════════════════════════════════
+   📣 ANNONCES
+════════════════════════════════ */
+
+#annonce-bar{
+  width:100%; z-index:500; position:relative;
+  animation: annonce-slidein 0.4s cubic-bezier(.2,.8,.3,1) both;
+}
+@keyframes annonce-slidein{
+  from{ opacity:0; transform:translateY(-16px); }
+  to{   opacity:1; transform:translateY(0); }
+}
+#annonce-bar-inner{
+  display:flex; align-items:center; gap:10px;
+  padding:11px 16px; font-size:13px; font-weight:500;
+  font-family:'DM Sans',sans-serif; line-height:1.4;
+}
+#annonce-bar-icon{ font-size:16px; flex-shrink:0; }
+#annonce-bar-txt{ flex:1; }
+#annonce-bar-close{
+  background:none; border:none; color:inherit; opacity:0.5;
+  font-size:14px; cursor:pointer; padding:2px 4px; flex-shrink:0; line-height:1;
+}
+#annonce-bar-close:hover{ opacity:1; }
+#annonce-bar.type-info    { background:rgba(42,171,238,0.15);  border-bottom:1px solid rgba(42,171,238,0.3);  color:#7dd3f7; }
+#annonce-bar.type-success { background:rgba(0,232,122,0.12);   border-bottom:1px solid rgba(0,232,122,0.25);  color:#00e87a; }
+#annonce-bar.type-warning { background:rgba(255,160,0,0.12);   border-bottom:1px solid rgba(255,160,0,0.25);  color:#ffb020; }
+#annonce-bar.type-promo   { background:rgba(255,69,69,0.12);   border-bottom:1px solid rgba(255,69,69,0.25);  color:#ff7070; }
+
+.ticker-wrap.urgent{ background:rgba(255,40,40,0.1); border-top:1px solid rgba(255,69,69,0.15); }
+.ticker-wrap.urgent .ticker-item{ color:#ff6060; font-weight:600; }
+.ticker-wrap.urgent .ticker-dot{ background:#ff6060; }
+
+#annonce-popup-overlay{
+  display:none; position:fixed; inset:0; z-index:8500;
+  background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
+#annonce-popup-overlay.open{ display:block; }
+
+#annonce-popup{
+  position:fixed; z-index:8501;
+  left:50%; top:50%; transform:translate(-50%,-50%) scale(0.88);
+  width:calc(100% - 40px); max-width:340px;
+  background:linear-gradient(160deg,#132219,#0d1a14);
+  border:1px solid rgba(0,232,122,0.2); border-radius:24px;
+  padding:32px 24px 28px; text-align:center;
+  box-shadow:0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;
+  opacity:0; pointer-events:none;
+  transition:opacity 0.3s, transform 0.35s cubic-bezier(.2,.8,.3,1);
+}
+#annonce-popup.open{
+  opacity:1; pointer-events:all; transform:translate(-50%,-50%) scale(1);
+}
+#annonce-popup-close{
+  position:absolute; top:14px; right:14px;
+  width:28px; height:28px; border-radius:50%;
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.4); font-size:12px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+#annonce-popup-emoji{ font-size:42px; margin-bottom:12px; line-height:1; }
+#annonce-popup-title{
+  font-family:'Syne',sans-serif; font-size:20px; font-weight:800;
+  color:white; margin-bottom:10px; letter-spacing:-0.3px; line-height:1.2;
+}
+#annonce-popup-body{
+  font-size:14px; color:rgba(255,255,255,0.6); line-height:1.6;
+  margin-bottom:22px; font-weight:300;
+}
+#annonce-popup-btn{
+  width:100%; padding:14px; border-radius:14px;
+  background:linear-gradient(145deg,var(--green),#00c866);
+  border:none; color:#0d1a14; font-family:'DM Sans',sans-serif;
+  font-weight:700; font-size:15px; cursor:pointer;
+  box-shadow:0 4px 20px rgba(0,232,122,0.35);
+  transition:filter 0.2s, transform 0.15s;
+}
+#annonce-popup-btn:active{ transform:scale(0.97); filter:brightness(0.95); }
 </style>
 
 <!-- ===== PERFORMANCE BOOST TELEGRAM IOS ===== -->
@@ -1919,6 +2279,25 @@ html, body {
   </div>
 </div>
 
+<!-- ═══ BANNIÈRE ANNONCE ═══ -->
+<div id="annonce-bar" style="display:none;">
+  <div id="annonce-bar-inner">
+    <span id="annonce-bar-icon"></span>
+    <span id="annonce-bar-txt"></span>
+    <button id="annonce-bar-close" onclick="document.getElementById('annonce-bar').style.display='none'" aria-label="Fermer">✕</button>
+  </div>
+</div>
+
+<!-- ═══ POP-UP ANNONCE ═══ -->
+<div id="annonce-popup-overlay" onclick="closeAnnoncePopup()"></div>
+<div id="annonce-popup">
+  <button id="annonce-popup-close" onclick="closeAnnoncePopup()">✕</button>
+  <div id="annonce-popup-emoji">🎉</div>
+  <div id="annonce-popup-title"></div>
+  <div id="annonce-popup-body"></div>
+  <button id="annonce-popup-btn" onclick="closeAnnoncePopup()"></button>
+</div>
+
 <!-- COMMANDE NOTICE -->
 <div class="wa-notice-wrap">
   <div class="wa-notice-border-t"></div>
@@ -1951,437 +2330,24 @@ html, body {
 
 <div class="container">
 
-  <!-- ══════════════════════════════
-       🌿 CALI HOLLANDAISE — 4 items
-  ══════════════════════════════ -->
-  <div class="cat-section section-cali grid-2 reveal" id="sec-cali">
-    <div class="cat-header">
-      <div class="cat-icon">🌴</div>
-      <div class="cat-header-text">
-        <div class="cat-label">Catégorie</div>
-        <div class="cat-name">Cali Hollandaise</div>
-        <div class="cat-sub">4 sélections premium — Qualité top niveau</div>
-      </div>
-    </div>
+  <!-- ═══════════════════════════════════════
+       CATALOGUE DYNAMIQUE — rendu depuis Gist
+  ════════════════════════════════════════ -->
+  <div id="catalogue-root"></div>
 
-    <div class="products-grid">
-    <!-- Produit 1 — Gelato -->
-    <div class="product cali-card reveal" data-pid="gelato">
-      <div class="video-wrapper">
-        <div class="vid-thumb" onclick="loadVid(this,'https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=gelato_tkpg56&autoplay=true')">
-          <img src="https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/gelato_tkpg56.jpg" loading="lazy" alt="Gelato">
-          <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-          <div class="vid-thumb-label">Appuyer pour lire</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>Gelato 🌈</h3>
-        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
-      </div>
-      <p>Saveurs douces et fruitées, notes de vanille.</p>
-      <div class="price">
-        <span class="price-pill cali-pill">2.5G / 40€</span>
-        <span class="price-pill cali-pill">5G / 60€</span>
-        <span class="price-pill cali-pill">10G / 100€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Gelato%20%F0%9F%8C%88%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
+  <!-- Skeleton chargement -->
+  <div id="catalogue-skeleton">
+    <div class="cat-skeleton-block">
+      <div class="skel-cat-header"></div>
+      <div class="skel-cards"><div class="skel-card"></div><div class="skel-card"></div></div>
     </div>
-
-    <!-- Produit 2 — Runtz -->
-    <div class="product cali-card out-of-stock reveal" data-pid="runtz">
-      <div class="video-wrapper">
-        <div class="vid-thumb" onclick="loadVid(this,'https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=runtz_hnzuyh&autoplay=true')">
-          <img src="https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/runtz_hnzuyh.jpg" loading="lazy" alt="Runtz">
-          <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-          <div class="vid-thumb-label">Appuyer pour lire</div>
-        </div>
-        <div class="oos-badge">Rupture</div>
-      </div>
-      <div class="product-header">
-        <h3>Runtz 🍍</h3>
-        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
-      </div>
-      <p>Saveurs d'agrumes, notes de bonbons.</p>
-      <div class="price">
-        <span class="price-pill cali-pill">2.5G / 40€</span>
-        <span class="price-pill cali-pill">5G / 60€</span>
-        <span class="price-pill cali-pill">10G / 100€</span>
-      </div>
-      <div class="btn-row">
-        <div class="btn-oos">❌ Indisponible</div>
-      </div>
-    </div>
-
-    <!-- Produit 3 — Tropicanozz -->
-    <div class="product cali-card reveal" data-pid="tropi">
-      <div class="video-wrapper">
-        <div class="vid-thumb" onclick="loadVid(this,'https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=tropi_gchm6a&autoplay=true')">
-          <img src="https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/tropi_gchm6a.jpg" loading="lazy" alt="Tropicanozz">
-          <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-          <div class="vid-thumb-label">Appuyer pour lire</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>Tropicanozz 🍹</h3>
-        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
-      </div>
-      <p>Notes exotiques d'ananas et d'agrumes.</p>
-      <div class="price">
-        <span class="price-pill cali-pill">2.5G / 40€</span>
-        <span class="price-pill cali-pill">5G / 60€</span>
-        <span class="price-pill cali-pill">10G / 100€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Tropicanozz%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
-
-    <!-- Produit 4 — GMO -->
-    <div class="product cali-card reveal" data-pid="gmo">
-      <div class="video-wrapper">
-        <div class="vid-thumb" onclick="loadVid(this,'https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=gmo_wedtc2&autoplay=true')">
-          <img src="https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/gmo_wedtc2.jpg" loading="lazy" alt="GMO">
-          <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-          <div class="vid-thumb-label">Appuyer pour lire</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>GMO 🥞</h3>
-        <span class="product-tag tag-cali">🌴 Cali Hollandaise</span>
-      </div>
-      <p>Goût unique et puissant.</p>
-      <div class="price">
-        <span class="price-pill cali-pill">2.5G / 40€</span>
-        <span class="price-pill cali-pill">5G / 60€</span>
-        <span class="price-pill cali-pill">10G / 100€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20GMO%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
-    </div><!-- /products-grid -->
-  </div>
-
-  <!-- ══════════════════════════════
-       ❄️ FROZEN — 2 items
-  ══════════════════════════════ -->
-  <div class="cat-section section-frozen grid-2 reveal" id="sec-frozen">
-    <div class="cat-header">
-      <div class="cat-icon">❄️</div>
-      <div class="cat-header-text">
-        <div class="cat-label">Catégorie</div>
-        <div class="cat-name">Frozen</div>
-        <div class="cat-sub">Sift Alec 220/90 🧨 — Meilleur rapport qualité/prix</div>
-      </div>
-    </div>
-
-    <div class="products-grid">
-    <!-- Produit 5 — Pannacotta -->
-    <div class="product frozen-card reveal" data-pid="pannacotta">
-      <div class="video-wrapper">
-        <div class="video-placeholder">
-          <div class="video-placeholder-border"></div>
-          <div class="vp-icon">☄️</div>
-          <div class="vp-title">Vidéo à venir</div>
-          <div class="vp-sub">Pannacotta</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>Pannacotta ☄️</h3>
-        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-frozen">❄️ Frozen Sift</span>
-          <span class="product-tag tag-new">✨ Nouveauté</span>
-        </div>
-      </div>
-      <p>Frozen Sift Alec 220/90. Arôme de vanille, notes sucrées.</p>
-      <div class="price">
-        <span class="price-pill frozen-pill">2G / 30€</span>
-        <span class="price-pill frozen-pill">5G / 70€</span>
-        <span class="price-pill frozen-pill">10G / 120€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Pannacotta%20%E2%98%84%EF%B8%8F%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
-
-    <!-- Produit 6 — Lemon Lobster -->
-    <div class="product frozen-card reveal" data-pid="lobster">
-      <div class="video-wrapper">
-        <div class="video-placeholder">
-          <div class="video-placeholder-border"></div>
-          <div class="vp-icon">🪐</div>
-          <div class="vp-title">Vidéo à venir</div>
-          <div class="vp-sub">Lemon Lobster</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>Lemon Lobster 🪐</h3>
-        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-frozen">❄️ Frozen Sift</span>
-          <span class="product-tag tag-new">✨ Nouveauté</span>
-        </div>
-      </div>
-      <p>Frozen Sift Alec 220/90. Arôme de citron et d'agrumes, notes épicées.</p>
-      <div class="price">
-        <span class="price-pill frozen-pill">2G / 30€</span>
-        <span class="price-pill frozen-pill">5G / 70€</span>
-        <span class="price-pill frozen-pill">10G / 120€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Lemon%20Lobster%20%F0%9F%AA%90%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
-    </div><!-- /products-grid -->
-  </div>
-
-  <!-- ══════════════════════════════
-       ⚡ STATIC PREMIUM
-  ══════════════════════════════ -->
-  <div class="cat-section section-static reveal" id="sec-static">
-    <div class="cat-header">
-      <div class="cat-icon">⚡</div>
-      <div class="cat-header-text">
-        <div class="cat-label">Catégorie</div>
-        <div class="cat-name">Static Premium</div>
-        <div class="cat-sub">4 références — dont 3 issues de top farm</div>
-      </div>
-    </div>
-
-    <div class="product static-card reveal" data-pid="plata">
-      <div class="video-wrapper">
-        <div class="video-placeholder">
-          <div class="video-placeholder-border"></div>
-          <div class="vp-icon">🚀</div>
-          <div class="vp-title">Vidéo à venir</div>
-          <div class="vp-sub">Plata O' Plomo</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>Plata O' Plomo 🚀</h3>
-        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-static">⚡ Static Premium</span>
-          <span class="product-tag tag-new">✨ Nouveauté</span>
-        </div>
-      </div>
-      <p>Gaz Boof 💣 — Plata O' Plomo Farm. Puissance brute.</p>
-      <div class="price">
-        <span class="price-pill static-pill">2G / 50€</span>
-        <span class="price-pill static-pill">5G / 110€</span>
-        <span class="price-pill static-pill">10G / 200€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Plata%20O'%20Plomo%20%F0%9F%9A%80%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
+    <div class="cat-skeleton-block">
+      <div class="skel-cat-header"></div>
+      <div class="skel-cards"><div class="skel-card"></div></div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════
-       🏴‍☠️ ANONYMOUZ FARM 2026
-  ══════════════════════════════ -->
-  <div class="cat-section section-anon reveal" id="sec-anon">
-    <div class="cat-header">
-      <div class="cat-icon">🏴‍☠️</div>
-      <div class="cat-header-text">
-        <div class="cat-label">Top Farm Exclusive</div>
-        <div class="cat-name">Anonymuz Farm</div>
-        <div class="cat-sub">Static Sift 2026 — Sélection d'élite</div>
-      </div>
-    </div>
-
-    <div class="top-farm-banner">
-      <span>🏆</span>
-      <div>
-        <div>Top Farm 2026</div>
-        <p>Les 3 références issues de la meilleure farm de la saison</p>
-      </div>
-    </div>
-
-    <div class="product anon-card reveal" data-pid="anon">
-      <div class="video-wrapper">
-        <div class="vid-thumb" onclick="loadVid(this,'https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=ano_u1eyxc&autoplay=true')">
-          <img src="https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/ano_u1eyxc.jpg" loading="lazy" alt="Anonymuz Farm">
-          <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-          <div class="vid-thumb-label">Appuyer pour lire</div>
-        </div>
-      </div>
-
-      <div class="product-header" style="margin-bottom:14px;">
-        <h3>Static Sift 2026</h3>
-        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-anon">🏴‍☠️ Anonymuz</span>
-          <span class="product-tag tag-top">🏆 Top Farm</span>
-        </div>
-      </div>
-
-      <div class="anon-strains">
-        <div class="anon-strain-item">
-          <div class="anon-strain-name">Weeding Cake 🎂</div>
-          <div class="anon-strain-desc">Sucré, fruité, terreux. Notes de menthe et d'épices poivrées.</div>
-        </div>
-        <div class="anon-strain-item">
-          <div class="anon-strain-name">Gelato 41 🍭</div>
-          <div class="anon-strain-desc">Vanille, crème, touches de lavande.</div>
-        </div>
-        <div class="anon-strain-item">
-          <div class="anon-strain-name">Ice Cream 🍨</div>
-          <div class="anon-strain-desc">Arôme sucré de glace à la crème.</div>
-        </div>
-      </div>
-
-      <div class="price" style="margin-top:14px;">
-        <span class="price-pill anon-pill">1.5G / 40€</span>
-        <span class="price-pill anon-pill">5G / 120€</span>
-        <span class="price-pill anon-pill">10G / 200€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Anonymuz%20Farm%20Static%20Sift%0A%F0%9F%8C%BF%20Strain%20%3A%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════
-       🫒 OLIVE
-  ══════════════════════════════ -->
-  <div class="cat-section section-olive reveal" id="sec-olive">
-    <div class="cat-header">
-      <div class="cat-icon">🫒</div>
-      <div class="cat-header-text">
-        <div class="cat-label">Catégorie</div>
-        <div class="cat-name">Olive</div>
-        <div class="cat-sub">Exclusivité Hubba Bubbatz Farm — 3 références</div>
-      </div>
-    </div>
-
-    <div class="hubba-banner reveal">
-      <div class="hubba-banner-glow"></div>
-      <div class="hubba-banner-inner">
-        <div class="hubba-icon">🫒</div>
-        <div class="hubba-text">
-          <div class="hubba-title">Hubba Bubbatz Farm</div>
-          <div class="hubba-sub">Les 3 sélections Olive issues de la même farm d'exception</div>
-        </div>
-        <div class="hubba-badge">Farm Exclu</div>
-      </div>
-      <div class="hubba-strains">
-        <span>👺 Sultan Static</span>
-        <span>🍊 Tangie</span>
-        <span>🍋 Lemon Ice</span>
-      </div>
-    </div>
-
-    <div class="product olive-card reveal" data-pid="sultan">
-      <div class="video-wrapper">
-        <div class="vid-thumb" onclick="loadVid(this,'https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=sultan_mshkhn&autoplay=true')">
-          <img src="https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/sultan_mshkhn.jpg" loading="lazy" alt="Sultan Static">
-          <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-          <div class="vid-thumb-label">Appuyer pour lire</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>Sultan Static 👺</h3>
-        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-olive">🫒 Olive</span>
-          <span class="product-tag tag-hubba">💥 Static</span>
-        </div>
-      </div>
-      <p>Drop Cherry 🍒 — Hubba Bubbatz Farm. Static puissant aux notes cerise profondes. Finition cristalline.</p>
-      <div class="price">
-        <span class="price-pill olive-pill">5G / 120€</span>
-        <span class="price-pill olive-pill">10G / 200€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Sultan%20Static%20%F0%9F%91%BA%20(Olive%20%7C%20Hubba%20Bubbatz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
-
-    <div class="product olive-card reveal" data-pid="tangie">
-      <div class="video-wrapper">
-        <div class="vid-thumb" onclick="loadVid(this,'https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=tangie_fresh_fro_bwh1jv&autoplay=true')">
-          <img src="https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/tangie_fresh_fro_bwh1jv.jpg" loading="lazy" alt="Tangie">
-          <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-          <div class="vid-thumb-label">Appuyer pour lire</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>Tangie 🍊</h3>
-        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-olive">🫒 Olive</span>
-          <span class="product-tag tag-frozen">❄️ Fresh Frozen</span>
-        </div>
-      </div>
-      <p>Fresh Frozen — Hubba Bubbatz Farm. Notes d'agrumes, orange vive et fraîche. Finition irréprochable.</p>
-      <div class="price">
-        <span class="price-pill olive-pill">5G / 100€</span>
-        <span class="price-pill olive-pill">10G / 160€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Tangie%20%F0%9F%8D%91%20Fresh%20Frozen%20(Olive%20%7C%20Hubba%20Bubbatz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
-
-    <div class="product olive-card reveal" data-pid="lemon_ice">
-      <div class="video-wrapper">
-        <div class="vid-thumb" onclick="loadVid(this,'https://player.cloudinary.com/embed/?cloud_name=dsygea1px&public_id=lemon_ice_k5aatd&autoplay=true')">
-          <img src="https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/lemon_ice_k5aatd.jpg" loading="lazy" alt="Lemon Ice">
-          <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
-          <div class="vid-thumb-label">Appuyer pour lire</div>
-        </div>
-      </div>
-      <div class="product-header">
-        <h3>Lemon Ice 🍋</h3>
-        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">
-          <span class="product-tag tag-olive">🫒 Olive</span>
-          <span class="product-tag tag-hubba">💥 Static</span>
-        </div>
-      </div>
-      <p>Static — Hubba Bubbatz Farm. Citron glacé, puissance et fraîcheur réunies.</p>
-      <div class="price">
-        <span class="price-pill olive-pill">5G / 100€</span>
-        <span class="price-pill olive-pill">10G / 160€</span>
-      </div>
-      <div class="btn-row">
-        <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20Lemon%20Ice%20%F0%9F%8D%8B%20Static%20(Olive%20%7C%20Hubba%20Bubbatz%20Farm)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════
-       💎 PURE 96%
-  ══════════════════════════════ -->
-  <div class="festive-section reveal" id="sec-festif">
-    <div class="section-title" style="color:#ffbf47;">Pure 96%</div>
-
-    <div class="festive-teaser">
-      <div class="festive-teaser-strip">❄️ &nbsp; Pure 96% — Écaille</div>
-      <div class="festive-teaser-body">
-        <div class="festive-placeholder">
-          <div class="festive-placeholder-inner">
-            <span class="big-emoji">❄️</span>
-            <span class="label">Vidéo à venir</span>
-            <span class="sublabel">Bientôt disponible</span>
-          </div>
-        </div>
-        <div class="festive-info-row">
-          <div class="festive-name">Écaille ❄️</div>
-          <span class="tag-festive">💎 Pure 96%</span>
-        </div>
-        <p class="festive-desc">La pureté à l'état brut. 96% — Sélection d'exception réservée aux connaisseurs.</p>
-        <div class="price" style="margin-bottom:14px;">
-          <span class="price-pill" style="border-color:rgba(255,200,80,0.25);color:#ffbf47;">0.5G / 30€</span>
-          <span class="price-pill" style="border-color:rgba(255,200,80,0.25);color:#ffbf47;">1G / 50€</span>
-          <span class="price-pill" style="border-color:rgba(255,200,80,0.25);color:#ffbf47;">5G / 240€</span>
-          <span class="price-pill" style="border-color:rgba(255,200,80,0.25);color:#ffbf47;">10G / 460€</span>
-        </div>
-        <div class="btn-row">
-          <a class="buy-btn whatsapp" href="https://wa.me/33758464533?text=Bonjour%2C%20je%20souhaite%20commander%20%3A%0A%F0%9F%93%A6%20Produit%20%3A%20%C3%89caille%20%E2%9D%84%EF%B8%8F%20(Pure%2096%25)%0A%E2%9A%96%EF%B8%8F%20Grammage%20%3A%0A%F0%9F%92%B0%20Prix%20%3A%0A%F0%9F%95%90%20Heure%20souhait%C3%A9e%20%3A">💬 WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- POURQUOI NOUS -->
+    <!-- POURQUOI NOUS -->
   <div class="section-title reveal">Pourquoi nous</div>
   <div class="why-grid">
     <div class="why-card reveal"><div class="why-icon-wrap"><span class="why-icon">⭐</span></div><div class="why-label">Since<br>2020</div></div>
@@ -2452,6 +2418,154 @@ html, body {
 
 </div>
 
+<!-- ═══════════════════════════════════════
+     🛒 MINI PANIER
+════════════════════════════════════════ -->
+<div id="cart-bubble" onclick="cartOpen()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+  <span id="cart-count">0</span>
+</div>
+
+<div id="cart-overlay" onclick="cartClose()"></div>
+
+<div id="cart-drawer">
+  <div class="cart-header">
+    <div class="cart-title">🛒 Mon panier</div>
+    <button class="cart-close" onclick="cartClose()">✕</button>
+  </div>
+  <div id="cart-items"></div>
+  <div id="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total estimé</span>
+      <span class="cart-total-val" id="cart-total">0€</span>
+    </div>
+    <div class="cart-note">💬 Le message WhatsApp sera pré-rempli avec tous tes articles</div>
+    <a id="cart-wa-btn" class="cart-wa-btn" href="#" onclick="return cartSend()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.112 1.523 5.84L.057 23.57a.75.75 0 00.918.919l5.733-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.92 0-3.73-.49-5.31-1.35l-.38-.22-3.94 1.01 1.02-3.83-.25-.4A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Commander tout sur WhatsApp
+    </a>
+    <button class="cart-clear-btn" onclick="cartClear()">🗑️ Vider le panier</button>
+  </div>
+  <div id="cart-empty">
+    <div class="cart-empty-icon">🛒</div>
+    <div class="cart-empty-txt">Ton panier est vide</div>
+    <div class="cart-empty-sub">Sélectionne un grammage sur une carte produit puis ajoute-le ici</div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// PANIER
+// ═══════════════════════════════════════
+(function(){
+  var cart = []; // [{name, grammage, prix, prixNum}]
+
+  function parsePrix(str){
+    var m = String(str).match(/([\d.,]+)\s*€/);
+    return m ? parseFloat(m[1].replace(',','.')) : 0;
+  }
+
+  function cartRender(){
+    var count = cart.length;
+    var bubble = document.getElementById('cart-bubble');
+    var countEl = document.getElementById('cart-count');
+    var itemsEl = document.getElementById('cart-items');
+    var footerEl = document.getElementById('cart-footer');
+    var emptyEl = document.getElementById('cart-empty');
+    var totalEl = document.getElementById('cart-total');
+
+    // Badge bulle
+    countEl.textContent = count;
+    bubble.classList.toggle('has-items', count > 0);
+
+    if(count === 0){
+      itemsEl.innerHTML = '';
+      footerEl.style.display = 'none';
+      emptyEl.style.display = 'flex';
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+    footerEl.style.display = 'block';
+
+    // Total
+    var total = cart.reduce(function(s,i){ return s + i.prixNum; }, 0);
+    totalEl.textContent = total > 0 ? total + '€' : '—';
+
+    // Items
+    itemsEl.innerHTML = cart.map(function(item, idx){
+      return '<div class="cart-item" id="ci-'+idx+'">'
+        + '<div class="cart-item-info">'
+        +   '<div class="cart-item-name">' + item.name + '</div>'
+        +   '<div class="cart-item-gram">' + item.grammage + (item.prix ? ' · ' + item.prix : '') + '</div>'
+        + '</div>'
+        + '<button class="cart-item-del" onclick="window._cartRemove('+idx+')">✕</button>'
+        + '</div>';
+    }).join('');
+  }
+
+  window._cartRemove = function(idx){
+    cart.splice(idx, 1);
+    cartRender();
+    try{ window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); }catch(e){}
+  };
+
+  window.cartAdd = function(name, grammage, prix){
+    // Évite les doublons exacts
+    var exists = cart.findIndex(function(i){ return i.name === name && i.grammage === grammage; });
+    if(exists >= 0){ cart.splice(exists, 1); } // remplace si même produit/grammage
+    cart.push({ name: name, grammage: grammage, prix: prix, prixNum: parsePrix(prix) });
+    cartRender();
+    // Pulse bulle
+    var b = document.getElementById('cart-bubble');
+    b.classList.add('bounce');
+    setTimeout(function(){ b.classList.remove('bounce'); }, 500);
+    try{ window.Telegram.WebApp.HapticFeedback.notificationOccurred('success'); }catch(e){}
+  };
+
+  window.cartOpen = function(){
+    document.getElementById('cart-drawer').classList.add('open');
+    document.getElementById('cart-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    try{ window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); }catch(e){}
+  };
+
+  window.cartClose = function(){
+    document.getElementById('cart-drawer').classList.remove('open');
+    document.getElementById('cart-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  window.cartClear = function(){
+    cart = [];
+    cartRender();
+    try{ window.Telegram.WebApp.HapticFeedback.impactOccurred('medium'); }catch(e){}
+  };
+
+  window.cartSend = function(){
+    if(cart.length === 0) return false;
+    var wa = (window.S && window.S.whatsapp) || '33758464533';
+    var total = cart.reduce(function(s,i){ return s + i.prixNum; }, 0);
+    var lines = cart.map(function(item, i){
+      return '📦 Produit ' + (i+1) + ' : ' + item.name
+        + '\n   ⚖️ Grammage : ' + item.grammage
+        + (item.prix ? '\n   💰 Prix : ' + item.prix : '');
+    });
+    var msg = 'Bonjour, je souhaite commander :\n\n'
+      + lines.join('\n\n')
+      + '\n\n' + (total > 0 ? '💵 Total estimé : ' + total + '€\n' : '')
+      + '🕐 Heure souhaitée :';
+    window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(msg), '_blank');
+    cartClose();
+    try{ window.Telegram.WebApp.HapticFeedback.notificationOccurred('success'); }catch(e){}
+    return false;
+  };
+
+  // Init rendu
+  cartRender();
+})();
+</script>
+
 <script>
 // ─── Splash screen with orbs ───
 (function(){
@@ -2497,235 +2611,310 @@ window.addEventListener('scroll', () => {
   if(btn) btn.classList.toggle('visible', window.scrollY > 300);
 }, { passive:true });
 
-// ─── Sync from Admin Panel ───
+// ─── Sync from Admin Panel + Rendu dynamique ───
 (function(){
+
+  // ── Mapping catégorie → styles visuels ──
+  const CAT_STYLE = {
+    cali:   { cls:'cali-card',   pill:'cali-pill',   sec:'section-cali',   grid:true,  icon:'🌴', tag:'tag-cali'  },
+    frozen: { cls:'frozen-card', pill:'frozen-pill', sec:'section-frozen', grid:true,  icon:'❄️', tag:'tag-frozen'},
+    static: { cls:'static-card', pill:'static-pill', sec:'section-static', grid:false, icon:'⚡', tag:'tag-static'},
+    anon:   { cls:'anon-card',   pill:'anon-pill',   sec:'section-anon',   grid:false, icon:'🏴‍☠️',tag:'tag-anon'  },
+    olive:  { cls:'olive-card',  pill:'olive-pill',  sec:'section-olive',  grid:false, icon:'🫒', tag:'tag-olive' },
+    festif: { cls:'festive-card',pill:'festive-pill',sec:'section-festif', grid:false, icon:'💎', tag:'tag-festive'},
+  };
+  const CAT_FALLBACK = { cls:'cali-card', pill:'price-pill', sec:'section-cali', grid:true, icon:'📦', tag:'tag-cali' };
+
+  function getStyle(cat){ return CAT_STYLE[cat] || CAT_FALLBACK; }
+
+  // ── Génère le HTML d'une carte produit ──
+  function buildCardHTML(p, wa, tpl, catLabel){
+    const s = getStyle(p.cat);
+    const pill = s.pill;
+
+    // Cloudinary: extrait public_id pour thumbnail auto
+    const _vidSrc = p.video || '';
+    const _m = _vidSrc.match(/public_id=([^&]+)/);
+    const _pid = _m ? _m[1] : '';
+    const _thumb = _pid
+      ? `https://res.cloudinary.com/dsygea1px/video/upload/so_0,w_600,h_338,c_fill,q_auto,f_jpg/${_pid}.jpg`
+      : '';
+
+    const videoHTML = _vidSrc
+      ? `<div class="video-wrapper">
+           <div class="vid-thumb" onclick="loadVid(this,'${_vidSrc}')">
+             ${_thumb ? `<img src="${_thumb}" loading="lazy" alt="${p.name}">` : ''}
+             <div class="vid-play-btn"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+             <div class="vid-thumb-label">Appuyer pour lire</div>
+           </div>
+         </div>`
+      : `<div class="video-wrapper">
+           <div class="video-placeholder">
+             <div class="video-placeholder-border"></div>
+             <div class="vp-icon">${p.name.match(/\p{Emoji_Presentation}|\p{Extended_Pictographic}/u)?.[0] || '📦'}</div>
+             <div class="vp-title">Vidéo à venir</div>
+             <div class="vp-sub">${p.name}</div>
+           </div>
+         </div>`;
+
+    const tags = [
+      `<span class="product-tag ${s.tag}">${s.icon} ${catLabel}</span>`,
+      p.isNew ? `<span class="product-tag tag-new">✨ Nouveauté</span>` : '',
+      p.promo ? `<span class="product-tag tag-promo" style="background:rgba(255,210,0,.1);border:1px solid rgba(255,210,0,.3);color:#ffd200;">🏷️ ${p.promo}</span>` : '',
+    ].filter(Boolean).join('');
+
+    const prices = (p.prices||[]).map(pr =>
+      `<span class="price-pill ${pill}">${pr}</span>`
+    ).join('');
+
+    const btnHTML = p.oos
+      ? `<div class="btn-oos">❌ Indisponible</div>`
+      : `<a class="buy-btn whatsapp needs-select" href="#">💬 WhatsApp <span class="btn-hint">— Sélectionne un grammage</span></a>`;
+
+    const oosClass = p.oos ? ' out-of-stock' : '';
+    const hiddenStyle = p.hidden ? ' style="display:none"' : '';
+
+    return `<div class="product ${s.cls} reveal${oosClass}" data-pid="${p.id}"${hiddenStyle}>
+      ${videoHTML}
+      <div class="product-header">
+        <h3>${p.name}</h3>
+        <div style="display:flex;gap:5px;flex-direction:column;align-items:flex-end">${tags}</div>
+      </div>
+      <p>${p.desc||''}</p>
+      <div class="price">${prices}</div>
+      <div class="btn-row">${btnHTML}</div>
+    </div>`;
+  }
+
+  // ── Construit une section catégorie ──
+  function buildSection(cat, products, wa, tpl, S){
+    const s = getStyle(cat);
+    const catInfo = (S && S.customCats && S.customCats[cat])
+      || { cali:'🌴 Cali Hollandaise', frozen:'❄️ Frozen Sift', static:'⚡ Static Premium',
+           anon:'🏴‍☠️ Anonymuz Farm', olive:'🫒 Olive', festif:'💎 Pure 96%' }[cat]
+      || cat;
+    const catLabel = catInfo.replace(/^[^\s]+\s/, '') || catInfo; // nom sans emoji
+    const catFull  = catInfo; // avec emoji
+
+    const visibleProds = products.filter(p => !p.hidden);
+    const count = visibleProds.length;
+
+    const isGrid = s.grid;
+    const secId  = `sec-${cat}`;
+    const sectionClass = `cat-section ${s.sec} ${isGrid?'grid-2':''} reveal`;
+
+    const cardsHTML = products.map(p => buildCardHTML(p, wa, tpl, catFull)).join('');
+    const gridHTML  = isGrid
+      ? `<div class="products-grid">${cardsHTML}</div>`
+      : cardsHTML;
+
+    return `<div class="${sectionClass}" id="${secId}">
+      <div class="cat-header">
+        <div class="cat-icon">${s.icon}</div>
+        <div class="cat-header-text">
+          <div class="cat-label">Catégorie</div>
+          <div class="cat-name">${catLabel}</div>
+          <div class="cat-sub">${count} produit${count>1?'s':''}</div>
+        </div>
+      </div>
+      ${gridHTML}
+    </div>`;
+  }
+
+  // ── Rebuild nav catégories ──
+  function rebuildNav(cats){
+    const nav = document.getElementById('catNav');
+    if(!nav) return;
+    const inner = nav.querySelector('.cat-nav-inner');
+    if(!inner) return;
+    // garde le séparateur et le bouton info
+    const sep     = inner.querySelector('.cat-sep');
+    const infoBtn = inner.querySelector('[onclick*="sec-info"]');
+    // reconstruit les onglets catégories
+    const catBtns = cats.map(([k, label]) => {
+      const s = getStyle(k);
+      const emoji = label.match(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic})/u)?.[0] || s.icon;
+      const name  = label.replace(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/u, '').split(' ')[0];
+      return `<button class="cat-tab" onclick="scrollToSection('sec-${k}')"><span class="t-ico">${emoji}</span><span class="t-lbl">${name}</span></button>`;
+    }).join('');
+    inner.innerHTML = catBtns
+      + (sep ? sep.outerHTML : '<div class="cat-sep"></div>')
+      + (infoBtn ? infoBtn.outerHTML : '<button class="cat-tab" onclick="scrollToSection(\'sec-info\')"><span class="t-ico">ℹ️</span><span class="t-lbl">Info</span></button>');
+  }
+
+  // ── Attache le reveal observer aux nouvelles cartes ──
+  function attachReveal(container){
+    if(!('IntersectionObserver' in window)) return;
+    if(!document.body.classList.contains('js-ready')) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          setTimeout(() => entry.target.classList.add('visible'), 50);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06 });
+    container.querySelectorAll('.reveal').forEach(el => { el.classList.remove('visible'); obs.observe(el); });
+  }
+
   async function _doApply(){
     try {
-    const [sp, ss] = await Promise.allSettled([
-      window.Store.get('admin-products'),
-      window.Store.get('admin-settings')
-    ]);
+      const [sp, ss] = await Promise.allSettled([
+        window.Store.get('admin-products'),
+        window.Store.get('admin-settings')
+      ]);
 
-    if(ss.status==='fulfilled' && ss.value){
-      const S = JSON.parse(ss.value.value);
+      const S = (ss.status==='fulfilled' && ss.value) ? JSON.parse(ss.value.value) : {};
+      const wa = S.whatsapp || '33758464533';
+      const tpl = S.waTpl || null;
 
+      // ── Settings front-end ──
       if(S.maintenance){
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#0d1a14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;';
         overlay.innerHTML = `
           <div style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:#fff;letter-spacing:-2px;">DerBeste<span style="color:#00e87a;">37</span></div>
           <div style="font-size:28px;">🔐</div>
-          <div style="font-size:15px;color:rgba(255,255,255,.6);text-align:center;max-width:280px;line-height:1.6;">${S.maintMsg||'Boutique temporairement fermée. Revenez bientôt 🙏'}</div>
-        `;
+          <div style="font-size:15px;color:rgba(255,255,255,.6);text-align:center;max-width:280px;line-height:1.6;">${S.maintMsg||'Boutique temporairement fermée. Revenez bientôt 🙏'}</div>`;
         document.body.appendChild(overlay);
         return;
       }
 
       if(S.tickerOn && S.ticker){
         const tw = document.getElementById('ticker-wrap');
+        if(tw){ const tDiv=tw.querySelector('.ticker'); if(tDiv){ const sep='<span class="ticker-dot"></span>'; const item=`<span class="ticker-item">${S.ticker}</span>${sep}`; const rep=item.repeat(12); tDiv.innerHTML=rep+rep; const dur=Math.max(45,Math.min(75,S.ticker.length*4.1)); tDiv.style.animation=`ticker ${dur}s linear infinite`; } }
+      }
+      if(S.heroBadge){ const hb=document.getElementById('hero-badge'); if(hb) hb.textContent=S.heroBadge; }
+      if(S.minLivr!==undefined){ const ml=document.getElementById('min-livr-text'); if(ml) ml.innerHTML=`${S.minLivr}€ <span style="font-size:12px;color:var(--text-dim);font-weight:400;">en livraison</span>`; const md=document.getElementById('min-detail-text'); const mt=(S.minMeet&&S.minMeet>0)?`Meet-up à partir de ${S.minMeet}€`:'Meet-up sans minimum'; if(md) md.textContent=`${mt} · Livraison à partir de ${S.minLivr}€`; }
+      if(S.horaires){ const hb2=document.getElementById('horaires-box'); if(hb2){ hb2.querySelectorAll('.horaire-row').forEach(r=>r.remove()); const days=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim']; const dl={Lun:'Lundi',Mar:'Mardi',Mer:'Mercredi',Jeu:'Jeudi',Ven:'Vendredi',Sam:'Samedi',Dim:'Dimanche'}; days.forEach(d=>{ const row=document.createElement('div'); row.className='horaire-row'; row.innerHTML='<span class="horaire-day">'+dl[d]+'</span><span class="horaire-time">'+(S.horaires[d]||'Fermé')+'</span>'; hb2.appendChild(row); }); } }
+      if(S.horaireMsg){ const hb2=document.getElementById('horaires-box'); if(hb2){ const ex=hb2.querySelector('.horaire-msg'); if(!ex){ const msg=document.createElement('div'); msg.className='horaire-msg'; msg.style.cssText='font-size:12px;color:var(--text-dim);margin-top:8px;line-height:1.5;'; msg.textContent=S.horaireMsg; hb2.appendChild(msg); }else{ex.textContent=S.horaireMsg;} } }
+      if(S.paiements&&S.paiements.length){ const hb2=document.getElementById('horaires-box'); if(hb2&&!document.getElementById('pay-methods')){ const div=document.createElement('div'); div.id='pay-methods'; div.style.cssText='margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);'; div.innerHTML=`<div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;font-weight:600;">Paiement accepté</div><div style="display:flex;flex-wrap:wrap;gap:6px;">${S.paiements.map(p=>`<span style="font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.15);color:#00e87a;">${p}</span>`).join('')}</div>`; hb2.appendChild(div); } }
+      if(S.zones&&S.zones.length){ const lb=document.getElementById('livraison-zones'); if(lb) lb.innerHTML=S.zones.slice(0,6).join('<br>'); if(S.meetupZone){ const mz=document.getElementById('meetup-zones'); if(mz) mz.textContent=S.meetupZone; } }
+      if(S.telegram){ const h=S.telegram.replace(/^@/,''); document.querySelectorAll('a[href*="t.me"]').forEach(a=>{ a.href=`https://t.me/${h}`; }); const th=document.getElementById('contact-tg-handle'); if(th) th.textContent=S.telegram.startsWith('@')?S.telegram:'@'+S.telegram; }
+      // ── Ticker urgent ──
+      if(S.urgentOn && S.urgentTxt){
+        const tw = document.getElementById('ticker-wrap');
         if(tw){
+          tw.classList.add('urgent');
           const tDiv = tw.querySelector('.ticker');
           if(tDiv){
             const sep = '<span class="ticker-dot"></span>';
-            const item = `<span class="ticker-item">${S.ticker}</span>${sep}`;
-            // Repeat enough times to fill 200vw+ for seamless loop
-            const repeated = item.repeat(12);
-            // Two copies side by side for infinite CSS scroll
-            tDiv.innerHTML = repeated + repeated;
-            // Adjust speed based on text length (shorter = faster)
-            const charLen = S.ticker.length;
-            const duration = Math.max(45, Math.min(75, charLen * 4.1));
-            tDiv.style.animation = `ticker ${duration}s linear infinite`;
+            const item = `<span class="ticker-item">⚡ ${S.urgentTxt}</span>${sep}`;
+            tDiv.innerHTML = (item).repeat(16);
+            const dur = Math.max(30, Math.min(60, S.urgentTxt.length * 3.5));
+            tDiv.style.animation = `ticker ${dur}s linear infinite`;
           }
         }
+      } else {
+        const tw = document.getElementById('ticker-wrap');
+        if(tw) tw.classList.remove('urgent');
       }
 
-      if(S.heroBadge !== undefined){
-        const hb = document.getElementById('hero-badge');
-        if(hb && S.heroBadge) hb.textContent = S.heroBadge;
-      }
-
-      if(S.heroSub !== undefined){
-        const hs = document.getElementById('hero-sub');
-        if(hs && S.heroSub) hs.textContent = S.heroSub;
-      }
-
-      if(S.minLivr !== undefined){
-        const ml = document.getElementById('min-livr-text');
-        if(ml) ml.innerHTML = `${S.minLivr}€ <span style="font-size:12px;color:var(--text-dim);font-weight:400;">en livraison</span>`;
-        const md = document.getElementById('min-detail-text');
-        const meetTxt = (S.minMeet && S.minMeet > 0) ? `Meet-up à partir de ${S.minMeet}€` : 'Meet-up sans minimum';
-        if(md) md.textContent = `${meetTxt} · Livraison à partir de ${S.minLivr}€`;
-      }
-
-      if(S.horaires){
-        const hb2=document.getElementById('horaires-box');
-        if(hb2){
-          hb2.querySelectorAll('.horaire-row').forEach(r=>r.remove());
-          const days=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-          const dayLabels={Lun:'Lundi',Mar:'Mardi',Mer:'Mercredi',Jeu:'Jeudi',Ven:'Vendredi',Sam:'Samedi',Dim:'Dimanche'};
-          days.forEach(d=>{
-            const row=document.createElement('div');
-            row.className='horaire-row';
-            row.innerHTML='<span class="horaire-day">'+dayLabels[d]+'</span><span class="horaire-time">'+(S.horaires[d]||'Fermé')+'</span>';
-            hb2.appendChild(row);
-          });
-        }
-      }
-      if(S.horaireMsg){
-        const hb2 = document.getElementById('horaires-box');
-        if(hb2){
-          const existing = hb2.querySelector('.horaire-msg');
-          if(!existing){
-            const msg = document.createElement('div');
-            msg.className = 'horaire-msg';
-            msg.style.cssText = 'font-size:12px;color:var(--text-dim);margin-top:8px;line-height:1.5;';
-            msg.textContent = S.horaireMsg;
-            hb2.appendChild(msg);
-          } else { existing.textContent = S.horaireMsg; }
+      // ── Bannière d'annonce ──
+      const bar = document.getElementById('annonce-bar');
+      if(bar){
+        if(S.annonceOn && S.annonceTxt){
+          // Vérifie expiration
+          const now = new Date();
+          const expired = S.annonceExp && new Date(S.annonceExp) < now;
+          if(!expired){
+            const icons = {info:'ℹ️', success:'✅', warning:'⚠️', promo:'🔥'};
+            bar.className = 'type-' + (S.annonceType || 'info');
+            document.getElementById('annonce-bar-icon').textContent = icons[S.annonceType] || 'ℹ️';
+            document.getElementById('annonce-bar-txt').textContent = S.annonceTxt;
+            bar.style.display = 'block';
+          }
+        } else {
+          bar.style.display = 'none';
         }
       }
 
-      if(S.paiements && S.paiements.length){
-        const hb2 = document.getElementById('horaires-box');
-        if(hb2 && !document.getElementById('pay-methods')){
-          const div = document.createElement('div');
-          div.id = 'pay-methods';
-          div.style.cssText = 'margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);';
-          div.innerHTML = `<div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;font-weight:600;">Paiement accepté</div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;">${S.paiements.map(p=>`<span style="font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.15);color:#00e87a;">${p}</span>`).join('')}</div>`;
-          hb2.appendChild(div);
+      // ── Pop-up d'accueil ──
+      if(S.popupOn && S.popupTitle){
+        // Clé unique basée sur le titre pour ne montrer qu'une fois par session
+        const popupKey = 'popup_seen_' + btoa(S.popupTitle).slice(0,12);
+        if(!sessionStorage.getItem(popupKey)){
+          sessionStorage.setItem(popupKey, '1');
+          // Extrait l'emoji du titre s'il y en a un, sinon emoji par défaut
+          const emojiMatch = S.popupTitle.match(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic})/u);
+          const emoji = emojiMatch ? emojiMatch[0] : '🎉';
+          const titleClean = S.popupTitle.replace(/^(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*/u, '');
+          document.getElementById('annonce-popup-emoji').textContent = emoji;
+          document.getElementById('annonce-popup-title').textContent = titleClean || S.popupTitle;
+          document.getElementById('annonce-popup-body').textContent = S.popupBody || '';
+          const btn = document.getElementById('annonce-popup-btn');
+          btn.textContent = S.popupBtn || 'OK, compris !';
+          // Affiche après un léger délai (laisse le splash se terminer)
+          setTimeout(() => {
+            document.getElementById('annonce-popup-overlay').classList.add('open');
+            document.getElementById('annonce-popup').classList.add('open');
+            try{ window.Telegram.WebApp.HapticFeedback.impactOccurred('light'); }catch(e_){}
+          }, 2800);
         }
       }
 
-      if(S.zones && S.zones.length){
-        const livrBlock = document.getElementById('livraison-zones');
-        if(livrBlock){
-          livrBlock.innerHTML = S.zones.slice(0,6).join('<br>');
-        }
-        if(S.meetupZone){ const mz=document.getElementById('meetup-zones'); if(mz) mz.textContent=S.meetupZone; }
+      // ── Rendu dynamique des produits ──
+      // Si le Gist n'a pas encore de produits, fallback sur DEFS
+      let products;
+      if(sp.status==='fulfilled' && sp.value){
+        try{ products = JSON.parse(sp.value.value); }catch(e_){ products = null; }
+      }
+      if(!products || !products.length){
+        products = (typeof DEFS !== 'undefined') ? JSON.parse(JSON.stringify(DEFS)) : [];
+      }
+      if(!products.length){
+        document.getElementById('catalogue-skeleton').style.display='none';
+        return;
       }
 
-      if(S.whatsapp){
-        document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
-          a.href = a.href.replace(/wa\.me\/\d+/, `wa.me/${S.whatsapp}`);
-        });
-      }
+      // Mise à jour numéro WA sur les liens existants
+      if(wa) document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{ a.href=a.href.replace(/wa\.me\/\d+/,`wa.me/${wa}`); });
 
-      if(S.telegram){
-        const tgHandle = S.telegram.replace(/^@/, '');
-        const tgDisplay = S.telegram.startsWith('@') ? S.telegram : '@' + S.telegram;
-        document.querySelectorAll('a[href*="t.me"]').forEach(a=>{
-          a.href = `https://t.me/${tgHandle}`;
-        });
-        const tgTxt = document.getElementById('contact-tg-handle');
-        if(tgTxt) tgTxt.textContent = tgDisplay;
-      }
+      // Regroupe les produits par catégorie (ordre d'apparition)
+      const catMap = new Map();
+      products.forEach(p => {
+        if(!catMap.has(p.cat)) catMap.set(p.cat, []);
+        catMap.get(p.cat).push(p);
+      });
 
-      if(S.minMeet !== undefined){
-        const mmEl = document.getElementById('min-meet-text');
-        if(mmEl) mmEl.textContent = S.minMeet === 0 ? 'Sans minimum' : `${S.minMeet}€ minimum`;
-      }
-    }
+      // Construit le HTML de tout le catalogue
+      const CATS_LABELS = Object.assign(
+        {cali:'🌴 Cali Hollandaise',frozen:'❄️ Frozen Sift',static:'⚡ Static Premium',anon:'🏴‍☠️ Anonymuz Farm',olive:'🫒 Olive',festif:'💎 Pure 96%'},
+        S.customCats||{}
+      );
 
-    if(sp.status!=='fulfilled' || !sp.value) return;
-    const products = JSON.parse(sp.value.value);
-    const wa = (() => { try{ return JSON.parse((ss.status==='fulfilled'&&ss.value)?ss.value.value:'{}').whatsapp||'33758464533'; }catch(e){return'33758464533';} })();
+      let html = '';
+      const catEntries = [];
+      catMap.forEach((prods, cat) => {
+        const visibleProds = prods.filter(p => !p.hidden);
+        if(visibleProds.length === 0) return; // masque les catégories vides
+        const label = CATS_LABELS[cat] || cat;
+        catEntries.push([cat, label]);
+        html += buildSection(cat, prods, wa, tpl, S);
+      });
 
-    document.querySelectorAll('[data-pid]').forEach(card => {
-      const pid = card.dataset.pid;
-      const p = products.find(x => x.id === pid);
-      if(!p) return;
+      const root = document.getElementById('catalogue-root');
+      root.innerHTML = html;
 
-      if(p.hidden){ card.style.display='none'; return; }
+      // Cache le skeleton
+      document.getElementById('catalogue-skeleton').style.display = 'none';
 
-      const btnRow = card.querySelector('.btn-row');
-      const wasOos = card.classList.contains('out-of-stock');
-      if(p.oos && !wasOos){
-        card.classList.add('out-of-stock');
-        const vw = card.querySelector('.video-wrapper');
-        if(vw && !vw.querySelector('.oos-badge')){
-          const badge = document.createElement('div');
-          badge.className = 'oos-badge'; badge.textContent = '✕ Rupture';
-          vw.appendChild(badge);
-          const overlay = document.createElement('div');
-          overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,0.5);border-radius:16px;z-index:2;';
-          vw.insertBefore(overlay, vw.firstChild);
-        }
-        if(btnRow) btnRow.innerHTML = '<div class="btn-oos">❌ Indisponible</div>';
-      } else if(!p.oos && wasOos){
-        card.classList.remove('out-of-stock');
-        const vw = card.querySelector('.video-wrapper');
-        if(vw){
-          vw.querySelector('.oos-badge')?.remove();
-          vw.querySelector('div[style*="rgba(0,0,0,0.5)"]')?.remove();
-        }
-        if(btnRow){
-          const name = card.querySelector('h3')?.textContent || '';
-          const tpl = (()=>{ try{ return JSON.parse((ss.status==='fulfilled'&&ss.value)?ss.value.value:'{}').waTpl||null; }catch(e){return null;} })();
-          const msg = tpl
-            ? encodeURIComponent(tpl.replace('{produit}',name).replace('{grammage}','').replace('{prix}',''))
-            : encodeURIComponent(`Bonjour, je souhaite commander :\n📦 Produit : ${name}\n⚖️ Grammage :\n💰 Prix :\n🕐 Heure souhaitée :`);
-          btnRow.innerHTML = `<a class="buy-btn whatsapp" href="https://wa.me/${wa}?text=${msg}">💬 WhatsApp</a>`;
-        }
-      }
+      // Attache reveal animations
+      attachReveal(root);
 
-      if(p.name){ const h3 = card.querySelector('h3'); if(h3) h3.textContent = p.name; }
+      // Rebuild nav
+      rebuildNav(catEntries);
 
-      if(p.desc){
-        const desc = card.querySelector('p:not(.video-placeholder p)');
-        if(desc && !desc.closest('.video-placeholder')) desc.textContent = p.desc;
-      }
+      // Ré-init sélecteur grammage + panier
+      if(typeof window._afterSync === 'function') window._afterSync();
 
-      const header = card.querySelector('.product-header');
-      const existingNew = card.querySelector('.tag-new');
-      if(p.isNew && !existingNew && header){
-        const wrap = header.querySelector('div[style]') || header;
-        const span = document.createElement('span');
-        span.className = 'product-tag tag-new'; span.textContent = '✨ Nouveauté';
-        wrap.appendChild(span);
-      } else if(!p.isNew && existingNew){ existingNew.remove(); }
-
-      const existingPromo = card.querySelector('.tag-promo');
-      if(p.promo && !existingPromo && header){
-        const wrap = header.querySelector('div[style]') || header;
-        const span = document.createElement('span');
-        span.className = 'product-tag tag-promo';
-        span.style.cssText = 'background:rgba(255,210,0,.1);border:1px solid rgba(255,210,0,.3);color:#ffd200;';
-        span.textContent = '🏷️ ' + p.promo;
-        wrap.appendChild(span);
-      } else if(!p.promo && existingPromo){ existingPromo.remove(); }
-
-      if(p.prices && p.prices.length){
-        const priceEl = card.querySelector('.price');
-        if(priceEl){
-          const cls = priceEl.querySelector('.price-pill')?.className || 'price-pill';
-          priceEl.innerHTML = p.prices.map(pr=>`<span class="${cls}">${pr}</span>`).join('');
-        }
-      }
-
-      if(p.video){
-        const vw = card.querySelector('.video-wrapper');
-        if(vw && !vw.querySelector('iframe')){
-          const placeholder = vw.querySelector('.video-placeholder');
-          if(placeholder) placeholder.remove();
-          const iframe = document.createElement('iframe');
-          iframe.src = p.video;
-          iframe.setAttribute('allow','autoplay;fullscreen;encrypted-media;picture-in-picture');
-          iframe.setAttribute('allowfullscreen','');
-          iframe.setAttribute('frameborder','0');
-          iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
-          vw.appendChild(iframe);
-        }
-      }
-    });
-
-  } catch(e){ console.log('Admin sync error:', e); }
+    } catch(e){ console.error('_doApply error:', e); document.getElementById('catalogue-skeleton').style.display='none'; }
   }
-  // Run immediately if Store ready, else wait
+
   if(window._storeReady){ _doApply(); }
   else { window._pendingApply = _doApply; window.addEventListener('storeReady', _doApply, {once:true}); }
 })();
+
 
 // ─── Telegram WebApp ───
 try {
@@ -2968,6 +3157,125 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ═══════════════════════════════════════
+  // SÉLECTEUR DE GRAMMAGE + PANIER
+  // ═══════════════════════════════════════
+  function initPriceSelector(card) {
+    if(card.dataset.priceInit) return;
+    card.dataset.priceInit = '1';
+
+    if(card.classList.contains('out-of-stock')) return;
+
+    const priceEl  = card.querySelector('.price');
+    const btnRow   = card.querySelector('.btn-row');
+    const waBtn    = btnRow && btnRow.querySelector('.buy-btn.whatsapp');
+    const pills    = priceEl ? Array.from(priceEl.querySelectorAll('.price-pill')) : [];
+
+    if(!priceEl || !waBtn || pills.length === 0) return;
+
+    // Label grammage
+    const label = document.createElement('div');
+    label.className = 'price-label';
+    label.textContent = 'Choisir un grammage';
+    priceEl.insertBefore(label, priceEl.firstChild);
+
+    // Désactive le bouton WA par défaut
+    waBtn.classList.add('needs-select');
+    waBtn.innerHTML = '💬 WhatsApp <span class="btn-hint">— Sélectionne un grammage</span>';
+
+    // Bouton "Ajouter au panier"
+    const cartBtn = document.createElement('button');
+    cartBtn.className = 'add-to-cart-btn';
+    cartBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';
+    cartBtn.title = 'Ajouter au panier';
+    cartBtn.style.display = 'none'; // caché tant que pas de grammage sélectionné
+    btnRow.appendChild(cartBtn);
+
+    function parsePill(text) {
+      const match = text.match(/^([\d.,]+\s*G)\s*\/\s*([\d.,]+\s*€)/i);
+      if(match) return { grammage: match[1].trim(), prix: match[2].trim() };
+      return { grammage: text, prix: '' };
+    }
+
+    function getProductName() {
+      const h3 = card.querySelector('h3');
+      if(!h3) return card.dataset.pid || '';
+      // Récupère le texte brut sans les spans metal-txt imbriqués
+      return h3.textContent.trim();
+    }
+
+    function buildWaLink(pillText) {
+      const { grammage, prix } = parsePill(pillText);
+      const wa = (window.S && window.S.whatsapp) || '33758464533';
+      const tpl = (window.S && window.S.waTpl) || null;
+      const name = getProductName();
+      let msg;
+      if(tpl){
+        msg = tpl.replace('{produit}', name).replace('{grammage}', grammage).replace('{prix}', prix);
+      } else {
+        msg = `Bonjour, je souhaite commander :\n📦 Produit : ${name}\n⚖️ Grammage : ${grammage}\n💰 Prix : ${prix}\n🕐 Heure souhaitée :`;
+      }
+      return `https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
+    }
+
+    let selectedPill = null;
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        pills.forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        selectedPill = pill.textContent.trim();
+
+        // Active WA btn
+        waBtn.classList.remove('needs-select');
+        waBtn.innerHTML = '💬 Commander';
+        waBtn.href = buildWaLink(selectedPill);
+
+        // Affiche le bouton panier
+        cartBtn.style.display = 'flex';
+
+        // Reset état "ajouté"
+        cartBtn.classList.remove('added');
+        cartBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';
+
+        try{ window.Telegram.WebApp.HapticFeedback.selectionChanged(); }catch(e_){}
+      });
+    });
+
+    cartBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if(!selectedPill) return;
+      const { grammage, prix } = parsePill(selectedPill);
+      window.cartAdd(getProductName(), grammage, prix);
+      // Feedback visuel sur le bouton
+      cartBtn.classList.add('added');
+      cartBtn.innerHTML = '✓';
+      setTimeout(() => {
+        cartBtn.classList.remove('added');
+        cartBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';
+      }, 1400);
+    });
+  }
+
+  document.querySelectorAll('.product').forEach(initPriceSelector);
+
+  window._afterSync = function(){ document.querySelectorAll('.product').forEach(initPriceSelector); };
+
+  new MutationObserver(mutations => {
+    mutations.forEach(m => {
+      m.addedNodes.forEach(node => {
+        if(node.nodeType === 1){
+          if(node.classList && node.classList.contains('product')) initPriceSelector(node);
+          node.querySelectorAll && node.querySelectorAll('.product').forEach(initPriceSelector);
+        }
+      });
+    });
+  }).observe(document.body, { childList: true, subtree: true });
+
 });
 </script>
 
@@ -3063,8 +3371,11 @@ window.addEventListener('DOMContentLoaded', () => {
     <button class="tb" onclick="ST(this,'add')">➕ Ajouter</button>
     <button class="tb" onclick="ST(this,'promo')">🏷️ Promos</button>
     <button class="tb" onclick="ST(this,'boutique')">🏪 Boutique</button>
+    <button class="tb" onclick="ST(this,'annonces')">📣 Annonces</button>
     <button class="tb" onclick="ST(this,'livraison')">🛵 Livraison</button>
     <button class="tb" onclick="ST(this,'messages')">💬 Messages</button>
+    <button class="tb" onclick="ST(this,'apparence')">🎨 Apparence</button>
+    <button class="tb" onclick="ST(this,'stats');renderStats()">📊 Stats</button>
     <button class="tb" onclick="ST(this,'settings')">⚙️ Config</button>
   </div>
 
@@ -3078,13 +3389,21 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="stat sr"><div class="sn" id="sO">0</div><div class="sl">Ruptures</div></div>
         <div class="stat so"><div class="sn" id="sN">0</div><div class="sl">Nouveautés</div></div>
       </div>
+      <div class="slb" style="margin-top:4px;">Filtres rapides</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+        <button class="qa" style="font-size:11px;padding:6px 12px;border-radius:20px;" onclick="filterProducts('all')">Tous</button>
+        <button class="qa qr" style="font-size:11px;padding:6px 12px;border-radius:20px;" onclick="filterProducts('oos')">❌ Ruptures</button>
+        <button class="qa qo" style="font-size:11px;padding:6px 12px;border-radius:20px;" onclick="filterProducts('new')">✨ Nouveautés</button>
+        <button class="qa" style="font-size:11px;padding:6px 12px;border-radius:20px;" onclick="filterProducts('hidden')">🙈 Masqués</button>
+        <button class="qa" style="font-size:11px;padding:6px 12px;border-radius:20px;background:rgba(255,210,0,.08);border-color:rgba(255,210,0,.2);color:#ffd200;" onclick="filterProducts('promo')">🏷️ Promos</button>
+      </div>
       <div class="slb">Catalogue</div>
       <div id="PL"></div>
     </div>
 
     <!-- ══ ACTIONS RAPIDES ══ -->
     <div class="pane" id="p-quick">
-      <div class="slb" style="margin-top:6px;">Actions rapides</div>
+      <div class="slb" style="margin-top:6px;">Actions globales</div>
       <div class="qa-grid">
         <div class="qa qr" onclick="qAction('allOos')">❌<br>Tout en rupture</div>
         <div class="qa qg" onclick="qAction('allStock')">✅<br>Tout en stock</div>
@@ -3092,11 +3411,16 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="qa" onclick="qAction('clearNew')">🚫<br>Retirer nouveautés</div>
         <div class="qa qb" onclick="qAction('showAll')">👁️<br>Tout afficher</div>
         <div class="qa" onclick="qAction('hideAll')">🙈<br>Tout masquer</div>
-        <div class="qa qo" onclick="qAction('clearPromo')">🔖<br>Retirer promos</div>
+        <div class="qa qo" onclick="qAction('clearPromo');saveAll()">🔖<br>Retirer promos</div>
         <div class="qa qr" onclick="confirmA('reset','','Réinitialiser le catalogue ?','Tous les produits seront remis par défaut.')">🔄<br>Réinitialiser</div>
       </div>
       <div class="slb">Par catégorie</div>
       <div id="catActions"></div>
+      <div class="slb" style="margin-top:8px;">Sauvegarder</div>
+      <div class="card">
+        <div style="font-size:12px;color:var(--dim);margin-bottom:10px;">Après tes actions rapides, n'oublie pas de sauvegarder pour que les clients voient les changements.</div>
+        <button class="abtn" onclick="saveAll()">💾 Sauvegarder maintenant</button>
+      </div>
     </div>
 
     <!-- ══ AJOUTER ══ -->
@@ -3107,9 +3431,9 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="fg"><div class="fl">Nom du produit</div>
           <input class="fi" id="nn" placeholder="ex: Gelato 🌈" type="text"></div>
         <div class="fg"><div class="fl">Catégorie</div>
-          <select class="fsel" id="nc" id="nc"></select></div>
+          <select class="fsel" id="nc"></select></div>
         <div class="fg"><div class="fl">Description</div>
-          <textarea class="fi" id="nd" rows="2" placeholder="Arômes, notes..."></textarea></div>
+          <textarea class="fi" id="nd" rows="2" placeholder="Arômes, notes, farm..."></textarea></div>
         <div class="fg"><div class="fl">URL Vidéo Cloudinary (optionnel)</div>
           <input class="fi" id="nv" placeholder="https://player.cloudinary.com/..." type="text"></div>
         <div class="fg"><div class="fl">Prix</div>
@@ -3118,7 +3442,7 @@ window.addEventListener('DOMContentLoaded', () => {
               <button class="pdel" onclick="this.closest('.pr').remove()">✕</button></div>
           </div>
           <button class="apb" onclick="addPR('np-list')">+ Ajouter un tarif</button></div>
-        <div class="fg"><div class="fl">Statut</div>
+        <div class="fg"><div class="fl">Statut initial</div>
           <div class="trow">
             <label class="ti"><input type="checkbox" id="ni"><div class="tt"><div class="th"></div></div><span class="tl">✨ Nouveauté</span></label>
             <label class="ti tr"><input type="checkbox" id="no"><div class="tt"><div class="th"></div></div><span class="tl">❌ Rupture</span></label>
@@ -3126,31 +3450,67 @@ window.addEventListener('DOMContentLoaded', () => {
           </div></div>
         <button class="abtn" onclick="addProduct()">✅ Ajouter au catalogue</button>
       </div>
+
+      <div class="slb" style="margin-top:16px;">Gérer les catégories</div>
+      <div class="card">
+        <div class="card-title">📂 Ajouter une catégorie</div>
+        <div class="fg"><div class="fl">Clé (sans espaces, ex: kush)</div>
+          <input class="fi" id="new-cat-key" placeholder="ex: kush" type="text"></div>
+        <div class="fg"><div class="fl">Nom affiché (ex: 🍃 Kush)</div>
+          <input class="fi" id="new-cat-name" placeholder="ex: 🍃 Kush Premium" type="text"></div>
+        <button class="apb" onclick="addCategory()">+ Ajouter la catégorie</button>
+        <div class="slb" style="margin-top:12px;font-size:11px;">Catégories actuelles</div>
+        <div id="cat-list" style="margin-top:6px;"></div>
+      </div>
     </div>
 
     <!-- ══ PROMOS ══ -->
     <div class="pane" id="p-promo">
       <div class="slb" style="margin-top:6px;">Promotions actives</div>
-      <div id="promoList"><div style="font-size:13px;color:var(--dim);text-align:center;padding:20px;">Aucune promo active</div></div>
-      <div class="slb">Ajouter une promo</div>
+      <div id="promoList"><div class="promo-empty">Aucune promo active</div></div>
+
+      <div class="slb" style="margin-top:16px;">Ajouter une promo</div>
       <div class="card">
-        <div class="fg"><div class="fl">Produit</div><select class="fsel" id="promo-pid"></select></div>
-        <div class="fg"><div class="fl">Type</div>
-          <select class="fsel" id="promo-type">
-            <option value="pct">% Réduction</option>
-            <option value="fixed">Prix fixe</option>
-            <option value="badge">Badge promo</option>
-            <option value="lot">Offre lot (ex: 3 pour 2)</option>
-          </select></div>
-        <div class="fg"><div class="fl">Valeur / Texte</div>
-          <input class="fi" id="promo-val" placeholder="ex: -20% ou 2=1" type="text"></div>
-        <button class="abtn" style="margin-top:0;" onclick="addPromo()">✅ Appliquer la promo</button>
+        <div class="fg">
+          <div class="fl">Produit</div>
+          <select class="fsel" id="promo-pid"></select>
+        </div>
+        <div class="fg">
+          <div class="fl">Type de promo</div>
+          <select class="fsel" id="promo-type" onchange="updatePromoPlaceholder()">
+            <option value="pct">🏷️ % Réduction (ex: -20%)</option>
+            <option value="fixed">💶 Prix fixe (ex: 50€)</option>
+            <option value="lot">📦 Offre lot (ex: 3 pour 2)</option>
+            <option value="badge">✨ Badge libre (texte custom)</option>
+            <option value="flash">⚡ Promo flash</option>
+            <option value="solde">🔥 Soldes</option>
+          </select>
+        </div>
+        <div class="fg">
+          <div class="fl">Valeur / Texte</div>
+          <input class="fi" id="promo-val" placeholder="ex: 20 pour -20%" type="text">
+        </div>
+        <div class="fg">
+          <div class="fl">Description (optionnel)</div>
+          <input class="fi" id="promo-desc" placeholder="ex: Promo de lancement" type="text">
+        </div>
+        <div class="fg">
+          <div class="fl">Expire le (optionnel)</div>
+          <input class="fi" id="promo-exp" type="date">
+        </div>
+        <button class="promo-save-btn" onclick="addPromo()">🏷️ Appliquer la promo &amp; Sauvegarder</button>
+      </div>
+
+      <div class="slb" style="margin-top:16px;">Actions globales</div>
+      <div class="card" style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="qa qr" style="flex:1;min-width:120px;font-size:12px;" onclick="qAction('clearPromo');saveAll();">🗑️ Retirer toutes les promos</button>
+        <button class="qa qg" style="flex:1;min-width:120px;font-size:12px;" onclick="saveAll()">💾 Sauvegarder</button>
       </div>
     </div>
 
     <!-- ══ BOUTIQUE ══ -->
     <div class="pane" id="p-boutique">
-      <div class="slb" style="margin-top:6px;">Mode boutique</div>
+      <div class="slb" style="margin-top:6px;">Statut</div>
       <div class="card">
         <div class="card-title">🏪 Statut de la boutique</div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
@@ -3161,57 +3521,124 @@ window.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="fg"><div class="fl">Message de fermeture</div>
           <input class="fi" id="s-maintmsg" value="Boutique temporairement fermée. Revenez bientôt 🙏" type="text" oninput="markU()"></div>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
+          <label class="ti"><input type="checkbox" id="s-boutique-new" oninput="markU()"><div class="tt"><div class="th"></div></div></label>
+          <span style="font-size:12px;color:var(--dim);">Afficher badge "Nouveau" sur la page d'accueil</span>
+        </div>
       </div>
 
       <div class="slb">Ticker / Annonce</div>
       <div class="card">
         <div class="card-title">📢 Bandeau défilant</div>
         <div class="fg"><div class="fl">Texte du ticker</div>
-          <input class="fi" id="s-ticker" placeholder="ex: 🔥 Nouvelle arrivée cette semaine..." type="text" oninput="document.getElementById('ticker-preview').textContent=this.value||'Aperçu du ticker'"></div>
+          <input class="fi" id="s-ticker" placeholder="ex: 🔥 Nouvelle arrivée cette semaine..." type="text" oninput="document.getElementById('ticker-preview').textContent=this.value||'Aperçu du ticker';markU()"></div>
         <div class="ticker-preview" id="ticker-preview">Aperçu du ticker</div>
         <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
-          <label class="ti"><input type="checkbox" id="s-ticker-on"><div class="tt"><div class="th"></div></div></label>
+          <label class="ti"><input type="checkbox" id="s-ticker-on" oninput="markU()"><div class="tt"><div class="th"></div></div></label>
           <span style="font-size:12px;color:var(--dim);">Activer le ticker personnalisé</span>
         </div>
       </div>
 
-      <div class="slb">Section héro</div>
+      <div class="slb">Accès rapide boutique</div>
+      <div class="card" style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="qa qg" style="flex:1;font-size:12px;" onclick="window.closeAdminPanel()">👁️ Voir la boutique</button>
+        <button class="qa qg" style="flex:1;font-size:12px;" onclick="saveAll()">💾 Sauvegarder</button>
+      </div>
+    </div>
+
+    <!-- ══ ANNONCES ══ -->
+    <div class="pane" id="p-annonces">
+      <div class="slb" style="margin-top:6px;">Annonce principale</div>
       <div class="card">
-        <div class="card-title">🖼️ Hero & Titre</div>
-        <div class="fg"><div class="fl">Sous-titre hero</div>
-          <input class="fi" id="s-herosub" placeholder="ex: Tours · Since 2020" type="text" oninput="markU()"></div>
-        <div class="fg"><div class="fl">Badge hero</div>
-          <input class="fi" id="s-herobadge" placeholder="ex: ✅ Disponible maintenant" type="text" oninput="markU()"></div>
+        <div class="card-title">📣 Bannière d'annonce</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div><div style="font-size:13px;font-weight:600;">Afficher une annonce</div>
+            <div style="font-size:11px;color:var(--dim);margin-top:3px;">Bandeau visible en haut de la boutique</div></div>
+          <label class="ti tr"><input type="checkbox" id="s-annonce-on" oninput="markU()">
+            <div class="tt"><div class="th"></div></div></label>
+        </div>
+        <div class="fg"><div class="fl">Texte de l'annonce</div>
+          <input class="fi" id="s-annonce-txt" placeholder="ex: 🎉 Livraison offerte ce week-end !" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Type</div>
+          <select class="fsel" id="s-annonce-type" oninput="markU()">
+            <option value="info">ℹ️ Info (bleu)</option>
+            <option value="success">✅ Succès (vert)</option>
+            <option value="warning">⚠️ Alerte (orange)</option>
+            <option value="promo">🔥 Promo (rouge)</option>
+          </select></div>
+        <div class="fg"><div class="fl">Expire le (optionnel)</div>
+          <input class="fi" id="s-annonce-exp" type="date" oninput="markU()"></div>
+      </div>
+
+      <div class="slb">Message pop-up</div>
+      <div class="card">
+        <div class="card-title">💬 Pop-up d'accueil</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div><div style="font-size:13px;font-weight:600;">Afficher un pop-up</div>
+            <div style="font-size:11px;color:var(--dim);margin-top:3px;">Affiché une fois à l'arrivée</div></div>
+          <label class="ti tr"><input type="checkbox" id="s-popup-on" oninput="markU()">
+            <div class="tt"><div class="th"></div></div></label>
+        </div>
+        <div class="fg"><div class="fl">Titre du pop-up</div>
+          <input class="fi" id="s-popup-title" placeholder="ex: 🎁 Offre exclusive !" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Contenu</div>
+          <textarea class="fi" id="s-popup-body" rows="3" placeholder="ex: Commande avant 18h et reçois un cadeau surprise 🎁" oninput="markU()"></textarea></div>
+        <div class="fg"><div class="fl">Texte du bouton</div>
+          <input class="fi" id="s-popup-btn" placeholder="ex: Commander maintenant" type="text" oninput="markU()"></div>
+      </div>
+
+      <div class="slb">Message ticker spécial</div>
+      <div class="card">
+        <div class="card-title">⚡ Ticker d'urgence</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <div><div style="font-size:13px;font-weight:600;">Ticker rouge urgent</div>
+            <div style="font-size:11px;color:var(--dim);margin-top:3px;">Remplace le ticker normal, couleur rouge</div></div>
+          <label class="ti tr"><input type="checkbox" id="s-urgent-on" oninput="markU()">
+            <div class="tt"><div class="th"></div></div></label>
+        </div>
+        <div class="fg"><div class="fl">Texte urgent</div>
+          <input class="fi" id="s-urgent-txt" placeholder="ex: ⚠️ Rupture imminente sur Gelato !" type="text" oninput="markU()"></div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <button class="abtn" onclick="saveAll()">💾 Sauvegarder les annonces</button>
       </div>
     </div>
 
     <!-- ══ LIVRAISON ══ -->
     <div class="pane" id="p-livraison">
-      <div class="slb" style="margin-top:6px;">Horaires de livraison</div>
+      <div class="slb" style="margin-top:6px;">Horaires</div>
       <div class="card">
-        <div class="card-title">🕐 Plages horaires</div>
+        <div class="card-title">🕐 Plages horaires par jour</div>
         <div class="horaires-grid" id="horaires-grid"></div>
         <div style="margin-top:12px;">
-          <div class="fl">Message horaire affiché</div>
+          <div class="fl">Message horaire affiché sur la boutique</div>
           <input class="fi" id="s-horaireMsg" placeholder="ex: Livraison 12h–22h tous les jours" type="text" oninput="markU()"></div>
       </div>
 
       <div class="slb">Commande minimum</div>
       <div class="card">
+        <div class="card-title">💶 Minimums de commande</div>
         <div class="fg"><div class="fl">Minimum livraison (€)</div>
           <input class="fi" id="s-minlivr" placeholder="50" type="number" oninput="markU()"></div>
-        <div class="fg"><div class="fl">Minimum meet-up (€)</div>
+        <div class="fg"><div class="fl">Minimum meet-up (€) — 0 = sans minimum</div>
           <input class="fi" id="s-minmeet" placeholder="0" type="number" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Frais de livraison (optionnel)</div>
+          <input class="fi" id="s-frais-livr" placeholder="ex: 5€ ou Gratuit" type="text" oninput="markU()"></div>
       </div>
 
       <div class="slb">Lieu du meet-up</div>
       <div class="card">
-        <div class="fg"><div class="fl">Texte affiché dans "Meet-up"</div>
+        <div class="card-title">📍 Zone de meet-up</div>
+        <div class="fg"><div class="fl">Texte affiché (visible par les clients)</div>
           <input class="fi" id="s-meetupzone" placeholder="ex: Tours 37000" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Infos complémentaires (optionnel)</div>
+          <input class="fi" id="s-meetup-info" placeholder="ex: RDV à convenir par message" type="text" oninput="markU()"></div>
       </div>
 
       <div class="slb">Zones de livraison</div>
       <div class="card">
+        <div class="card-title">🗺️ Zones couvertes</div>
         <div id="zones-list"></div>
         <input class="fi" id="zone-inp" placeholder="ex: Tours centre, Joué-lès-Tours..." type="text" style="margin-top:4px;">
         <button class="apb" onclick="addZone()">+ Ajouter une zone</button>
@@ -3219,35 +3646,111 @@ window.addEventListener('DOMContentLoaded', () => {
 
       <div class="slb">Moyens de paiement</div>
       <div class="card">
+        <div class="card-title">💳 Paiements acceptés</div>
         <div class="fl" style="margin-bottom:10px;">Sélectionne les moyens acceptés</div>
         <div class="pay-grid" id="pay-grid"></div>
+        <div class="fg" style="margin-top:12px;"><div class="fl">Autre moyen de paiement (texte libre)</div>
+          <input class="fi" id="s-pay-autre" placeholder="ex: 💳 Carte bancaire" type="text" oninput="markU()"></div>
+        <button class="apb" onclick="addPayAutre()">+ Ajouter</button>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <button class="abtn" onclick="saveAll()">💾 Sauvegarder la livraison</button>
       </div>
     </div>
 
     <!-- ══ MESSAGES ══ -->
     <div class="pane" id="p-messages">
-      <div class="slb" style="margin-top:6px;">Templates WhatsApp</div>
+      <div class="slb" style="margin-top:6px;">Contacts</div>
+      <div class="card">
+        <div class="card-title">📞 Numéros de contact</div>
+        <div class="fg"><div class="fl">Numéro WhatsApp (sans +, ex: 33758...)</div>
+          <input class="fi" id="s-wa" placeholder="33758464533" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Telegram SAV</div>
+          <input class="fi" id="s-tg" placeholder="@DerBeste37" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Second Telegram (optionnel)</div>
+          <input class="fi" id="s-tg2" placeholder="@autrecompte" type="text" oninput="markU()"></div>
+      </div>
+
+      <div class="slb">Templates WhatsApp</div>
       <div class="card">
         <div class="card-title">📋 Message de commande</div>
-        <div class="fg"><div class="fl">Template (utilise {produit} {grammage} {prix})</div>
-          <textarea class="fi" id="s-watpl" rows="5" oninput="markU()"></textarea></div>
+        <div style="font-size:11px;color:var(--dim);margin-bottom:8px;line-height:1.5;">Variables : <span style="color:var(--g);">{produit}</span> · <span style="color:var(--g);">{grammage}</span> · <span style="color:var(--g);">{prix}</span></div>
+        <div class="fg">
+          <textarea class="fi" id="s-watpl" rows="6" oninput="markU()"></textarea></div>
         <button class="gbtn" onclick="saveWaTpl()">💾 Enregistrer le template</button>
       </div>
 
       <div class="slb">Message rupture de stock</div>
       <div class="card">
         <div class="card-title">❌ Message "Me prévenir"</div>
-        <div class="fg"><div class="fl">Message automatique</div>
+        <div style="font-size:11px;color:var(--dim);margin-bottom:8px;line-height:1.5;">Variable : <span style="color:var(--g);">{produit}</span></div>
+        <div class="fg">
           <textarea class="fi" id="s-wanotif" rows="4" oninput="markU()"></textarea></div>
         <button class="gbtn" onclick="saveWaTpl()">💾 Enregistrer</button>
       </div>
 
-      <div class="slb">Numéros de contact</div>
+      <div class="slb">Message personnalisé</div>
       <div class="card">
-        <div class="fg"><div class="fl">Numéro WhatsApp</div>
-          <input class="fi" id="s-wa" placeholder="33758464533" type="text" oninput="markU()"></div>
-        <div class="fg"><div class="fl">Telegram SAV</div>
-          <input class="fi" id="s-tg" placeholder="@DerBeste37" type="text" oninput="markU()"></div>
+        <div class="card-title">✍️ Message libre (optionnel)</div>
+        <div class="fg"><div class="fl">Affiché en bas de la page boutique</div>
+          <textarea class="fi" id="s-msg-libre" rows="3" placeholder="ex: Pour toute question, contactez-nous directement 🙏" oninput="markU()"></textarea></div>
+        <button class="gbtn" onclick="saveAll()">💾 Sauvegarder</button>
+      </div>
+    </div>
+
+    <!-- ══ APPARENCE ══ -->
+    <div class="pane" id="p-apparence">
+      <div class="slb" style="margin-top:6px;">Hero & Titre</div>
+      <div class="card">
+        <div class="card-title">🖼️ Section principale</div>
+        <div class="fg"><div class="fl">Sous-titre hero</div>
+          <input class="fi" id="s-herosub" placeholder="ex: Tours · Since 2020" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Badge hero</div>
+          <input class="fi" id="s-herobadge" placeholder="ex: ⭐ Since 2020" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">URL image hero (optionnel)</div>
+          <input class="fi" id="s-hero-img" placeholder="https://... (image de fond)" type="text" oninput="markU()"></div>
+      </div>
+
+      <div class="slb">Couleurs</div>
+      <div class="card">
+        <div class="card-title">🎨 Couleur principale</div>
+        <div class="fg"><div class="fl">Couleur accentuation (défaut : vert)</div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <input type="color" id="s-color-main" value="#00e87a" oninput="markU();previewColor(this.value)" style="width:50px;height:38px;border:none;background:none;cursor:pointer;border-radius:8px;overflow:hidden;">
+            <span style="font-size:12px;color:var(--dim);">Prévisualisation en direct</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+          <button onclick="previewColor('#00e87a');document.getElementById('s-color-main').value='#00e87a';markU()" style="width:30px;height:30px;border-radius:50%;background:#00e87a;border:2px solid rgba(255,255,255,.2);cursor:pointer;"></button>
+          <button onclick="previewColor('#2AABEE');document.getElementById('s-color-main').value='#2AABEE';markU()" style="width:30px;height:30px;border-radius:50%;background:#2AABEE;border:2px solid rgba(255,255,255,.2);cursor:pointer;"></button>
+          <button onclick="previewColor('#ff6b35');document.getElementById('s-color-main').value='#ff6b35';markU()" style="width:30px;height:30px;border-radius:50%;background:#ff6b35;border:2px solid rgba(255,255,255,.2);cursor:pointer;"></button>
+          <button onclick="previewColor('#b388ff');document.getElementById('s-color-main').value='#b388ff';markU()" style="width:30px;height:30px;border-radius:50%;background:#b388ff;border:2px solid rgba(255,255,255,.2);cursor:pointer;"></button>
+          <button onclick="previewColor('#ffd200');document.getElementById('s-color-main').value='#ffd200';markU()" style="width:30px;height:30px;border-radius:50%;background:#ffd200;border:2px solid rgba(255,255,255,.2);cursor:pointer;"></button>
+        </div>
+      </div>
+
+      <div class="slb">Affichage produits</div>
+      <div class="card">
+        <div class="card-title">🃏 Style des cartes produits</div>
+        <div class="fg"><div class="fl">Afficher les badges "Nouveauté"</div>
+          <label class="ti tr"><input type="checkbox" id="s-show-new" checked oninput="markU()"><div class="tt"><div class="th"></div></div></label></div>
+        <div class="fg" style="margin-top:8px;"><div class="fl">Afficher les prix sur les cartes</div>
+          <label class="ti tr"><input type="checkbox" id="s-show-prices" checked oninput="markU()"><div class="tt"><div class="th"></div></div></label></div>
+        <div class="fg" style="margin-top:8px;"><div class="fl">Afficher le compteur de produits</div>
+          <label class="ti tr"><input type="checkbox" id="s-show-count" checked oninput="markU()"><div class="tt"><div class="th"></div></div></label></div>
+      </div>
+
+      <div class="card" style="margin-top:8px;">
+        <button class="abtn" onclick="saveAll()">💾 Sauvegarder l'apparence</button>
+      </div>
+    </div>
+
+    <!-- ══ STATS ══ -->
+    <div class="pane" id="p-stats">
+      <div class="slb" style="margin-top:6px;">Aperçu catalogue</div>
+      <div id="stats-content">
+        <div style="font-size:13px;color:var(--dim);text-align:center;padding:20px;">Chargement…</div>
       </div>
     </div>
 
@@ -3265,7 +3768,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
       <div class="slb">Export / Import</div>
       <div class="card">
-        <div class="card-title">📦 Sauvegarde des données</div>
+        <div class="card-title">📦 Sauvegarde complète</div>
+        <div style="font-size:12px;color:var(--dim);margin-bottom:10px;">Exporte tous tes produits et paramètres en JSON. Garde une copie de sécurité régulièrement.</div>
         <div style="display:flex;gap:8px;">
           <button class="gbtn" style="flex:1;" onclick="exportData()">⬇️ Exporter JSON</button>
           <button class="gbtn" style="flex:1;background:var(--sur2);color:var(--txt);" onclick="document.getElementById('import-inp').click()">⬆️ Importer</button>
@@ -3273,10 +3777,21 @@ window.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
+      <div class="slb">Infos système</div>
+      <div class="card">
+        <div class="card-title">ℹ️ Informations</div>
+        <div style="font-size:12px;color:var(--dim);line-height:1.8;">
+          <div>Version : <span style="color:var(--g);">DerBeste37 v2.0</span></div>
+          <div>Stockage : <span style="color:var(--g);">GitHub Gist</span></div>
+          <div id="info-last-save">Dernière sauvegarde : —</div>
+          <div id="info-prod-count">Produits chargés : —</div>
+        </div>
+      </div>
+
       <div class="slb">Danger</div>
       <div class="card">
         <button class="dbtn" onclick="confirmA('reset','','Réinitialiser ?','Catalogue remis par défaut. Irréversible.')">🔄 Remettre catalogue par défaut</button>
-        <button class="dbtn" onclick="confirmA('wipe','','Tout effacer ?','TOUTES les données admin seront supprimées. Irréversible.')">💣 Effacer toutes les données</button>
+        <button class="dbtn" style="margin-top:8px;" onclick="confirmA('wipe','','Tout effacer ?','TOUTES les données admin seront supprimées. Irréversible.')">💣 Effacer toutes les données</button>
       </div>
     </div>
 
@@ -3332,6 +3847,7 @@ const DEFS=[
   {id:'lemon_ice',name:'Lemon Ice 🧊',cat:'olive',desc:'Lemon Ice — Hubba Bubbatz. Citron glacé, puissance.',prices:['2G / 35€','5G / 80€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
   {id:'ecaille',name:'Écaille 💎',cat:'festif',desc:"La pureté à l'état brut. 96% — Sélection d'exception.",prices:['0.5G / 30€','1G / 50€','5G / 240€','10G / 460€'],oos:false,isNew:false,hidden:false,promo:null,video:''},
 ];
+window.DEFS = DEFS; // expose pour _doApply fallback
 
 let P=[], S={
   whatsapp:'33758464533', telegram:'@DerBeste37', password:'beste37',
@@ -3404,23 +3920,48 @@ function buildUI(){
 
   document.getElementById('s-watpl').value=S.waTpl;
   document.getElementById('s-wanotif').value=S.waNotif;
-  document.getElementById('s-wa').value=S.whatsapp;
-  document.getElementById('s-tg').value=S.telegram;
+  document.getElementById('s-wa').value=S.whatsapp||'';
+  document.getElementById('s-tg').value=S.telegram||'';
+  if(document.getElementById('s-tg2')) document.getElementById('s-tg2').value=S.telegram2||'';
   document.getElementById('s-maint').checked=S.maintenance;
-  document.getElementById('s-maintmsg').value=S.maintMsg;
-  document.getElementById('s-ticker').value=S.ticker;
-  document.getElementById('s-ticker-on').checked=S.tickerOn;
-  document.getElementById('s-herosub').value=S.heroSub;
-  document.getElementById('s-herobadge').value=S.heroBadge;
-  document.getElementById('s-minlivr').value=S.minLivr;
-  document.getElementById('s-minmeet').value=S.minMeet;
-  document.getElementById('s-horaireMsg').value=S.horaireMsg;
+  document.getElementById('s-maintmsg').value=S.maintMsg||'';
+  document.getElementById('s-ticker').value=S.ticker||'';
+  document.getElementById('s-ticker-on').checked=S.tickerOn||false;
+  // Apparence
+  document.getElementById('s-herosub').value=S.heroSub||'';
+  document.getElementById('s-herobadge').value=S.heroBadge||'';
+  if(document.getElementById('s-hero-img')) document.getElementById('s-hero-img').value=S.heroImg||'';
+  if(document.getElementById('s-color-main')&&S.colorMain) document.getElementById('s-color-main').value=S.colorMain;
+  // Livraison
+  document.getElementById('s-minlivr').value=S.minLivr||50;
+  document.getElementById('s-minmeet').value=S.minMeet||0;
+  if(document.getElementById('s-frais-livr')) document.getElementById('s-frais-livr').value=S.fraisLivr||'';
+  if(document.getElementById('s-meetup-info')) document.getElementById('s-meetup-info').value=S.meetupInfo||'';
+  document.getElementById('s-horaireMsg').value=S.horaireMsg||'';
   document.getElementById('s-meetupzone').value=S.meetupZone||'';
+  // Annonces
+  if(document.getElementById('s-annonce-on')) document.getElementById('s-annonce-on').checked=S.annonceOn||false;
+  if(document.getElementById('s-annonce-txt')) document.getElementById('s-annonce-txt').value=S.annonceTxt||'';
+  if(document.getElementById('s-annonce-type')) document.getElementById('s-annonce-type').value=S.annonceType||'info';
+  if(document.getElementById('s-annonce-exp')) document.getElementById('s-annonce-exp').value=S.annonceExp||'';
+  if(document.getElementById('s-popup-on')) document.getElementById('s-popup-on').checked=S.popupOn||false;
+  if(document.getElementById('s-popup-title')) document.getElementById('s-popup-title').value=S.popupTitle||'';
+  if(document.getElementById('s-popup-body')) document.getElementById('s-popup-body').value=S.popupBody||'';
+  if(document.getElementById('s-popup-btn')) document.getElementById('s-popup-btn').value=S.popupBtn||'';
+  if(document.getElementById('s-urgent-on')) document.getElementById('s-urgent-on').checked=S.urgentOn||false;
+  if(document.getElementById('s-urgent-txt')) document.getElementById('s-urgent-txt').value=S.urgentTxt||'';
+  // Messages
+  if(document.getElementById('s-msg-libre')) document.getElementById('s-msg-libre').value=S.msgLibre||'';
+  // Ticker preview
   if(S.ticker) document.getElementById('ticker-preview').textContent=S.ticker;
-  if(S.maintenance){document.getElementById('maintBadge').style.display='block';}
+  if(S.maintenance) document.getElementById('maintBadge').style.display='block';
+  // Couleur
+  if(S.colorMain) previewColor(S.colorMain);
+  // Catégories custom
+  if(S.customCats) Object.assign(CATS, S.customCats);
 
   const pp=document.getElementById('promo-pid');
-  pp.innerHTML=P.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  if(pp) pp.innerHTML=P.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 
   const ca=document.getElementById('catActions');
   ca.innerHTML=Object.entries(CATS).map(([k,v])=>`
@@ -3429,6 +3970,14 @@ function buildUI(){
       <button class="qa qr" style="flex:0 0 auto;font-size:11px;padding:7px 10px;border-radius:10px;" onclick="catAction('${k}','oos')">❌ Rupture</button>
       <button class="qa qg" style="flex:0 0 auto;font-size:11px;padding:7px 10px;border-radius:10px;" onclick="catAction('${k}','stock')">✅ Stock</button>
     </div>`).join('');
+
+  // Info système
+  const ipc = document.getElementById('info-prod-count');
+  if(ipc) ipc.textContent = `Produits chargés : ${P.length}`;
+  const ils = document.getElementById('info-last-save');
+  if(ils && S._lastSave) ils.textContent = `Dernière sauvegarde : ${new Date(S._lastSave).toLocaleString('fr-FR')}`;
+
+  renderCatList();
 }
 
 function renderZones(){
@@ -3440,8 +3989,139 @@ function renderZones(){
 }
 
 // ═══════════════════════════════════════
-// TABS
+// FILTER PRODUCTS
 // ═══════════════════════════════════════
+function filterProducts(type){
+  // Admin panel list
+  document.querySelectorAll('#PL .pc').forEach(c=>{
+    const id = c.id.replace('c-','');
+    const p = P.find(x=>x.id===id);
+    if(!p){c.style.display='';return;}
+    let show = type==='all';
+    if(!show && type==='oos')    show = p.oos;
+    if(!show && type==='new')    show = p.isNew;
+    if(!show && type==='hidden') show = p.hidden;
+    if(!show && type==='promo')  show = !!p.promo;
+    c.style.display = show ? '' : 'none';
+  });
+  document.querySelectorAll('#PL .slb').forEach(l=>l.style.display = type==='all' ? '' : 'none');
+}
+
+// ═══════════════════════════════════════
+// CATEGORIES DYNAMIQUES
+// ═══════════════════════════════════════
+function renderCatList(){
+  const cl = document.getElementById('cat-list');
+  if(!cl) return;
+  cl.innerHTML = Object.entries(window._CATS||CATS).map(([k,v])=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;padding:8px 10px;background:var(--sur);border-radius:10px;border:1px solid var(--bdr);">
+      <div style="flex:1;font-size:13px;">${v}</div>
+      <div style="font-size:11px;color:var(--dim);padding:3px 8px;background:var(--sur2);border-radius:6px;">${k}</div>
+      ${Object.keys(CATS).includes(k)?'<span style="font-size:10px;color:var(--dim);">défaut</span>':'<button onclick="removeCategory(\''+k+'\')" style="background:rgba(255,69,69,.08);border:1px solid rgba(255,69,69,.15);color:var(--red);border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer;">✕</button>'}
+    </div>`).join('');
+}
+function addCategory(){
+  const key  = document.getElementById('new-cat-key').value.trim().toLowerCase().replace(/\s+/g,'_');
+  const name = document.getElementById('new-cat-name').value.trim();
+  if(!key||!name){toast('❌ Clé et nom requis');return;}
+  if(CATS[key]){toast('❌ Cette clé existe déjà');return;}
+  CATS[key] = name;
+  if(!S.customCats) S.customCats = {};
+  S.customCats[key] = name;
+  document.getElementById('new-cat-key').value = '';
+  document.getElementById('new-cat-name').value = '';
+  renderCatList();
+  buildUI();
+  markU();
+  toast(`✅ Catégorie "${name}" ajoutée`);
+}
+function removeCategory(key){
+  if(Object.keys(CATS).length <= 1){toast('❌ Impossible de supprimer la dernière catégorie');return;}
+  const hasProducts = P.some(p=>p.cat===key);
+  if(hasProducts){toast('❌ Des produits utilisent cette catégorie');return;}
+  delete CATS[key];
+  if(S.customCats) delete S.customCats[key];
+  renderCatList();
+  buildUI();
+  markU();
+  toast('🗑️ Catégorie supprimée');
+}
+
+// ═══════════════════════════════════════
+// APPARENCE
+// ═══════════════════════════════════════
+function previewColor(hex){
+  document.documentElement.style.setProperty('--green', hex);
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  document.documentElement.style.setProperty('--green-dim', `rgba(${r},${g},${b},0.12)`);
+  document.documentElement.style.setProperty('--green-glow', `rgba(${r},${g},${b},0.25)`);
+  document.documentElement.style.setProperty('--cali', hex);
+}
+
+// ═══════════════════════════════════════
+// PAIEMENT LIBRE
+// ═══════════════════════════════════════
+function addPayAutre(){
+  const v = document.getElementById('s-pay-autre').value.trim();
+  if(!v){toast('❌ Texte vide');return;}
+  if(!S.paiements.includes(v)) S.paiements.push(v);
+  document.getElementById('s-pay-autre').value = '';
+  // Refresh pay-grid
+  const pg = document.getElementById('pay-grid');
+  const existing = pg.querySelector(`[data-custom="${v}"]`);
+  if(!existing){
+    const div = document.createElement('div');
+    div.className = 'pay-tag on';
+    div.dataset.custom = v;
+    div.textContent = v;
+    div.onclick = ()=>{ div.classList.toggle('on'); if(div.classList.contains('on'))S.paiements.push(v); else S.paiements=S.paiements.filter(x=>x!==v); markU(); };
+    pg.appendChild(div);
+  }
+  markU();
+  toast(`✅ "${v}" ajouté`);
+}
+
+// ═══════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════
+function renderStats(){
+  const el = document.getElementById('stats-content');
+  if(!el) return;
+  const total   = P.length;
+  const oos     = P.filter(p=>p.oos).length;
+  const nw      = P.filter(p=>p.isNew).length;
+  const hidden  = P.filter(p=>p.hidden).length;
+  const promos  = P.filter(p=>p.promo).length;
+  const visible = P.filter(p=>!p.hidden).length;
+
+  const catStats = Object.entries(CATS).map(([k,v])=>{
+    const ps = P.filter(p=>p.cat===k);
+    const oosC = ps.filter(p=>p.oos).length;
+    return {name:v, total:ps.length, oos:oosC};
+  }).filter(c=>c.total>0);
+
+  el.innerHTML = `
+    <div class="stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:12px;">
+      <div class="stat sg"><div class="sn">${total}</div><div class="sl">Total</div></div>
+      <div class="stat sr"><div class="sn">${oos}</div><div class="sl">Ruptures</div></div>
+      <div class="stat so"><div class="sn">${nw}</div><div class="sl">Nouveautés</div></div>
+    </div>
+    <div class="stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;">
+      <div class="stat sg"><div class="sn">${visible}</div><div class="sl">Visibles</div></div>
+      <div class="stat"><div class="sn">${hidden}</div><div class="sl">Masqués</div></div>
+      <div class="stat" style="background:rgba(255,210,0,.06);border-color:rgba(255,210,0,.15);"><div class="sn" style="color:#ffd200;">${promos}</div><div class="sl">Promos</div></div>
+    </div>
+    <div class="slb">Par catégorie</div>
+    ${catStats.map(c=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--sur);border:1px solid var(--bdr);border-radius:12px;margin-bottom:6px;">
+        <div style="flex:1;font-size:13px;font-weight:600;">${c.name}</div>
+        <div style="font-size:12px;color:var(--g);">${c.total} produit${c.total>1?'s':''}</div>
+        ${c.oos>0?`<div style="font-size:11px;color:var(--red);padding:2px 8px;background:rgba(255,69,69,.08);border-radius:8px;">❌ ${c.oos} rupture${c.oos>1?'s':''}</div>`:'<div style="font-size:11px;color:var(--g);padding:2px 8px;background:rgba(0,232,122,.08);border-radius:8px;">✅ Dispo</div>'}
+      </div>`).join('')}
+    <div class="slb" style="margin-top:12px;">Dernière sauvegarde</div>
+    <div class="card"><div style="font-size:12px;color:var(--dim);" id="stats-last-save">${S._lastSave ? '🕐 ' + new Date(S._lastSave).toLocaleString('fr-FR') : 'Aucune sauvegarde enregistrée'}</div></div>
+  `;
+}
 function ST(btn,name){
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
@@ -3608,36 +4288,74 @@ function addProduct(){
 // ═══════════════════════════════════════
 // PROMOS
 // ═══════════════════════════════════════
-function addPromo(){
-  const pid=document.getElementById('promo-pid').value;
-  const type=document.getElementById('promo-type').value;
-  const val=document.getElementById('promo-val').value.trim();
-  if(!val){toast('❌ Valeur requise');return;}
-  const p=P.find(x=>x.id===pid);if(!p)return;
-  const label=type==='pct'?`-${val}%`:type==='fixed'?`${val}€`:type==='lot'?val:val;
-  p.promo=label;
-  if(!S.promos)S.promos=[];
-  S.promos=S.promos.filter(x=>x.id!==pid);
-  S.promos.push({id:pid,name:p.name,type,val,label});
-  document.getElementById('promo-val').value='';
-  toast(`🏷️ Promo appliquée sur ${p.name}`);markU();render();
+function updatePromoPlaceholder(){
+  const type = document.getElementById('promo-type').value;
+  const inp = document.getElementById('promo-val');
+  const ph = {pct:'ex: 20 (pour -20%)', fixed:'ex: 50 (pour 50€)', lot:'ex: 3 pour 2', badge:'ex: Nouveauté', flash:'ex: -15%', solde:'ex: Soldes d\'été'};
+  inp.placeholder = ph[type] || 'Valeur';
 }
-function removePromo(pid){
-  const p=P.find(x=>x.id===pid);if(p)p.promo=null;
-  S.promos=(S.promos||[]).filter(x=>x.id!==pid);
-  markU();render();toast('🗑️ Promo retirée');
+async function addPromo(){
+  const pid   = document.getElementById('promo-pid').value;
+  const type  = document.getElementById('promo-type').value;
+  const val   = document.getElementById('promo-val').value.trim();
+  const desc  = document.getElementById('promo-desc').value.trim();
+  const exp   = document.getElementById('promo-exp').value;
+  if(!val){toast('❌ Valeur requise');return;}
+  const p = P.find(x=>x.id===pid); if(!p) return;
+
+  const labels = {pct:`-${val}%`, fixed:`${val}€`, lot:val, badge:val, flash:`⚡ -${val}%`, solde:`🔥 ${val}`};
+  const label  = labels[type] || val;
+
+  p.promo = label;
+  if(!S.promos) S.promos = [];
+  S.promos = S.promos.filter(x=>x.id!==pid);
+  S.promos.push({id:pid, name:p.name, type, val, label, desc, exp, addedAt: new Date().toISOString()});
+
+  document.getElementById('promo-val').value  = '';
+  document.getElementById('promo-desc').value = '';
+  document.getElementById('promo-exp').value  = '';
+
+  toast(`⏳ Sauvegarde en cours…`);
+  markU(); render();
+  await saveAll();
+}
+async function removePromo(pid){
+  const p = P.find(x=>x.id===pid); if(p) p.promo=null;
+  S.promos = (S.promos||[]).filter(x=>x.id!==pid);
+  markU(); render();
+  toast('⏳ Suppression en cours…');
+  await saveAll();
 }
 function renderPromos(){
-  const pl=document.getElementById('promoList');
-  const active=(S.promos||[]).filter(pr=>P.find(p=>p.id===pr.id&&p.promo));
-  pl.innerHTML=active.length?active.map(pr=>`
-    <div class="promo-row">
-      <div class="promo-info">
-        <div class="promo-name">${pr.name}</div>
-        <div class="promo-sub">🏷️ ${pr.label}</div>
-      </div>
-      <button class="promo-del" onclick="removePromo('${pr.id}')">✕</button>
-    </div>`).join(''):'<div style="font-size:13px;color:var(--dim);text-align:center;padding:20px;">Aucune promo active</div>';
+  const pl = document.getElementById('promoList');
+  if(!pl) return;
+  // Filtrer les promos expirées automatiquement
+  const now = new Date();
+  const active = (S.promos||[]).filter(pr=>{
+    if(!P.find(p=>p.id===pr.id&&p.promo)) return false;
+    if(pr.exp && new Date(pr.exp) < now) return false;
+    return true;
+  });
+  if(!active.length){ pl.innerHTML='<div class="promo-empty">Aucune promo active</div>'; return; }
+  const count = active.length;
+  pl.innerHTML = `<div class="promo-count">🏷️ ${count} promo${count>1?'s':''} active${count>1?'s':''}</div>` +
+    active.map(pr=>{
+      const typeLabels={pct:'% Réduction',fixed:'Prix fixe',lot:'Offre lot',badge:'Badge',flash:'Flash',solde:'Soldes'};
+      const meta = [
+        typeLabels[pr.type]||pr.type,
+        pr.desc ? pr.desc : null,
+        pr.exp  ? `Expire le ${new Date(pr.exp).toLocaleDateString('fr-FR')}` : null,
+        pr.addedAt ? `Ajouté le ${new Date(pr.addedAt).toLocaleDateString('fr-FR')}` : null
+      ].filter(Boolean);
+      return `<div class="promo-row">
+        <div class="promo-info">
+          <div class="promo-name">${pr.name}</div>
+          <div class="promo-sub">🏷️ ${pr.label}</div>
+          <div class="promo-meta">${meta.map(m=>`<span>${m}</span>`).join('')}</div>
+        </div>
+        <button class="promo-del" onclick="removePromo('${pr.id}')">✕</button>
+      </div>`;
+    }).join('');
 }
 
 // ═══════════════════════════════════════
@@ -3734,26 +4452,48 @@ function confirmA(action,id,title,text){
 // ═══════════════════════════════════════
 function markU(){unsaved=true;}
 async function saveAll(){
-  // Dismiss iOS keyboard before saving
   if(document.activeElement) document.activeElement.blur();
+  // Boutique
   S.maintenance=document.getElementById('s-maint').checked;
-  S.whatsapp=document.getElementById('s-wa').value;
-  S.telegram=document.getElementById('s-tg').value;
   S.maintMsg=document.getElementById('s-maintmsg').value;
   S.ticker=document.getElementById('s-ticker').value;
   S.tickerOn=document.getElementById('s-ticker-on').checked;
+  // Contacts
+  S.whatsapp=document.getElementById('s-wa').value;
+  S.telegram=document.getElementById('s-tg').value;
+  if(document.getElementById('s-tg2')) S.telegram2=document.getElementById('s-tg2').value;
+  // Apparence
   S.heroSub=document.getElementById('s-herosub').value;
   S.heroBadge=document.getElementById('s-herobadge').value;
+  if(document.getElementById('s-hero-img')) S.heroImg=document.getElementById('s-hero-img').value;
+  if(document.getElementById('s-color-main')) S.colorMain=document.getElementById('s-color-main').value;
+  // Livraison
   S.minLivr=parseInt(document.getElementById('s-minlivr').value)||50;
   S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
+  if(document.getElementById('s-frais-livr')) S.fraisLivr=document.getElementById('s-frais-livr').value;
+  if(document.getElementById('s-meetup-info')) S.meetupInfo=document.getElementById('s-meetup-info').value;
   S.horaireMsg=document.getElementById('s-horaireMsg').value;
   S.meetupZone=document.getElementById('s-meetupzone').value;
   if(!S.horaires) S.horaires={};
   ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(function(d){var el=document.getElementById('h-'+d);if(el)S.horaires[d]=el.value;});
-  // Collect paiements from DOM (belt+suspenders)
   S.paiements=Array.from(document.querySelectorAll('.pay-tag.on')).map(function(el){return el.textContent;});
+  // Messages
   S.waTpl=document.getElementById('s-watpl').value;
   S.waNotif=document.getElementById('s-wanotif').value;
+  if(document.getElementById('s-msg-libre')) S.msgLibre=document.getElementById('s-msg-libre').value;
+  // Annonces
+  if(document.getElementById('s-annonce-on')) S.annonceOn=document.getElementById('s-annonce-on').checked;
+  if(document.getElementById('s-annonce-txt')) S.annonceTxt=document.getElementById('s-annonce-txt').value;
+  if(document.getElementById('s-annonce-type')) S.annonceType=document.getElementById('s-annonce-type').value;
+  if(document.getElementById('s-annonce-exp')) S.annonceExp=document.getElementById('s-annonce-exp').value;
+  if(document.getElementById('s-popup-on')) S.popupOn=document.getElementById('s-popup-on').checked;
+  if(document.getElementById('s-popup-title')) S.popupTitle=document.getElementById('s-popup-title').value;
+  if(document.getElementById('s-popup-body')) S.popupBody=document.getElementById('s-popup-body').value;
+  if(document.getElementById('s-popup-btn')) S.popupBtn=document.getElementById('s-popup-btn').value;
+  if(document.getElementById('s-urgent-on')) S.urgentOn=document.getElementById('s-urgent-on').checked;
+  if(document.getElementById('s-urgent-txt')) S.urgentTxt=document.getElementById('s-urgent-txt').value;
+  // Timestamp
+  S._lastSave = new Date().toISOString();
   try{
     var Store = window.Store;
     if(!Store) throw new Error('Store non disponible');
@@ -3762,9 +4502,12 @@ async function saveAll(){
     unsaved=false;
     toast('✅ Sauvegardé — visible par tous !');
     applySettingsToDOM(S);
+    // Update info panel
+    const ils = document.getElementById('info-last-save');
+    if(ils) ils.textContent = `Dernière sauvegarde : ${new Date(S._lastSave).toLocaleString('fr-FR')}`;
   }catch(e){
     unsaved=false;
-    toast('⚠️ Sauvegardé localement — vérifie ta connexion');
+    toast('⚠️ Erreur sauvegarde : ' + e.message);
     applySettingsToDOM(S);
   }
 }
@@ -3862,6 +4605,14 @@ function toast(msg){
   if(typeof addPR !== "undefined") window.addPR = addPR;
   if(typeof addProduct !== "undefined") window.addProduct = addProduct;
   if(typeof addPromo !== "undefined") window.addPromo = addPromo;
+  if(typeof updatePromoPlaceholder !== "undefined") window.updatePromoPlaceholder = updatePromoPlaceholder;
+  if(typeof filterProducts !== "undefined") window.filterProducts = filterProducts;
+  if(typeof addCategory !== "undefined") window.addCategory = addCategory;
+  if(typeof removeCategory !== "undefined") window.removeCategory = removeCategory;
+  if(typeof renderCatList !== "undefined") window.renderCatList = renderCatList;
+  if(typeof previewColor !== "undefined") window.previewColor = previewColor;
+  if(typeof addPayAutre !== "undefined") window.addPayAutre = addPayAutre;
+  if(typeof renderStats !== "undefined") window.renderStats = renderStats;
   if(typeof addZone !== "undefined") window.addZone = addZone;
   if(typeof catAction !== "undefined") window.catAction = catAction;
   if(typeof changePass !== "undefined") window.changePass = changePass;
@@ -3916,35 +4667,54 @@ function toast(msg){
 
 <script>
 // ══ GitHub Gist Store ══
-// Simple REST: GET/PATCH — works everywhere, no SDK needed
+// Utilise un proxy CORS pour contourner les restrictions du navigateur
 (function(){
   var GIST_ID  = '2b848b6b09d4c91e57e82399358a5c3f';
-  var GH_TOKEN = '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'; // ⚠️ Remplace par ton nouveau token si tu en crées un
+  var GH_TOKEN = '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';
   var FILE     = 'config.json';
+  var RAW_URL  = 'https://gist.githubusercontent.com/raw/' + GIST_ID + '/' + FILE;
   var API      = 'https://api.github.com/gists/' + GIST_ID;
-  var HEADERS  = {
-    'Authorization': 'Bearer ' + GH_TOKEN,
-    'Accept'       : 'application/vnd.github+json',
-    'Content-Type' : 'application/json'
-  };
+  // Proxy CORS public pour les requêtes PATCH (écriture)
+  var PROXY    = 'https://corsproxy.io/?';
 
   // Cache local en mémoire
   var _cache = null;
+
+  async function _fetchGist() {
+    // Lecture directe sans proxy (GET public fonctionne sans CORS)
+    var resp = await fetch(RAW_URL + '?t=' + Date.now());
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return JSON.parse(await resp.text());
+  }
+
+  async function _patchGist(data) {
+    var body = JSON.stringify({ files: { [FILE]: { content: JSON.stringify(data, null, 2) } } });
+    // On essaie d'abord sans proxy (certains environnements l'acceptent)
+    try {
+      var r = await fetch(API, {
+        method: 'PATCH',
+        headers: { 'Authorization': 'Bearer ' + GH_TOKEN, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+        body: body
+      });
+      if (r.ok) return true;
+    } catch(e) {}
+    // Sinon on passe par le proxy CORS
+    var r2 = await fetch(PROXY + encodeURIComponent(API), {
+      method: 'PATCH',
+      headers: { 'Authorization': 'Bearer ' + GH_TOKEN, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json', 'x-requested-with': 'xhr' },
+      body: body
+    });
+    if (!r2.ok) throw new Error('HTTP ' + r2.status);
+    return true;
+  }
 
   window.Store = {
 
     async get(key) {
       try {
-        var resp = await fetch(API, { headers: HEADERS });
-        if (resp.ok) {
-          var gist = await resp.json();
-          var raw  = gist.files[FILE] && gist.files[FILE].content;
-          if (raw) {
-            var all = JSON.parse(raw);
-            _cache  = all;
-            return all[key] !== undefined ? { value: JSON.stringify(all[key]) } : null;
-          }
-        }
+        var all = await _fetchGist();
+        _cache = all;
+        return all[key] !== undefined ? { value: JSON.stringify(all[key]) } : null;
       } catch(e) {
         console.log('ℹ️ Gist GET (fallback cache):', e.message);
         if (_cache && _cache[key] !== undefined)
@@ -3955,28 +4725,12 @@ function toast(msg){
 
     async set(key, valueStr) {
       try {
-        // Lire d'abord pour merger avec les données existantes
-        var current = _cache || {};
+        // Charger les données existantes si pas encore en cache
         if (!_cache) {
-          var resp0 = await fetch(API, { headers: HEADERS });
-          if (resp0.ok) {
-            var gist0 = await resp0.json();
-            var raw0  = gist0.files[FILE] && gist0.files[FILE].content;
-            if (raw0) current = JSON.parse(raw0);
-          }
+          try { _cache = await _fetchGist(); } catch(e) { _cache = {}; }
         }
-
-        current[key] = JSON.parse(valueStr);
-        _cache = current;
-
-        var resp = await fetch(API, {
-          method : 'PATCH',
-          headers: HEADERS,
-          body   : JSON.stringify({
-            files: { [FILE]: { content: JSON.stringify(current, null, 2) } }
-          })
-        });
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        _cache[key] = JSON.parse(valueStr);
+        await _patchGist(_cache);
         return true;
       } catch(e) {
         console.log('ℹ️ Gist SET failed:', e.message);
@@ -3986,20 +4740,19 @@ function toast(msg){
 
     async delete(key) {
       try {
-        var current = _cache || {};
-        delete current[key];
-        _cache = current;
-        await fetch(API, {
-          method : 'PATCH',
-          headers: HEADERS,
-          body   : JSON.stringify({
-            files: { [FILE]: { content: JSON.stringify(current, null, 2) } }
-          })
-        });
+        if (!_cache) { try { _cache = await _fetchGist(); } catch(e) { _cache = {}; } }
+        delete _cache[key];
+        await _patchGist(_cache);
       } catch(e) { console.log('ℹ️ Gist DELETE failed:', e.message); }
     }
   };
 
+
+// ── Fermer le pop-up annonce ──
+window.closeAnnoncePopup = function(){
+  document.getElementById('annonce-popup-overlay').classList.remove('open');
+  document.getElementById('annonce-popup').classList.remove('open');
+};
   window._storeReady = true;
   window.dispatchEvent(new Event('storeReady'));
   console.log('✅ GitHub Gist Store ready');
