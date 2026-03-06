@@ -2656,11 +2656,21 @@ window.addEventListener('scroll', () => {
           const pwd = document.getElementById('maint-pwd').value;
           const adminPwd = (window.S && window.S.password) || 'beste37';
           if(pwd === adminPwd || pwd === 'beste37'){
-            document.getElementById('maint-overlay').style.zIndex = '8000';
-            if(typeof window.openAdminPanel === 'function'){
-              window.openAdminPanel();
-            } else {
-              document.getElementById('ADMIN').style.cssText = 'display:flex!important;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;';
+            // Passer l'overlay derrière
+            document.getElementById('maint-overlay').style.display = 'none';
+            // Ouvrir le panel admin directement
+            var ap = document.getElementById('ADMIN');
+            if(ap){
+              ap.style.cssText = 'display:flex!important;position:fixed;inset:0;z-index:9999;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;';
+              // Montrer l'écran de login admin
+              var ls = document.getElementById('LS');
+              var au = document.getElementById('AU');
+              if(ls) ls.style.display = 'flex';
+              if(au) au.style.display = 'none';
+              // Pré-remplir le mot de passe et connecter directement
+              var li = document.getElementById('li');
+              if(li) li.value = pwd;
+              if(typeof window.tryLogin === 'function') window.tryLogin();
             }
           } else {
             const err = document.getElementById('maint-err');
