@@ -2633,42 +2633,81 @@ window.addEventListener('scroll', () => {
       const S = JSON.parse(ss.value.value);
 
       if(S.maintenance){
-        const overlay = document.createElement('div');
-        overlay.id = 'maint-overlay';
-        overlay.style.cssText = 'position:fixed;inset:0;z-index:9998;background:#0d1a14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;';
-        overlay.innerHTML = `
-          <div style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:#fff;letter-spacing:-2px;">DerBeste<span style="color:#00e87a;">37</span></div>
-          <div style="font-size:28px;">🔐</div>
-          <div style="font-size:15px;color:rgba(255,255,255,.6);text-align:center;max-width:280px;line-height:1.6;">${S.maintMsg||'Boutique temporairement fermée. Revenez bientôt 🙏'}</div>
-          <div style="margin-top:24px;width:100%;max-width:280px;">
-            <input id="maint-pwd" type="password" placeholder="Mot de passe admin" maxlength="30"
-              style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:15px;color:#fff;outline:none;letter-spacing:3px;text-align:center;box-sizing:border-box;">
-            <button onclick="
-              var pwd = document.getElementById('maint-pwd').value.trim();
-              var ok = (pwd === 'beste37') || (window.S && pwd === window.S.password);
-              if(ok){
-                document.getElementById('maint-overlay').remove();
-                window.openAdminPanel();
-              } else {
-                document.getElementById('maint-err').textContent = 'Mot de passe incorrect';
-                document.getElementById('maint-err').style.opacity = '1';
-                document.getElementById('maint-pwd').value = '';
-                setTimeout(function(){ document.getElementById('maint-err').style.opacity='0'; }, 2000);
-              }
-            " style="width:100%;margin-top:10px;background:linear-gradient(135deg,#00e87a,#00b85e);border:none;border-radius:14px;padding:13px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;color:#0d1a14;cursor:pointer;">
-              Accéder à l'admin
-            </button>
-            <div id="maint-err" style="font-size:12px;color:#ff4545;text-align:center;margin-top:8px;opacity:0;transition:opacity .2s;"></div>
-          </div>
-        `;
-        document.body.appendChild(overlay);
-        // Enter key support
-        setTimeout(function(){
-          var inp = document.getElementById('maint-pwd');
-          if(inp) inp.addEventListener('keydown', function(e){
-            if(e.key==='Enter') inp.nextElementSibling && inp.nextElementSibling.click();
-          });
-        }, 100);
+        var ov = document.createElement('div');
+        ov.id = 'maint-overlay';
+        ov.style.cssText = 'position:fixed;inset:0;z-index:9998;background:#0d1a14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;box-sizing:border-box;';
+
+        var logo = document.createElement('div');
+        logo.style.cssText = 'font-family:\'Syne\',sans-serif;font-size:40px;font-weight:800;color:#fff;letter-spacing:-2px;';
+        logo.innerHTML = 'DerBeste<span style="color:#00e87a;">37</span>';
+
+        var lock = document.createElement('div');
+        lock.style.fontSize = '28px';
+        lock.textContent = '🔐';
+
+        var msg = document.createElement('div');
+        msg.style.cssText = 'font-size:15px;color:rgba(255,255,255,.6);text-align:center;max-width:280px;line-height:1.6;';
+        msg.textContent = S.maintMsg || 'Boutique temporairement fermée. Revenez bientôt 🙏';
+
+        var box = document.createElement('div');
+        box.style.cssText = 'margin-top:24px;width:100%;max-width:280px;';
+
+        var inp = document.createElement('input');
+        inp.id = 'maint-pwd';
+        inp.type = 'password';
+        inp.placeholder = 'Mot de passe admin';
+        inp.maxLength = 30;
+        inp.style.cssText = 'width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 18px;font-family:\'DM Sans\',sans-serif;font-size:16px;color:#fff;outline:none;letter-spacing:3px;text-align:center;box-sizing:border-box;display:block;';
+
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = 'Accéder à l\'admin →';
+        btn.style.cssText = 'width:100%;margin-top:10px;background:linear-gradient(135deg,#00e87a,#00b85e);border:none;border-radius:14px;padding:14px;font-family:\'DM Sans\',sans-serif;font-weight:700;font-size:15px;color:#0d1a14;cursor:pointer;display:block;box-sizing:border-box;';
+
+        var err = document.createElement('div');
+        err.id = 'maint-err';
+        err.style.cssText = 'font-size:12px;color:#ff4545;text-align:center;margin-top:8px;min-height:18px;';
+
+        box.appendChild(inp);
+        box.appendChild(btn);
+        box.appendChild(err);
+        ov.appendChild(logo);
+        ov.appendChild(lock);
+        ov.appendChild(msg);
+        ov.appendChild(box);
+        document.body.appendChild(ov);
+
+        function doLogin(){
+          var pwd = inp.value.trim();
+          var ok = (pwd === 'beste37') || (window.S && pwd === window.S.password);
+          if(ok){
+            ov.remove();
+            var ap = document.getElementById('ADMIN');
+            if(!ap) return;
+            ap.style.display = 'flex';
+            ap.style.position = 'fixed';
+            ap.style.top = '0'; ap.style.left = '0'; ap.style.right = '0'; ap.style.bottom = '0';
+            ap.style.zIndex = '9999';
+            ap.style.flexDirection = 'column';
+            ap.style.background = '#0d1a14';
+            ap.style.overflowY = 'auto';
+            var ls = document.getElementById('LS');
+            var au = document.getElementById('AU');
+            if(ls) ls.style.display = 'none';
+            if(au) au.style.display = 'block';
+            if(!window._adminReady){
+              window._adminReady = true;
+              if(typeof adminInit === 'function') adminInit();
+            }
+          } else {
+            err.textContent = '❌ Mot de passe incorrect';
+            inp.value = '';
+            setTimeout(function(){ err.textContent = ''; }, 2500);
+          }
+        }
+
+        btn.addEventListener('click', doLogin);
+        inp.addEventListener('keydown', function(e){ if(e.key === 'Enter') doLogin(); });
         return;
       }
 
