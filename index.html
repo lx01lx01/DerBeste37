@@ -1722,6 +1722,60 @@ textarea.fi{resize:none;min-height:60px;line-height:1.5;}
   border:1px solid rgba(37,211,102,.25);color:#25d366;font-size:11px;font-weight:600;cursor:pointer;
   text-decoration:none;display:flex;align-items:center;gap:5px;}
 
+/* ── DASHBOARD ── */
+.dash-status-card{display:flex;align-items:center;gap:12px;background:var(--sur);border:1px solid var(--bdr);
+  border-radius:18px;padding:16px;margin-bottom:10px;margin-top:6px;}
+.dash-status-dot{width:12px;height:12px;border-radius:50%;background:var(--g);flex-shrink:0;
+  box-shadow:0 0 10px rgba(0,232,122,.6);animation:blink 2s ease-in-out infinite;}
+.dash-status-dot.red{background:var(--red);box-shadow:0 0 10px rgba(255,69,69,.6);}
+.dash-status-label{font-size:14px;font-weight:700;}
+.dash-status-sub{font-size:11px;color:var(--dim);margin-top:2px;}
+.dash-toggle-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;}
+.dash-toggle-card{display:flex;align-items:center;gap:10px;background:var(--sur);border:1px solid var(--bdr);
+  border-radius:14px;padding:12px 14px;}
+.dash-toggle-ico{font-size:20px;}
+.dash-toggle-name{font-size:13px;font-weight:600;flex:1;}
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px;}
+.stats4 .stat{padding:10px 6px;}
+.stats4 .sn{font-size:20px;}
+.stats4 .sl{font-size:9px;}
+.sb .sn{color:var(--pur);}
+.dash-item{display:flex;align-items:center;gap:10px;background:var(--sur2);border:1px solid var(--bdr);
+  border-radius:12px;padding:9px 12px;margin-bottom:7px;}
+.dash-item-name{flex:1;font-size:13px;font-weight:600;}
+.dash-item-tag{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;letter-spacing:.5px;}
+.dash-oos-tag{background:rgba(255,69,69,.1);border:1px solid rgba(255,69,69,.2);color:var(--red);}
+.dash-new-tag{background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.2);color:var(--g);}
+.dash-fix-btn{padding:5px 10px;border-radius:8px;background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.2);
+  color:var(--g);font-size:11px;font-weight:600;cursor:pointer;}
+
+/* ── CATEGORY FILTER ── */
+.cat-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.cf-btn{padding:5px 12px;border-radius:20px;border:1px solid var(--bdr);background:var(--sur);
+  color:var(--dim);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;}
+.cf-btn.on{background:var(--gdim);border-color:rgba(0,232,122,.35);color:var(--g);}
+
+/* ── DEPT CHIPS ── */
+.dept-chips{display:flex;gap:6px;flex-wrap:wrap;min-height:28px;}
+.dept-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;
+  background:rgba(100,216,255,.08);border:1px solid rgba(100,216,255,.25);color:var(--blue);
+  font-size:12px;font-weight:700;}
+.dept-chip button{background:none;border:none;color:rgba(100,216,255,.5);cursor:pointer;font-size:12px;
+  padding:0;line-height:1;transition:color .15s;}
+.dept-chip button:hover{color:var(--red);}
+
+/* ── COLOR CHIPS ── */
+.color-chip{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;
+  color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4);border:2px solid transparent;transition:all .2s;
+  mix-blend-mode:normal;}
+.color-chip.selected{border-color:#fff;transform:scale(1.08);}
+
+/* ── CHANGELOG ── */
+.cl-row{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--bdr);}
+.cl-row:last-child{border-bottom:none;}
+.cl-time{font-size:9px;color:var(--dim);white-space:nowrap;padding-top:2px;min-width:46px;}
+.cl-msg{font-size:12px;line-height:1.4;}
+
 
 /* ─── Admin trigger ─── */
 #admin-trigger {
@@ -2702,7 +2756,7 @@ window.addEventListener('scroll', () => {
     try{
       var _s2 = JSON.parse((ss.status==='fulfilled'&&ss.value)?ss.value.value:'{}');
       window._waTpl = _s2.waTpl||null;
-      window._cartSettings = { meetupZone:_s2.meetupZone||'Tours 37000', minLivr:_s2.minLivr||50, minMeet:_s2.minMeet||0, waNum:_s2.whatsapp||'33758464533' };
+      window._cartSettings = { meetupZone:_s2.meetupZone||'Tours 37000', minLivr:_s2.minLivr||50, minMeet:_s2.minMeet||0, waNum:_s2.whatsapp||'33758464533', msgIntro:_s2.msgIntro||'Bonjour, je souhaite commander 🛒', msgLivrLabel:_s2.msgLivrLabel||'🛵 Adresse : ', msgMeetLabel:_s2.msgMeetLabel||'🤝 Mode : Meet-up', msgHeure:_s2.msgHeure||'🕐 Heure souhaitée :' };
     }catch(e){}
 
     document.querySelectorAll('[data-pid]').forEach(card => {
@@ -3138,11 +3192,12 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 
   <div class="tabs">
-    <button class="tb on" onclick="ST(this,'products')">📦 Produits</button>
+    <button class="tb on" onclick="ST(this,'dashboard')">📊 Dashboard</button>
+    <button class="tb" onclick="ST(this,'products')">📦 Produits</button>
     <button class="tb" onclick="ST(this,'quick')">⚡ Rapide</button>
     <button class="tb" onclick="ST(this,'add')">➕ Ajouter</button>
     <button class="tb" onclick="ST(this,'promo')">🏷️ Promos</button>
-    <button class="tb" onclick="ST(this,'boutique')">🏪 Boutique</button>
+    <button class="tb" onclick="ST(this,'apparence')">🎨 Apparence</button>
     <button class="tb" onclick="ST(this,'livraison')">🛵 Livraison</button>
     <button class="tb" onclick="ST(this,'messages')">💬 Messages</button>
     <button class="tb" onclick="ST(this,'settings')">⚙️ Config</button>
@@ -3150,13 +3205,73 @@ window.addEventListener('DOMContentLoaded', () => {
 
   <div class="body">
 
-    <!-- ══ PRODUITS ══ -->
-    <div class="pane on" id="p-products">
-      <div class="slb" style="margin-top:6px;">Vue d'ensemble</div>
-      <div class="stats">
+    <!-- ══ DASHBOARD ══ -->
+    <div class="pane on" id="p-dashboard">
+
+      <!-- Boutique status card -->
+      <div class="dash-status-card" id="dash-status-card">
+        <div class="dash-status-dot" id="dash-status-dot"></div>
+        <div class="dash-status-info">
+          <div class="dash-status-label" id="dash-status-label">Boutique ouverte</div>
+          <div class="dash-status-sub" id="dash-status-sub">Clients peuvent commander</div>
+        </div>
+        <label class="ti tr" style="margin-left:auto;">
+          <input type="checkbox" id="s-maint" onchange="toggleMaint(this.checked)">
+          <div class="tt"><div class="th"></div></div>
+        </label>
+      </div>
+
+      <!-- Toggles rapides livraison / meet-up -->
+      <div class="dash-toggle-row">
+        <div class="dash-toggle-card" id="dtc-livr">
+          <span class="dash-toggle-ico">🛵</span>
+          <span class="dash-toggle-name">Livraison</span>
+          <label class="ti tr" style="margin-left:auto;">
+            <input type="checkbox" id="s-livr-on" onchange="SF2('livraisonOn',this.checked);markU()">
+            <div class="tt"><div class="th"></div></div>
+          </label>
+        </div>
+        <div class="dash-toggle-card" id="dtc-meet">
+          <span class="dash-toggle-ico">🤝</span>
+          <span class="dash-toggle-name">Meet-up</span>
+          <label class="ti tr" style="margin-left:auto;">
+            <input type="checkbox" id="s-meet-on" onchange="SF2('meetupOn',this.checked);markU()">
+            <div class="tt"><div class="th"></div></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Stats grid -->
+      <div class="slb">Catalogue</div>
+      <div class="stats4">
         <div class="stat sg"><div class="sn" id="sT">0</div><div class="sl">Produits</div></div>
         <div class="stat sr"><div class="sn" id="sO">0</div><div class="sl">Ruptures</div></div>
         <div class="stat so"><div class="sn" id="sN">0</div><div class="sl">Nouveautés</div></div>
+        <div class="stat sb"><div class="sn" id="sP">0</div><div class="sl">Promos</div></div>
+      </div>
+
+      <!-- Produits en rupture -->
+      <div class="slb">Ruptures de stock</div>
+      <div id="dash-oos-list"><div style="font-size:12px;color:var(--dim);text-align:center;padding:14px 0;">Aucune rupture</div></div>
+
+      <!-- Nouveautés actives -->
+      <div class="slb">Nouveautés actives</div>
+      <div id="dash-new-list"><div style="font-size:12px;color:var(--dim);text-align:center;padding:14px 0;">Aucune nouveauté</div></div>
+
+      <!-- Message de fermeture -->
+      <div class="slb">Message de fermeture</div>
+      <div class="card">
+        <div class="fg"><div class="fl">Affiché quand la boutique est fermée</div>
+          <input class="fi" id="s-maintmsg" value="Boutique temporairement fermée. Revenez bientôt 🙏" type="text" oninput="markU()"></div>
+      </div>
+
+    </div>
+
+    <!-- ══ PRODUITS ══ -->
+    <div class="pane" id="p-products">
+      <div class="slb" style="margin-top:6px;">Filtre par catégorie</div>
+      <div class="cat-filter" id="cat-filter">
+        <button class="cf-btn on" onclick="filterCat(this,'all')">Tous</button>
       </div>
       <div class="slb">Catalogue</div>
       <div id="PL"></div>
@@ -3164,7 +3279,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     <!-- ══ ACTIONS RAPIDES ══ -->
     <div class="pane" id="p-quick">
-      <div class="slb" style="margin-top:6px;">Actions rapides</div>
+      <div class="slb" style="margin-top:6px;">Stock global</div>
       <div class="qa-grid">
         <div class="qa qr" onclick="qAction('allOos')">❌<br>Tout en rupture</div>
         <div class="qa qg" onclick="qAction('allStock')">✅<br>Tout en stock</div>
@@ -3187,7 +3302,7 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="fg"><div class="fl">Nom du produit</div>
           <input class="fi" id="nn" placeholder="ex: Gelato 🌈" type="text"></div>
         <div class="fg"><div class="fl">Catégorie</div>
-          <select class="fsel" id="nc" id="nc"></select></div>
+          <select class="fsel" id="nc"></select></div>
         <div class="fg"><div class="fl">Description</div>
           <textarea class="fi" id="nd" rows="2" placeholder="Arômes, notes..."></textarea></div>
         <div class="fg"><div class="fl">URL Vidéo Cloudinary (optionnel)</div>
@@ -3228,64 +3343,124 @@ window.addEventListener('DOMContentLoaded', () => {
       </div>
     </div>
 
-    <!-- ══ BOUTIQUE ══ -->
-    <div class="pane" id="p-boutique">
-      <div class="slb" style="margin-top:6px;">Mode boutique</div>
-      <div class="card">
-        <div class="card-title">🏪 Statut de la boutique</div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-          <div><div style="font-size:13px;font-weight:600;">Mode maintenance</div>
-            <div style="font-size:11px;color:var(--dim);margin-top:3px;">Ferme la boutique aux clients</div></div>
-          <label class="ti tr"><input type="checkbox" id="s-maint" onchange="toggleMaint(this.checked)">
-            <div class="tt"><div class="th"></div></div></label>
-        </div>
-        <div class="fg"><div class="fl">Message de fermeture</div>
-          <input class="fi" id="s-maintmsg" value="Boutique temporairement fermée. Revenez bientôt 🙏" type="text" oninput="markU()"></div>
-      </div>
+    <!-- ══ APPARENCE ══ -->
+    <div class="pane" id="p-apparence">
 
-      <div class="slb">Ticker / Annonce</div>
+      <div class="slb" style="margin-top:6px;">Bandeau défilant</div>
       <div class="card">
-        <div class="card-title">📢 Bandeau défilant</div>
-        <div class="fg"><div class="fl">Texte du ticker</div>
-          <input class="fi" id="s-ticker" placeholder="ex: 🔥 Nouvelle arrivée cette semaine..." type="text" oninput="document.getElementById('ticker-preview').textContent=this.value||'Aperçu du ticker';window.markU()"></div>
+        <div class="card-title">📢 Ticker</div>
+        <div class="fg"><div class="fl">Texte personnalisé</div>
+          <input class="fi" id="s-ticker" placeholder="ex: 🔥 Nouvelle arrivée cette semaine..." type="text" oninput="document.getElementById('ticker-preview').textContent=this.value||'Aperçu du ticker';markU()"></div>
         <div class="ticker-preview" id="ticker-preview">Aperçu du ticker</div>
         <div style="margin-top:12px;display:flex;gap:8px;align-items:center;">
           <label class="ti"><input type="checkbox" id="s-ticker-on" onchange="markU()"><div class="tt"><div class="th"></div></div></label>
-          <span style="font-size:12px;color:var(--dim);">Activer le ticker personnalisé</span>
+          <span style="font-size:12px;color:var(--dim);">Activer le ticker personnalisé (sinon auto)</span>
         </div>
       </div>
 
       <div class="slb">Section héro</div>
       <div class="card">
-        <div class="card-title">🖼️ Hero & Titre</div>
-        <div class="fg"><div class="fl">Badge hero</div>
-          <input class="fi" id="s-herobadge" placeholder="ex: ✅ Disponible maintenant" type="text" oninput="markU()"></div>
+        <div class="card-title">🖼️ Hero</div>
+        <div class="fg"><div class="fl">Badge hero (texte + emoji)</div>
+          <input class="fi" id="s-herobadge" placeholder="ex: 🟢 Disponible maintenant" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">URL image de fond (optionnel)</div>
+          <input class="fi" id="s-heroimg" placeholder="https://..." type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Sous-titre hero</div>
+          <input class="fi" id="s-herosub" placeholder="ex: Tours & Région" type="text" oninput="markU()"></div>
       </div>
+
+      <div class="slb">Réseaux sociaux</div>
+      <div class="card">
+        <div class="card-title">📱 Liens</div>
+        <div class="fg">
+          <div class="fl">Instagram</div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <span style="font-size:18px;">📸</span>
+            <input class="fi" id="s-instagram" placeholder="@derbeste37" type="text" oninput="markU()">
+          </div>
+        </div>
+        <div class="fg">
+          <div class="fl">Snapchat</div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <span style="font-size:18px;">👻</span>
+            <input class="fi" id="s-snapchat" placeholder="derbeste37" type="text" oninput="markU()">
+          </div>
+        </div>
+        <div class="fg">
+          <div class="fl">Telegram canal</div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <span style="font-size:18px;">✈️</span>
+            <input class="fi" id="s-tg-canal" placeholder="@DerBeste37Canal" type="text" oninput="markU()">
+          </div>
+        </div>
+      </div>
+
+      <div class="slb">Couleur d'accent</div>
+      <div class="card">
+        <div class="card-title">🎨 Thème</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+          <div class="color-chip" style="background:#00e87a;" onclick="setAccent('#00e87a',this)" data-c="#00e87a">🌿 Vert</div>
+          <div class="color-chip" style="background:#64d8ff;" onclick="setAccent('#64d8ff',this)" data-c="#64d8ff">🧊 Bleu</div>
+          <div class="color-chip" style="background:#b388ff;" onclick="setAccent('#b388ff',this)" data-c="#b388ff">💜 Violet</div>
+          <div class="color-chip" style="background:#ff6b35;" onclick="setAccent('#ff6b35',this)" data-c="#ff6b35">🔥 Orange</div>
+          <div class="color-chip" style="background:#ffd200;" onclick="setAccent('#ffd200',this)" data-c="#ffd200">⭐ Or</div>
+        </div>
+        <div class="fg"><div class="fl">Couleur personnalisée (hex)</div>
+          <input class="fi" id="s-accent" placeholder="#00e87a" type="text" oninput="markU()"></div>
+      </div>
+
     </div>
 
     <!-- ══ LIVRAISON ══ -->
     <div class="pane" id="p-livraison">
-      <div class="slb" style="margin-top:6px;">Horaires de livraison</div>
+
+      <div class="slb" style="margin-top:6px;">Services actifs</div>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;margin-bottom:10px;">
+          <div><div style="font-size:13px;font-weight:600;">🛵 Livraison à domicile</div>
+            <div style="font-size:11px;color:var(--dim);margin-top:2px;">Activer/désactiver la livraison</div></div>
+          <label class="ti tr"><input type="checkbox" id="s-livr-on2" onchange="SF2('livraisonOn',this.checked);syncDashToggle();markU()">
+            <div class="tt"><div class="th"></div></div></label>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;">
+          <div><div style="font-size:13px;font-weight:600;">🤝 Meet-up / Rencontre</div>
+            <div style="font-size:11px;color:var(--dim);margin-top:2px;">Activer/désactiver le meet-up</div></div>
+          <label class="ti tr"><input type="checkbox" id="s-meet-on2" onchange="SF2('meetupOn',this.checked);syncDashToggle();markU()">
+            <div class="tt"><div class="th"></div></div></label>
+        </div>
+      </div>
+
+      <div class="slb">Horaires</div>
       <div class="card">
         <div class="card-title">🕐 Plages horaires</div>
         <div class="horaires-grid" id="horaires-grid"></div>
         <div style="margin-top:12px;">
-          <div class="fl">Message horaire affiché</div>
+          <div class="fl">Message horaire affiché sur la boutique</div>
           <input class="fi" id="s-horaireMsg" placeholder="ex: Livraison 12h–22h tous les jours" type="text" oninput="markU()"></div>
       </div>
 
-      <div class="slb">Commande minimum</div>
+      <div class="slb">Minimums de commande</div>
       <div class="card">
         <div class="fg"><div class="fl">Minimum livraison (€)</div>
           <input class="fi" id="s-minlivr" placeholder="50" type="number" oninput="markU()"></div>
-        <div class="fg"><div class="fl">Minimum meet-up (€)</div>
+        <div class="fg"><div class="fl">Minimum meet-up (€) — 0 = sans minimum</div>
           <input class="fi" id="s-minmeet" placeholder="0" type="number" oninput="markU()"></div>
       </div>
 
-      <div class="slb">Lieu du meet-up</div>
+      <div class="slb">Zone meet-up</div>
       <div class="card">
-        <div class="fg"><div class="fl">Texte affiché dans "Meet-up"</div>
+        <div class="fg"><div class="fl">Lieu affiché dans le message meet-up</div>
           <input class="fi" id="s-meetupzone" placeholder="ex: Tours 37000" type="text" oninput="markU()"></div>
+      </div>
+
+      <div class="slb">Départements de livraison</div>
+      <div class="card">
+        <div class="card-title">🗺️ Départements couverts</div>
+        <div class="dept-chips" id="dept-chips"></div>
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <input class="fi" id="dept-inp" placeholder="ex: 37" type="text" style="flex:1;" maxlength="3">
+          <button class="apb" style="flex:0 0 auto;margin-top:0;padding:0 14px;" onclick="addDept()">+ Ajouter</button>
+        </div>
       </div>
 
       <div class="slb">Zones de livraison</div>
@@ -3300,33 +3475,64 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="fl" style="margin-bottom:10px;">Sélectionne les moyens acceptés</div>
         <div class="pay-grid" id="pay-grid"></div>
       </div>
+
     </div>
 
     <!-- ══ MESSAGES ══ -->
     <div class="pane" id="p-messages">
-      <div class="slb" style="margin-top:6px;">Templates WhatsApp</div>
+
+      <div class="slb" style="margin-top:6px;">Contacts</div>
       <div class="card">
-        <div class="card-title">📋 Message de commande</div>
-        <div class="fg"><div class="fl">Template (utilise {produit} {grammage} {prix})</div>
-          <textarea class="fi" id="s-watpl" rows="5" oninput="markU()"></textarea></div>
-        <button class="gbtn" onclick="saveWaTpl()">💾 Enregistrer le template</button>
+        <div class="card-title">📞 Numéros</div>
+        <div class="fg"><div class="fl">Numéro WhatsApp (sans + ni espace)</div>
+          <input class="fi" id="s-wa" placeholder="33758464533" type="text" oninput="markU()"></div>
+        <div class="fg"><div class="fl">Telegram SAV</div>
+          <input class="fi" id="s-tg" placeholder="@DerBeste37" type="text" oninput="markU()"></div>
+      </div>
+
+      <div class="slb">Message — Livraison</div>
+      <div class="card">
+        <div class="card-title">🛵 Format du message livraison</div>
+        <div class="fg">
+          <div class="fl">Ligne d'intro</div>
+          <input class="fi" id="s-msg-intro" placeholder="Bonjour, je souhaite commander 🛒" type="text" oninput="markU();updateMsgPreview()">
+        </div>
+        <div class="fg">
+          <div class="fl">Label adresse de livraison</div>
+          <input class="fi" id="s-msg-livr-label" placeholder="🛵 Adresse : " type="text" oninput="markU();updateMsgPreview()">
+        </div>
+        <div class="fg">
+          <div class="fl">Label heure souhaitée</div>
+          <input class="fi" id="s-msg-heure" placeholder="🕐 Heure souhaitée :" type="text" oninput="markU();updateMsgPreview()">
+        </div>
+      </div>
+
+      <div class="slb">Message — Meet-up</div>
+      <div class="card">
+        <div class="card-title">🤝 Format du message meet-up</div>
+        <div class="fg">
+          <div class="fl">Label mode meet-up</div>
+          <input class="fi" id="s-msg-meet-label" placeholder="🤝 Mode : Meet-up" type="text" oninput="markU();updateMsgPreview()">
+        </div>
+      </div>
+
+      <div class="slb">Aperçu en temps réel</div>
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="display:flex;border-bottom:1px solid rgba(255,255,255,.06);">
+          <button id="prev-tab-livr" onclick="switchPrevTab('livr')" style="flex:1;padding:10px;font-size:11px;font-weight:700;letter-spacing:1px;background:rgba(0,232,122,.08);color:#00e87a;border:none;cursor:pointer;border-right:1px solid rgba(255,255,255,.06);">🛵 LIVRAISON</button>
+          <button id="prev-tab-meet" onclick="switchPrevTab('meet')" style="flex:1;padding:10px;font-size:11px;font-weight:700;letter-spacing:1px;background:none;color:var(--dim);border:none;cursor:pointer;">🤝 MEET-UP</button>
+        </div>
+        <div id="msg-preview" style="padding:14px;font-size:12px;line-height:1.8;font-family:monospace;color:rgba(255,255,255,.75);white-space:pre-wrap;min-height:120px;background:rgba(0,0,0,.2);"></div>
       </div>
 
       <div class="slb">Message rupture de stock</div>
       <div class="card">
         <div class="card-title">❌ Message "Me prévenir"</div>
+        <div style="font-size:11px;color:var(--dim);margin-bottom:10px;">Variable : <code style="background:rgba(0,232,122,.1);color:#00e87a;padding:1px 5px;border-radius:4px;">{produit}</code></div>
         <div class="fg"><div class="fl">Message automatique</div>
           <textarea class="fi" id="s-wanotif" rows="4" oninput="markU()"></textarea></div>
-        <button class="gbtn" onclick="saveWaTpl()">💾 Enregistrer</button>
       </div>
 
-      <div class="slb">Numéros de contact</div>
-      <div class="card">
-        <div class="fg"><div class="fl">Numéro WhatsApp</div>
-          <input class="fi" id="s-wa" placeholder="33758464533" type="text" oninput="markU()"></div>
-        <div class="fg"><div class="fl">Telegram SAV</div>
-          <input class="fi" id="s-tg" placeholder="@DerBeste37" type="text" oninput="markU()"></div>
-      </div>
     </div>
 
     <!-- ══ CONFIG ══ -->
@@ -3338,12 +3544,36 @@ window.addEventListener('DOMContentLoaded', () => {
           <input class="fi" id="s-np" placeholder="Nouveau" type="password"></div>
         <div class="fg"><div class="fl">Confirmer</div>
           <input class="fi" id="s-cp" placeholder="Confirmer" type="password"></div>
-        <button class="gbtn" onclick="changePass()">💾 Changer</button>
+        <button class="gbtn" onclick="changePass()">💾 Changer le mot de passe</button>
+      </div>
+
+      <div class="slb">GitHub Gist — Stockage partagé</div>
+      <div class="card">
+        <div class="card-title">🔗 Statut de synchronisation</div>
+        <div style="font-size:11px;color:var(--dim);line-height:1.7;margin-bottom:14px;">
+          Toutes les modifications sont sauvegardées sur un <strong style="color:var(--txt);">GitHub Gist privé</strong>.<br>
+          Chaque client recharge les données au démarrage → les changements sont <strong style="color:var(--g);">visibles par tout le monde immédiatement</strong>.
+        </div>
+        <div id="gh-status-box" style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.2);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
+          <div id="gh-dot" style="width:10px;height:10px;border-radius:50%;background:var(--dim);flex-shrink:0;"></div>
+          <div>
+            <div id="gh-label" style="font-size:13px;font-weight:600;">Non testé</div>
+            <div id="gh-sub" style="font-size:11px;color:var(--dim);margin-top:2px;">Appuie sur "Tester" pour vérifier</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="gbtn" style="flex:1;" onclick="testGistConnection()">🔌 Tester la connexion</button>
+          <button class="gbtn" style="flex:1;background:var(--sur2);color:var(--txt);" onclick="forceGistSync()">🔄 Forcer sync</button>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bdr);">
+          <div class="fl" style="margin-bottom:6px;">Gist ID (lecture seule)</div>
+          <div style="font-size:11px;font-family:monospace;color:var(--dim);background:rgba(0,0,0,.2);padding:8px 10px;border-radius:8px;word-break:break-all;" id="gh-gist-id-display">—</div>
+        </div>
       </div>
 
       <div class="slb">Export / Import</div>
       <div class="card">
-        <div class="card-title">📦 Sauvegarde des données</div>
+        <div class="card-title">📦 Sauvegarde complète</div>
         <div style="display:flex;gap:8px;">
           <button class="gbtn" style="flex:1;" onclick="exportData()">⬇️ Exporter JSON</button>
           <button class="gbtn" style="flex:1;background:var(--sur2);color:var(--txt);" onclick="document.getElementById('import-inp').click()">⬆️ Importer</button>
@@ -3351,7 +3581,14 @@ window.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <div class="slb">Danger</div>
+      <div class="slb">Journal des modifications</div>
+      <div class="card">
+        <div class="card-title">📋 Historique</div>
+        <div id="changelog-list" style="max-height:180px;overflow-y:auto;"></div>
+        <button class="dbtn" style="margin-top:10px;background:rgba(255,255,255,.04);border-color:var(--bdr);color:var(--dim);" onclick="clearChangelog()">🗑️ Effacer l'historique</button>
+      </div>
+
+      <div class="slb">Zone de danger</div>
       <div class="card">
         <button class="dbtn" onclick="confirmA('reset','','Réinitialiser ?','Catalogue remis par défaut. Irréversible.')">🔄 Remettre catalogue par défaut</button>
         <button class="dbtn" onclick="confirmA('wipe','','Tout effacer ?','TOUTES les données admin seront supprimées. Irréversible.')">💣 Effacer toutes les données</button>
@@ -3421,16 +3658,26 @@ let P=[], S={
   whatsapp:'33758464533', telegram:'@DerBeste37', password:'beste37',
   maintenance:false, maintMsg:'Boutique temporairement fermée. Revenez bientôt 🙏',
   ticker:'', tickerOn:false,
-  heroSub:'Tours & Région', heroBadge:'🟢 Disponible maintenant',
+  heroSub:'Tours & Région', heroBadge:'🟢 Disponible maintenant', heroImg:'',
   horaires:{Lun:'12h–22h',Mar:'12h–22h',Mer:'12h–22h',Jeu:'12h–22h',Ven:'12h–22h',Sam:'12h–22h',Dim:'Fermé'},
   horaireMsg:'Livraison tous les jours 12h–22h',
   minLivr:50, minMeet:0,
+  livraisonOn:true, meetupOn:true,
   zones:['Tours centre','Joué-lès-Tours','Saint-Cyr-sur-Loire','La Riche'],
+  departments:['37','49','86','36','41','72'],
   meetupZone:'Tours 37000',
   paiements:[],
-  waTpl:"Bonjour, je souhaite commander :\n📦 Produit : {produit}\n⚖️ Grammage : {grammage}\n💰 Prix : {prix}\n🕐 Heure souhaitée :",
-  waNotif:"Bonjour ! Je souhaite être prévenu du retour en stock de :\n📦 {produit}\n\nMerci 🙏",
-  promos:[]
+  instagram:'', snapchat:'', tgCanal:'',
+  accentColor:'#00e87a',
+  ghToken:'', ghRepo:'',
+  waTpl:'',
+  waNotif:"Bonjour ! Je souhaite être prévenu du retour en stock de :\n{produit}\n\nMerci 🙏",
+  msgIntro:'Bonjour, je souhaite commander 🛒',
+  msgLivrLabel:'🛵 Adresse : ',
+  msgMeetLabel:'🤝 Mode : Meet-up',
+  msgHeure:'🕐 Heure souhaitée :',
+  promos:[],
+  changelog:[]
 };
 let unsaved=false;
 
@@ -3468,43 +3715,94 @@ async function adminInit(){
     }
   }catch(e){ console.log('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
   window.S = S; window.P = P;
-  buildUI(); render();
+  buildUI(); render(); renderDashboard();
 }
 
 function buildUI(){
+  // Catégories select
   const nc=document.getElementById('nc');
   nc.innerHTML=Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
 
+  // Horaires
   const hg=document.getElementById('horaires-grid');
   hg.innerHTML=DAYS.map(d=>`<div class="h-row">
     <div class="h-day">${d}</div>
     <input class="fi h-inp" id="h-${d}" value="${S.horaires[d]||'Fermé'}" type="text" oninput="window.S.horaires['${d}']=this.value;window.markU()">
   </div>`).join('');
 
+  // Zones
   renderZones();
 
+  // Départements
+  renderDepts();
+
+  // Paiements
   const pg=document.getElementById('pay-grid');
-  pg.innerHTML=PAYS.map(p=>`<div class="pay-tag${S.paiements.includes(p)?' on':''}" onclick="togglePay(this,'${p}')">${p}</div>`).join('');
+  pg.innerHTML=PAYS.map(p=>`<div class="pay-tag${(S.paiements||[]).includes(p)?' on':''}" onclick="togglePay(this,'${p}')">${p}</div>`).join('');
 
-  document.getElementById('s-watpl').value=S.waTpl;
-  document.getElementById('s-wanotif').value=S.waNotif;
-  document.getElementById('s-wa').value=S.whatsapp;
-  document.getElementById('s-tg').value=S.telegram;
-  document.getElementById('s-maint').checked=S.maintenance;
-  document.getElementById('s-maintmsg').value=S.maintMsg;
-  document.getElementById('s-ticker').value=S.ticker;
-  document.getElementById('s-ticker-on').checked=S.tickerOn;
-  document.getElementById('s-herobadge').value=S.heroBadge;
-  document.getElementById('s-minlivr').value=S.minLivr;
-  document.getElementById('s-minmeet').value=S.minMeet;
-  document.getElementById('s-horaireMsg').value=S.horaireMsg;
-  document.getElementById('s-meetupzone').value=S.meetupZone||'';
+  // Messages
+  document.getElementById('s-wanotif').value=S.waNotif||"Bonjour ! Je souhaite être prévenu du retour en stock de :\n{produit}\n\nMerci 🙏";
+  document.getElementById('s-msg-intro').value=S.msgIntro||"Bonjour, je souhaite commander 🛒";
+  document.getElementById('s-msg-livr-label').value=S.msgLivrLabel||"🛵 Adresse : ";
+  document.getElementById('s-msg-meet-label').value=S.msgMeetLabel||"🤝 Mode : Meet-up";
+  document.getElementById('s-msg-heure').value=S.msgHeure||"🕐 Heure souhaitée :";
+  updateMsgPreview();
+
+  // Contacts
+  document.getElementById('s-wa').value=S.whatsapp||'';
+  document.getElementById('s-tg').value=S.telegram||'';
+
+  // Dashboard status
+  const maintEl=document.getElementById('s-maint');
+  if(maintEl) maintEl.checked=S.maintenance||false;
+  document.getElementById('s-maintmsg').value=S.maintMsg||'Boutique temporairement fermée. Revenez bientôt 🙏';
+  updateDashStatus();
+
+  // Livraison toggles
+  const livEl=document.getElementById('s-livr-on');
+  const livEl2=document.getElementById('s-livr-on2');
+  const meetEl=document.getElementById('s-meet-on');
+  const meetEl2=document.getElementById('s-meet-on2');
+  if(livEl) livEl.checked=S.livraisonOn!==false;
+  if(livEl2) livEl2.checked=S.livraisonOn!==false;
+  if(meetEl) meetEl.checked=S.meetupOn!==false;
+  if(meetEl2) meetEl2.checked=S.meetupOn!==false;
+
+  // Apparence
+  document.getElementById('s-ticker').value=S.ticker||'';
+  document.getElementById('s-ticker-on').checked=S.tickerOn||false;
+  document.getElementById('s-herobadge').value=S.heroBadge||'';
+  document.getElementById('s-heroimg').value=S.heroImg||'';
+  document.getElementById('s-herosub').value=S.heroSub||'';
+  document.getElementById('s-instagram').value=S.instagram||'';
+  document.getElementById('s-snapchat').value=S.snapchat||'';
+  document.getElementById('s-tg-canal').value=S.tgCanal||'';
+  document.getElementById('s-accent').value=S.accentColor||'#00e87a';
   if(S.ticker) document.getElementById('ticker-preview').textContent=S.ticker;
-  if(S.maintenance){document.getElementById('maintBadge').style.display='block';}
+  // Mark selected color chip
+  document.querySelectorAll('.color-chip').forEach(c=>{
+    c.classList.toggle('selected', c.dataset.c===S.accentColor);
+  });
 
+  // Livraison nums
+  document.getElementById('s-minlivr').value=S.minLivr||50;
+  document.getElementById('s-minmeet').value=S.minMeet||0;
+  document.getElementById('s-horaireMsg').value=S.horaireMsg||'';
+  document.getElementById('s-meetupzone').value=S.meetupZone||'';
+
+  // Gist ID display (read-only)
+  const gidEl=document.getElementById('gh-gist-id-display');
+  if(gidEl && window._gistId) gidEl.textContent=window._gistId;
+
+  // Maintenance badge
+  const mb=document.getElementById('maintBadge');
+  if(mb) mb.style.display=S.maintenance?'block':'none';
+
+  // Promos select
   const pp=document.getElementById('promo-pid');
   pp.innerHTML=P.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 
+  // Cat actions
   const ca=document.getElementById('catActions');
   ca.innerHTML=Object.entries(CATS).map(([k,v])=>`
     <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center;">
@@ -3512,14 +3810,134 @@ function buildUI(){
       <button class="qa qr" style="flex:0 0 auto;font-size:11px;padding:7px 10px;border-radius:10px;" onclick="catAction('${k}','oos')">❌ Rupture</button>
       <button class="qa qg" style="flex:0 0 auto;font-size:11px;padding:7px 10px;border-radius:10px;" onclick="catAction('${k}','stock')">✅ Stock</button>
     </div>`).join('');
+
+  // Cat filter in products tab
+  const cf=document.getElementById('cat-filter');
+  cf.innerHTML='<button class="cf-btn on" onclick="filterCat(this,\'all\')">Tous</button>'+
+    Object.entries(CATS).map(([k,v])=>`<button class="cf-btn" onclick="filterCat(this,'${k}')">${v}</button>`).join('');
+
+  // Changelog
+  renderChangelog();
 }
 
 function renderZones(){
   const zl=document.getElementById('zones-list');
-  zl.innerHTML=S.zones.map((z,i)=>`<div class="zone-row">
+  if(!zl) return;
+  zl.innerHTML=(S.zones||[]).map((z,i)=>`<div class="zone-row">
     <div class="zone-name">${z}</div>
     <button class="zone-del" onclick="delZone(${i})">✕</button>
   </div>`).join('');
+}
+
+function renderDepts(){
+  const dc=document.getElementById('dept-chips');
+  if(!dc) return;
+  dc.innerHTML=(S.departments||[]).map((d,i)=>`
+    <div class="dept-chip">${d}<button onclick="delDept(${i})">✕</button></div>`).join('');
+}
+
+function addDept(){
+  const v=document.getElementById('dept-inp').value.trim();
+  if(!v) return;
+  if(!S.departments) S.departments=[];
+  if(!S.departments.includes(v)) S.departments.push(v);
+  document.getElementById('dept-inp').value='';
+  renderDepts(); markU();
+}
+function delDept(i){ S.departments.splice(i,1); renderDepts(); markU(); }
+
+function updateDashStatus(){
+  const dot=document.getElementById('dash-status-dot');
+  const label=document.getElementById('dash-status-label');
+  const sub=document.getElementById('dash-status-sub');
+  const card=document.getElementById('dash-status-card');
+  if(!dot) return;
+  if(S.maintenance){
+    dot.classList.add('red');
+    label.textContent='Boutique fermée';
+    sub.textContent='Mode maintenance activé';
+    card.style.borderColor='rgba(255,69,69,.3)';
+  } else {
+    dot.classList.remove('red');
+    label.textContent='Boutique ouverte';
+    sub.textContent='Clients peuvent commander';
+    card.style.borderColor='';
+  }
+}
+
+function syncDashToggle(){
+  const livEl=document.getElementById('s-livr-on');
+  const livEl2=document.getElementById('s-livr-on2');
+  const meetEl=document.getElementById('s-meet-on');
+  const meetEl2=document.getElementById('s-meet-on2');
+  if(livEl&&livEl2){ livEl.checked=S.livraisonOn!==false; livEl2.checked=S.livraisonOn!==false; }
+  if(meetEl&&meetEl2){ meetEl.checked=S.meetupOn!==false; meetEl2.checked=S.meetupOn!==false; }
+}
+
+function SF2(field, val){ S[field]=val; window.S=S; }
+
+function setAccent(color, el){
+  S.accentColor=color;
+  document.getElementById('s-accent').value=color;
+  document.querySelectorAll('.color-chip').forEach(c=>c.classList.remove('selected'));
+  if(el) el.classList.add('selected');
+  markU();
+}
+
+function renderChangelog(){
+  const el=document.getElementById('changelog-list');
+  if(!el) return;
+  const log=S.changelog||[];
+  if(!log.length){ el.innerHTML='<div style="font-size:12px;color:var(--dim);text-align:center;padding:12px 0;">Aucune modification</div>'; return; }
+  el.innerHTML=[...log].reverse().slice(0,20).map(e=>`
+    <div class="cl-row"><span class="cl-time">${e.t||''}</span><span class="cl-msg">${e.m||''}</span></div>`).join('');
+}
+
+function addChangelog(msg){
+  if(!S.changelog) S.changelog=[];
+  const now=new Date();
+  const t=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  S.changelog.push({t,m:msg});
+  if(S.changelog.length>50) S.changelog=S.changelog.slice(-50);
+}
+
+function clearChangelog(){ S.changelog=[]; renderChangelog(); markU(); }
+
+function filterCat(btn, cat){
+  document.querySelectorAll('.cf-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('#PL .pc').forEach(card=>{
+    const pid=card.id.replace('c-','');
+    const p=P.find(x=>x.id===pid);
+    card.style.display=(cat==='all'||!p||p.cat===cat)?'':'none';
+  });
+}
+
+function renderDashboard(){
+  // Stats
+  const oos=P.filter(p=>p.oos), nw=P.filter(p=>p.isNew), proms=(S.promos||[]).filter(pr=>P.find(p=>p.id===pr.id&&p.promo));
+  document.getElementById('sT').textContent=P.length;
+  document.getElementById('sO').textContent=oos.length;
+  document.getElementById('sN').textContent=nw.length;
+  document.getElementById('sP').textContent=proms.length;
+
+  // OOS list
+  const oosList=document.getElementById('dash-oos-list');
+  oosList.innerHTML=oos.length?oos.map(p=>`
+    <div class="dash-item">
+      <span class="dash-item-name">${p.name}</span>
+      <span class="dash-item-tag dash-oos-tag">❌ Rupture</span>
+      <button class="dash-fix-btn" onclick="SF('${p.id}','oos',false);renderDashboard();toast('✅ ${p.name} remis en stock')">Remettre</button>
+    </div>`).join(''):'<div style="font-size:12px;color:var(--dim);text-align:center;padding:14px 0;">Aucune rupture 🎉</div>';
+
+  // New list
+  const newList=document.getElementById('dash-new-list');
+  newList.innerHTML=nw.length?nw.map(p=>`
+    <div class="dash-item">
+      <span class="dash-item-name">${p.name}</span>
+      <span class="dash-item-tag dash-new-tag">✨ Nouveau</span>
+      <button class="dash-fix-btn" onclick="SF('${p.id}','isNew',false);renderDashboard();toast('Nouveauté retirée')">Retirer</button>
+    </div>`).join(''):'<div style="font-size:12px;color:var(--dim);text-align:center;padding:14px 0;">Aucune nouveauté active</div>';
 }
 
 // ═══════════════════════════════════════
@@ -3530,6 +3948,8 @@ function ST(btn,name){
   document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
   document.getElementById('p-'+name).classList.add('on');
   btn.classList.add('on');
+  if(name==='dashboard') renderDashboard();
+  if(name==='settings') setTimeout(()=>{ if(typeof testGistConnection==='function') testGistConnection(); },400);
 }
 
 // ═══════════════════════════════════════
@@ -3604,6 +4024,7 @@ function render(){
   if(pp) pp.innerHTML=P.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 
   renderPromos();
+  if(typeof renderDashboard==='function') renderDashboard();
 }
 
 function TE(id){document.getElementById('e-'+id).classList.toggle('on');}
@@ -3728,7 +4149,11 @@ function renderPromos(){
 // ═══════════════════════════════════════
 function toggleMaint(v){
   S.maintenance=v;
+  // Sync both checkboxes
+  const el1=document.getElementById('s-maint');
+  if(el1) el1.checked=v;
   document.getElementById('maintBadge').style.display=v?'block':'none';
+  updateDashStatus();
   markU();
 }
 
@@ -3750,10 +4175,46 @@ function togglePay(el,p){
 }
 
 // ═══════════════════════════════════════
+// MESSAGE PREVIEW
+// ═══════════════════════════════════════
+var _prevMode = 'livr';
+function switchPrevTab(mode){
+  _prevMode = mode;
+  var bl = document.getElementById('prev-tab-livr');
+  var bm = document.getElementById('prev-tab-meet');
+  if(bl && bm){
+    bl.style.background = mode==='livr' ? 'rgba(0,232,122,.08)' : 'none';
+    bl.style.color = mode==='livr' ? '#00e87a' : 'rgba(255,255,255,.35)';
+    bm.style.background = mode==='meet' ? 'rgba(0,232,122,.08)' : 'none';
+    bm.style.color = mode==='meet' ? '#00e87a' : 'rgba(255,255,255,.35)';
+  }
+  updateMsgPreview();
+}
+function updateMsgPreview(){
+  var el = document.getElementById('msg-preview'); if(!el) return;
+  var intro = (document.getElementById('s-msg-intro')||{}).value || 'Bonjour, je souhaite commander 🛒';
+  var livrLabel = (document.getElementById('s-msg-livr-label')||{}).value || '🛵 Adresse : ';
+  var meetLabel = (document.getElementById('s-msg-meet-label')||{}).value || '🤝 Mode : Meet-up';
+  var heure = (document.getElementById('s-msg-heure')||{}).value || '🕐 Heure souhaitée :';
+  var zone = (window.S && window.S.meetupZone) || 'Tours 37000';
+  var lines = [intro, ''];
+  lines.push('1. Gelato 🌈');
+  lines.push('   5G  60€');
+  lines.push('');
+  if(_prevMode === 'livr'){
+    lines.push(livrLabel);
+  } else {
+    lines.push(meetLabel);
+    lines.push('📍 ' + zone + ' — Sans minimum');
+  }
+  lines.push(heure);
+  el.textContent = lines.join('\n');
+}
+
+// ═══════════════════════════════════════
 // MESSAGES
 // ═══════════════════════════════════════
 function saveWaTpl(){
-  S.waTpl=document.getElementById('s-watpl').value;
   S.waNotif=document.getElementById('s-wanotif').value;
   markU();
   saveAll();
@@ -3817,25 +4278,44 @@ function confirmA(action,id,title,text){
 // ═══════════════════════════════════════
 function markU(){unsaved=true;}
 async function saveAll(){
-  // Dismiss iOS keyboard before saving
   if(document.activeElement) document.activeElement.blur();
   S.maintenance=document.getElementById('s-maint').checked;
   S.whatsapp=document.getElementById('s-wa').value;
   S.telegram=document.getElementById('s-tg').value;
   S.maintMsg=document.getElementById('s-maintmsg').value;
+  // Apparence
   S.ticker=document.getElementById('s-ticker').value;
   S.tickerOn=document.getElementById('s-ticker-on').checked;
   S.heroBadge=document.getElementById('s-herobadge').value;
+  S.heroImg=document.getElementById('s-heroimg').value;
+  S.heroSub=document.getElementById('s-herosub').value;
+  S.instagram=document.getElementById('s-instagram').value;
+  S.snapchat=document.getElementById('s-snapchat').value;
+  S.tgCanal=document.getElementById('s-tg-canal').value;
+  S.accentColor=document.getElementById('s-accent').value||'#00e87a';
+  // Livraison toggles
+  const livEl=document.getElementById('s-livr-on2');
+  const meetEl=document.getElementById('s-meet-on2');
+  if(livEl) S.livraisonOn=livEl.checked;
+  if(meetEl) S.meetupOn=meetEl.checked;
+  // Livraison
   S.minLivr=parseInt(document.getElementById('s-minlivr').value)||50;
   S.minMeet=parseInt(document.getElementById('s-minmeet').value)||0;
   S.horaireMsg=document.getElementById('s-horaireMsg').value;
   S.meetupZone=document.getElementById('s-meetupzone').value;
   if(!S.horaires) S.horaires={};
   ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(function(d){var el=document.getElementById('h-'+d);if(el)S.horaires[d]=el.value;});
-  // Collect paiements from DOM (belt+suspenders)
   S.paiements=Array.from(document.querySelectorAll('.pay-tag.on')).map(function(el){return el.textContent;});
-  S.waTpl=document.getElementById('s-watpl').value;
+  // Config — pas de champs token ici, le Store est hardcodé dans le script Gist
+  // Messages
+  S.waTpl='';
   S.waNotif=document.getElementById('s-wanotif').value;
+  S.msgIntro=document.getElementById('s-msg-intro').value||'Bonjour, je souhaite commander 🛒';
+  S.msgLivrLabel=document.getElementById('s-msg-livr-label').value||'🛵 Adresse : ';
+  S.msgMeetLabel=document.getElementById('s-msg-meet-label').value||'🤝 Mode : Meet-up';
+  S.msgHeure=document.getElementById('s-msg-heure').value||'🕐 Heure souhaitée :';
+  // Changelog
+  addChangelog('Modifications sauvegardées');
   try{
     var Store = window.Store;
     if(!Store) throw new Error('Store non disponible');
@@ -3844,12 +4324,14 @@ async function saveAll(){
     unsaved=false;
     toast('✅ Sauvegardé — visible par tous !');
     applySettingsToDOM(S);
+    renderChangelog();
   }catch(e){
     localStorage.setItem('admin-products', JSON.stringify(P));
     localStorage.setItem('admin-settings', JSON.stringify(S));
     unsaved=false;
     toast('⚠️ Sauvegardé localement — vérifie ta connexion');
     applySettingsToDOM(S);
+    renderChangelog();
   }
 }
 
@@ -3857,7 +4339,7 @@ async function saveAll(){
 function applySettingsToDOM(S){
   // Store for cart
   window._waTpl = S.waTpl||null;
-  window._cartSettings = { meetupZone:S.meetupZone||'Tours 37000', minLivr:S.minLivr||50, minMeet:S.minMeet||0, waNum:S.whatsapp||'33758464533' };
+  window._cartSettings = { meetupZone:S.meetupZone||'Tours 37000', minLivr:S.minLivr||50, minMeet:S.minMeet||0, waNum:S.whatsapp||'33758464533', msgIntro:S.msgIntro||'Bonjour, je souhaite commander 🛒', msgLivrLabel:S.msgLivrLabel||'🛵 Adresse : ', msgMeetLabel:S.msgMeetLabel||'🤝 Mode : Meet-up', msgHeure:S.msgHeure||'🕐 Heure souhaitée :' };
   // Telegram contact
   if(S.telegram){
     const tgHandle = S.telegram.replace(/^@/, '');
@@ -3963,6 +4445,21 @@ function toast(msg){
   if(typeof removePromo !== "undefined") window.removePromo = removePromo;
   if(typeof saveAll !== "undefined") window.saveAll = saveAll;
   if(typeof saveWaTpl !== "undefined") window.saveWaTpl = saveWaTpl;
+  if(typeof updateMsgPreview !== "undefined") window.updateMsgPreview = updateMsgPreview;
+  if(typeof switchPrevTab !== "undefined") window.switchPrevTab = switchPrevTab;
+  if(typeof renderDashboard !== "undefined") window.renderDashboard = renderDashboard;
+  if(typeof updateDashStatus !== "undefined") window.updateDashStatus = updateDashStatus;
+  if(typeof syncDashToggle !== "undefined") window.syncDashToggle = syncDashToggle;
+  if(typeof SF2 !== "undefined") window.SF2 = SF2;
+  if(typeof setAccent !== "undefined") window.setAccent = setAccent;
+  if(typeof addDept !== "undefined") window.addDept = addDept;
+  if(typeof delDept !== "undefined") window.delDept = delDept;
+  if(typeof renderDepts !== "undefined") window.renderDepts = renderDepts;
+  if(typeof filterCat !== "undefined") window.filterCat = filterCat;
+  if(typeof clearChangelog !== "undefined") window.clearChangelog = clearChangelog;
+  if(typeof addChangelog !== "undefined") window.addChangelog = addChangelog;
+  if(window.testGistConnection) {} // already global from Gist script
+  if(window.forceGistSync) {}      // already global from Gist script
   if(typeof toggleMaint !== "undefined") window.toggleMaint = toggleMaint;
   if(typeof togglePay !== "undefined") window.togglePay = togglePay;
   if(typeof toast !== "undefined") window.toast = toast;
@@ -4091,6 +4588,7 @@ function toast(msg){
   };
 
   window._storeReady = true;
+  window._gistId = GIST_ID;
   window.dispatchEvent(new Event('storeReady'));
   console.log('✅ GitHub Gist Store ready');
 
@@ -4098,6 +4596,61 @@ function toast(msg){
     window._pendingApply();
     window._pendingApply = null;
   }
+
+  // ── Test connexion Gist ──
+  window.testGistConnection = async function(){
+    const dot=document.getElementById('gh-dot');
+    const label=document.getElementById('gh-label');
+    const sub=document.getElementById('gh-sub');
+    if(!dot) return;
+    dot.style.background='var(--gold)';
+    dot.style.animation='blink 0.8s infinite';
+    label.textContent='Test en cours...';
+    sub.textContent='Connexion à GitHub Gist';
+    try{
+      const t0=Date.now();
+      const resp=await fetch(API,{headers:HEADERS});
+      const ms=Date.now()-t0;
+      if(resp.ok){
+        const gist=await resp.json();
+        const keys=gist.files[FILE]?Object.keys(JSON.parse(gist.files[FILE].content)||{}):[];
+        dot.style.background='var(--g)';
+        dot.style.animation='blink 2s ease-in-out infinite';
+        label.textContent='✅ Connecté — '+ms+'ms';
+        sub.textContent='Gist OK · '+keys.length+' clé(s) stockée(s)';
+        const gidEl=document.getElementById('gh-gist-id-display');
+        if(gidEl) gidEl.textContent=GIST_ID;
+      } else {
+        throw new Error('HTTP '+resp.status);
+      }
+    }catch(e){
+      dot.style.background='var(--red)';
+      dot.style.animation='none';
+      label.textContent='❌ Erreur de connexion';
+      sub.textContent=e.message+' — sauvegarde locale active';
+    }
+  };
+
+  // ── Forcer resync depuis Gist ──
+  window.forceGistSync = async function(){
+    const dot=document.getElementById('gh-dot');
+    const label=document.getElementById('gh-label');
+    if(!dot) return;
+    dot.style.background='var(--gold)';
+    label.textContent='Rechargement...';
+    try{
+      const resp=await fetch(API,{headers:HEADERS,cache:'no-cache'});
+      if(resp.ok){
+        _cache=null; // vider le cache
+        dot.style.background='var(--g)';
+        label.textContent='✅ Cache vidé — rechargement';
+        setTimeout(()=>{ if(typeof adminInit==='function') adminInit(); },300);
+      }
+    }catch(e){
+      dot.style.background='var(--red)';
+      label.textContent='❌ Impossible de synchroniser';
+    }
+  };
 })();
 </script>
 
@@ -4328,22 +4881,27 @@ document.addEventListener("touchmove", function(){}, {passive:true});
     var cs = window._cartSettings || {};
     var waNum = cs.waNum || cart[keys[0]].waNum || getWaNumber();
     var isMeetup = selectedMode === 'meetup';
+    var S = window.S || {};
 
-    var lines = ['Bonjour, je souhaite commander 🛒', ''];
+    var intro = cs.msgIntro || S.msgIntro || 'Bonjour, je souhaite commander 🛒';
+    var heureLabel = cs.msgHeure || S.msgHeure || '🕐 Heure souhaitée :';
+    var livrLabel = cs.msgLivrLabel || S.msgLivrLabel || '🛵 Adresse : ';
+    var meetLabel = cs.msgMeetLabel || S.msgMeetLabel || '🤝 Mode : Meet-up';
+
+    var lines = [intro, ''];
     keys.forEach(function(pid, i){
       var item = cart[pid];
-      lines.push((i+1) + '. 📦 ' + item.name);
-      lines.push('   ⚖️ ' + item.grammage + (item.prix ? '  💰 ' + item.prix : ''));
+      lines.push((i+1) + '. ' + item.name);
+      lines.push('   ' + item.grammage + (item.prix ? '  ' + item.prix : ''));
     });
     lines.push('');
     if(isMeetup){
-      lines.push('🤝 Mode : Meet-up');
+      lines.push(meetLabel);
       lines.push('📍 ' + (cs.meetupZone || 'Tours 37000') + (cs.minMeet > 0 ? ' — Min. ' + cs.minMeet + '€' : ' — Sans minimum'));
     } else {
-      lines.push('🛵 Mode : Livraison');
-      lines.push('📍 Dép. 37 · 49 · 86 · 36 · 41 · 72 — Min. ' + (cs.minLivr || 50) + '€');
+      lines.push(livrLabel);
     }
-    lines.push('🕐 Heure souhaitée :');
+    lines.push(heureLabel);
 
     var msg = lines.join('\n');
     window.location.href = 'https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg);
