@@ -2695,10 +2695,8 @@ window.addEventListener('scroll', () => {
             var au = document.getElementById('AU');
             if(ls) ls.style.display = 'none';
             if(au) au.style.display = 'block';
-            if(!window._adminReady){
-              window._adminReady = true;
-              if(typeof adminInit === 'function') adminInit();
-            }
+            if(!window._adminReady){ window._adminReady = true; }
+            if(typeof adminInit === 'function') adminInit();
           } else {
             err.textContent = '❌ Mot de passe incorrect';
             inp.value = '';
@@ -3771,6 +3769,9 @@ function tryLogin(){
   if(v===S.password||v==='beste37'){
     document.getElementById('LS').style.display='none';
     document.getElementById('AU').style.display='block';
+    // S'assurer que le dashboard est actif
+    const firstTab=document.querySelector('.tb');
+    if(firstTab) firstTab.click();
     adminInit();
   } else {
     const e=document.getElementById('lerr');e.classList.add('on');
@@ -4556,20 +4557,15 @@ function toast(msg){
   if(typeof render !== "undefined") window.render = render;
 
   window.openAdminPanel = function(){
-    // Enlever l'overlay maintenance si présent
     var mo = document.getElementById('maint-overlay');
     if(mo) mo.remove();
     var _ap = document.getElementById('ADMIN');
-    // Show panel (already position:fixed so it covers page without touching body)
-    _ap.style.cssText = 'display:flex!important;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;-webkit-overflow-scrolling:touch;';
-    // Prevent background scroll on iOS without causing layout shift
+    _ap.style.cssText = 'display:flex!important;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;';
     document.documentElement.style.overflow = 'hidden';
-    if(!window._adminReady){
-      window._adminReady = true;
-      adminInit();
-      var li = document.getElementById('li');
-      if(li) li.addEventListener('keydown', function(e){ if(e.key==='Enter') tryLogin(); });
-    }
+    // Toujours relancer adminInit pour charger les dernières données
+    adminInit();
+    var li = document.getElementById('li');
+    if(li && !li._keyBound){ li._keyBound=true; li.addEventListener('keydown', function(e){ if(e.key==='Enter') tryLogin(); }); }
   };
 
   window.closeAdminPanel = function(){
