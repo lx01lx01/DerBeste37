@@ -2696,7 +2696,7 @@ window.addEventListener('scroll', () => {
             if(ls) ls.style.display = 'none';
             if(au) au.style.display = 'block';
             if(!window._adminReady){ window._adminReady = true; }
-            if(typeof adminInit === 'function') adminInit();
+            adminInit();
           } else {
             err.textContent = '❌ Mot de passe incorrect';
             inp.value = '';
@@ -3769,7 +3769,6 @@ function tryLogin(){
   if(v===S.password||v==='beste37'){
     document.getElementById('LS').style.display='none';
     document.getElementById('AU').style.display='block';
-    // S'assurer que le dashboard est actif
     const firstTab=document.querySelector('.tb');
     if(firstTab) firstTab.click();
     adminInit();
@@ -3783,21 +3782,34 @@ function tryLogin(){
 // ═══════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════
+var _initRunning = false;
 async function adminInit(){
+  if(_initRunning) return;
+  _initRunning = true;
   try{
     var Store = window.Store;
-    if(!Store) throw new Error('Store not ready');
+    if(!Store) throw new Error('Store non disponible');
     const sp = await Store.get('admin-products');
-    if(sp) P=JSON.parse(sp.value); else P=JSON.parse(JSON.stringify(DEFS));
-    const ss = await Store.get('admin-settings');
-    if(ss){
-      const loaded=JSON.parse(ss.value);
-      const mergedHoraires=Object.assign({},S.horaires,loaded.horaires||{});
-      S={...S,...loaded};
-      S.horaires=mergedHoraires;
+    if(sp && sp.value){
+      var parsed = JSON.parse(sp.value);
+      if(Array.isArray(parsed) && parsed.length > 0) P = parsed;
+      else P = JSON.parse(JSON.stringify(DEFS));
+    } else {
+      P = JSON.parse(JSON.stringify(DEFS));
     }
-  }catch(e){ console.log('adminInit error:', e.message); P=JSON.parse(JSON.stringify(DEFS)); }
+    const ss = await Store.get('admin-settings');
+    if(ss && ss.value){
+      const loaded = JSON.parse(ss.value);
+      const mergedHoraires = Object.assign({}, S.horaires, loaded.horaires||{});
+      S = {...S, ...loaded};
+      S.horaires = mergedHoraires;
+    }
+  } catch(e){
+    console.log('adminInit error:', e.message);
+    P = JSON.parse(JSON.stringify(DEFS));
+  }
   window.S = S; window.P = P;
+  _initRunning = false;
   buildUI(); render(); renderDashboard();
 }
 
@@ -4562,8 +4574,6 @@ function toast(msg){
     var _ap = document.getElementById('ADMIN');
     _ap.style.cssText = 'display:flex!important;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;';
     document.documentElement.style.overflow = 'hidden';
-    // Toujours relancer adminInit pour charger les dernières données
-    adminInit();
     var li = document.getElementById('li');
     if(li && !li._keyBound){ li._keyBound=true; li.addEventListener('keydown', function(e){ if(e.key==='Enter') tryLogin(); }); }
   };
