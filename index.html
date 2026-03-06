@@ -3554,11 +3554,25 @@ window.addEventListener('DOMContentLoaded', () => {
           Toutes les modifications sont sauvegardées sur un <strong style="color:var(--txt);">GitHub Gist privé</strong>.<br>
           Chaque client recharge les données au démarrage → les changements sont <strong style="color:var(--g);">visibles par tout le monde immédiatement</strong>.
         </div>
+
+        <!-- Token field -->
+        <div class="fg" style="margin-bottom:14px;">
+          <div class="fl">GitHub Token (Personal Access Token)</div>
+          <div style="display:flex;gap:6px;">
+            <input class="fi" id="s-ghtoken-live" placeholder="ghp_..." type="password" style="flex:1;font-family:monospace;font-size:12px;"
+              value="" oninput="">
+            <button onclick="applyToken()" style="flex-shrink:0;padding:0 14px;border-radius:10px;background:linear-gradient(135deg,var(--g),#00b85e);border:none;color:#0d1a14;font-weight:700;font-size:13px;cursor:pointer;">✓</button>
+          </div>
+          <div style="font-size:10px;color:var(--dim);margin-top:5px;line-height:1.6;">
+            → <a href="https://github.com/settings/tokens/new?scopes=gist&description=DerBeste37" target="_blank" style="color:var(--g);">Créer un token ici</a> avec le scope <code style="background:rgba(0,232,122,.1);color:var(--g);padding:1px 4px;border-radius:4px;">gist</code> · Expiration : No expiration
+          </div>
+        </div>
+
         <div id="gh-status-box" style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.2);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
           <div id="gh-dot" style="width:10px;height:10px;border-radius:50%;background:var(--dim);flex-shrink:0;"></div>
           <div>
             <div id="gh-label" style="font-size:13px;font-weight:600;">Non testé</div>
-            <div id="gh-sub" style="font-size:11px;color:var(--dim);margin-top:2px;">Appuie sur "Tester" pour vérifier</div>
+            <div id="gh-sub" style="font-size:11px;color:var(--dim);margin-top:2px;">Colle ton token puis clique ✓ puis Tester</div>
           </div>
         </div>
         <div style="display:flex;gap:8px;">
@@ -3566,8 +3580,14 @@ window.addEventListener('DOMContentLoaded', () => {
           <button class="gbtn" style="flex:1;background:var(--sur2);color:var(--txt);" onclick="forceGistSync()">🔄 Forcer sync</button>
         </div>
         <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bdr);">
-          <div class="fl" style="margin-bottom:6px;">Gist ID (lecture seule)</div>
-          <div style="font-size:11px;font-family:monospace;color:var(--dim);background:rgba(0,0,0,.2);padding:8px 10px;border-radius:8px;word-break:break-all;" id="gh-gist-id-display">—</div>
+          <div class="fl" style="margin-bottom:6px;">Gist ID</div>
+          <div style="display:flex;gap:6px;">
+            <input class="fi" id="gh-gist-id-display" placeholder="2b848b6b09d4c91e57e82399358a5c3f" type="text" style="flex:1;font-family:monospace;font-size:11px;" value="">
+            <button onclick="applyGistId()" style="flex-shrink:0;padding:0 14px;border-radius:10px;background:linear-gradient(135deg,var(--g),#00b85e);border:none;color:#0d1a14;font-weight:700;font-size:13px;cursor:pointer;">✓</button>
+          </div>
+          <div style="font-size:10px;color:var(--dim);margin-top:5px;line-height:1.6;">
+            → Va sur <a href="https://gist.github.com" target="_blank" style="color:var(--g);">gist.github.com</a>, crée un fichier <code style="background:rgba(0,232,122,.1);color:var(--g);padding:1px 4px;border-radius:4px;">config.json</code> avec <code style="background:rgba(0,232,122,.1);color:var(--g);padding:1px 4px;border-radius:4px;">{}</code>, puis copie l'ID dans l'URL
+          </div>
         </div>
       </div>
 
@@ -3949,7 +3969,15 @@ function ST(btn,name){
   document.getElementById('p-'+name).classList.add('on');
   btn.classList.add('on');
   if(name==='dashboard') renderDashboard();
-  if(name==='settings') setTimeout(()=>{ if(typeof testGistConnection==='function') testGistConnection(); },400);
+  if(name==='settings'){
+    const tinp=document.getElementById('s-ghtoken-live');
+    const stored=localStorage.getItem('_ghToken')||'';
+    if(tinp) tinp.value=stored;
+    const ginp=document.getElementById('gh-gist-id-display');
+    const storedGist=localStorage.getItem('_gistId')||window._gistId||'';
+    if(ginp) ginp.value=storedGist;
+    setTimeout(()=>{ if(typeof testGistConnection==='function') testGistConnection(); },400);
+  }
 }
 
 // ═══════════════════════════════════════
@@ -4460,6 +4488,7 @@ function toast(msg){
   if(typeof addChangelog !== "undefined") window.addChangelog = addChangelog;
   if(window.testGistConnection) {} // already global from Gist script
   if(window.forceGistSync) {}      // already global from Gist script
+  if(window.applyToken) {}         // already global from Gist script
   if(typeof toggleMaint !== "undefined") window.toggleMaint = toggleMaint;
   if(typeof togglePay !== "undefined") window.togglePay = togglePay;
   if(typeof toast !== "undefined") window.toast = toast;
@@ -4505,15 +4534,20 @@ function toast(msg){
 // ══ GitHub Gist Store ══
 // Simple REST: GET/PATCH — works everywhere, no SDK needed
 (function(){
-  var GIST_ID  = '2b848b6b09d4c91e57e82399358a5c3f';
-  var GH_TOKEN = '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'; // ⚠️ Remplace par ton nouveau token si tu en crées un
+  var GIST_ID  = localStorage.getItem('_gistId') || '367f4fb610fe17c45fed1c2b75141590';
+  var GH_TOKEN = localStorage.getItem('_ghToken') || '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';
+  window._getToken = function(){ return localStorage.getItem('_ghToken') || GH_TOKEN; };
+  window._setToken = function(t){ localStorage.setItem('_ghToken', t); GH_TOKEN = t; };
+  window._getGistId = function(){ return localStorage.getItem('_gistId') || GIST_ID; };
+  window._setGistId = function(id){ localStorage.setItem('_gistId', id); GIST_ID = id; API = 'https://api.github.com/gists/' + id; };
   var FILE     = 'config.json';
   var API      = 'https://api.github.com/gists/' + GIST_ID;
-  var HEADERS  = {
-    'Authorization': 'Bearer ' + GH_TOKEN,
+  function getHeaders(){ return {
+    'Authorization': 'Bearer ' + window._getToken(),
     'Accept'       : 'application/vnd.github+json',
     'Content-Type' : 'application/json'
-  };
+  }; }
+  var HEADERS = getHeaders();
 
   // Cache local en mémoire
   var _cache = null;
@@ -4522,7 +4556,7 @@ function toast(msg){
 
     async get(key) {
       try {
-        var resp = await fetch(API, { headers: HEADERS });
+        var resp = await fetch(API, { headers: getHeaders() });
         if (resp.ok) {
           var gist = await resp.json();
           var raw  = gist.files[FILE] && gist.files[FILE].content;
@@ -4545,7 +4579,7 @@ function toast(msg){
         // Lire d'abord pour merger avec les données existantes
         var current = _cache || {};
         if (!_cache) {
-          var resp0 = await fetch(API, { headers: HEADERS });
+          var resp0 = await fetch(API, { headers: getHeaders() });
           if (resp0.ok) {
             var gist0 = await resp0.json();
             var raw0  = gist0.files[FILE] && gist0.files[FILE].content;
@@ -4558,7 +4592,7 @@ function toast(msg){
 
         var resp = await fetch(API, {
           method : 'PATCH',
-          headers: HEADERS,
+          headers: getHeaders(),
           body   : JSON.stringify({
             files: { [FILE]: { content: JSON.stringify(current, null, 2) } }
           })
@@ -4578,7 +4612,7 @@ function toast(msg){
         _cache = current;
         await fetch(API, {
           method : 'PATCH',
-          headers: HEADERS,
+          headers: getHeaders(),
           body   : JSON.stringify({
             files: { [FILE]: { content: JSON.stringify(current, null, 2) } }
           })
@@ -4588,7 +4622,7 @@ function toast(msg){
   };
 
   window._storeReady = true;
-  window._gistId = GIST_ID;
+  window._gistId = localStorage.getItem('_gistId') || GIST_ID;
   window.dispatchEvent(new Event('storeReady'));
   console.log('✅ GitHub Gist Store ready');
 
@@ -4597,7 +4631,39 @@ function toast(msg){
     window._pendingApply = null;
   }
 
-  // ── Test connexion Gist ──
+  // ── Appliquer un nouveau Gist ID ──
+  window.applyGistId = function(){
+    const inp=document.getElementById('gh-gist-id-display');
+    if(!inp) return;
+    const id=inp.value.trim();
+    if(!id || id.length < 20){
+      const sub=document.getElementById('gh-sub');
+      if(sub) sub.textContent='⚠️ Gist ID invalide — vérifie l\'URL de ton Gist';
+      return;
+    }
+    window._setGistId(id);
+    _cache = null;
+    const sub=document.getElementById('gh-sub');
+    if(sub) sub.textContent='Gist ID enregistré — test en cours...';
+    setTimeout(()=>window.testGistConnection(), 300);
+  };
+
+  // ── Appliquer un nouveau token ──
+  window.applyToken = function(){
+    const inp=document.getElementById('s-ghtoken-live');
+    if(!inp) return;
+    const t=inp.value.trim();
+    if(!t || !t.startsWith('ghp_')){ 
+      const sub=document.getElementById('gh-sub');
+      if(sub) sub.textContent='⚠️ Token invalide — doit commencer par ghp_';
+      return;
+    }
+    window._setToken(t);
+    inp.value=t;
+    const sub=document.getElementById('gh-sub');
+    if(sub) sub.textContent='Token enregistré — test en cours...';
+    setTimeout(()=>window.testGistConnection(), 300);
+  };
   window.testGistConnection = async function(){
     const dot=document.getElementById('gh-dot');
     const label=document.getElementById('gh-label');
@@ -4609,7 +4675,7 @@ function toast(msg){
     sub.textContent='Connexion à GitHub Gist';
     try{
       const t0=Date.now();
-      const resp=await fetch(API,{headers:HEADERS});
+      const resp=await fetch(API,{headers:getHeaders()});
       const ms=Date.now()-t0;
       if(resp.ok){
         const gist=await resp.json();
@@ -4639,7 +4705,7 @@ function toast(msg){
     dot.style.background='var(--gold)';
     label.textContent='Rechargement...';
     try{
-      const resp=await fetch(API,{headers:HEADERS,cache:'no-cache'});
+      const resp=await fetch(API,{headers:getHeaders(),cache:'no-cache'});
       if(resp.ok){
         _cache=null; // vider le cache
         dot.style.background='var(--g)';
