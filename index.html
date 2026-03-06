@@ -2640,46 +2640,35 @@ window.addEventListener('scroll', () => {
           <div style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:#fff;letter-spacing:-2px;">DerBeste<span style="color:#00e87a;">37</span></div>
           <div style="font-size:28px;">🔐</div>
           <div style="font-size:15px;color:rgba(255,255,255,.6);text-align:center;max-width:280px;line-height:1.6;">${S.maintMsg||'Boutique temporairement fermée. Revenez bientôt 🙏'}</div>
-          <div id="maint-admin-area" style="margin-top:24px;width:100%;max-width:280px;">
-            <input id="maint-pwd" type="password" placeholder="••••••••" maxlength="30"
+          <div style="margin-top:24px;width:100%;max-width:280px;">
+            <input id="maint-pwd" type="password" placeholder="Mot de passe admin" maxlength="30"
               style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:15px;color:#fff;outline:none;letter-spacing:3px;text-align:center;box-sizing:border-box;">
-            <button id="maint-login-btn"
-              style="width:100%;margin-top:10px;background:linear-gradient(135deg,#00e87a,#00b85e);border:none;border-radius:14px;padding:13px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;color:#0d1a14;cursor:pointer;">
+            <button onclick="
+              var pwd = document.getElementById('maint-pwd').value.trim();
+              var ok = (pwd === 'beste37') || (window.S && pwd === window.S.password);
+              if(ok){
+                document.getElementById('maint-overlay').remove();
+                window.openAdminPanel();
+              } else {
+                document.getElementById('maint-err').textContent = 'Mot de passe incorrect';
+                document.getElementById('maint-err').style.opacity = '1';
+                document.getElementById('maint-pwd').value = '';
+                setTimeout(function(){ document.getElementById('maint-err').style.opacity='0'; }, 2000);
+              }
+            " style="width:100%;margin-top:10px;background:linear-gradient(135deg,#00e87a,#00b85e);border:none;border-radius:14px;padding:13px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;color:#0d1a14;cursor:pointer;">
               Accéder à l'admin
             </button>
             <div id="maint-err" style="font-size:12px;color:#ff4545;text-align:center;margin-top:8px;opacity:0;transition:opacity .2s;"></div>
           </div>
         `;
         document.body.appendChild(overlay);
-
-        function tryMaintLogin(){
-          const pwd = document.getElementById('maint-pwd').value.trim();
-          // Vérification : mot de passe par défaut OU celui chargé depuis le store
-          const ok = pwd === 'beste37' || (window.S && pwd === window.S.password);
-          if(ok){
-            document.getElementById('maint-overlay').remove();
-            var ap = document.getElementById('ADMIN');
-            if(!ap) return;
-            ap.style.cssText = 'display:flex!important;position:fixed;inset:0;z-index:9999;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;';
-            var ls = document.getElementById('LS');
-            var au = document.getElementById('AU');
-            if(ls) ls.style.display = 'none';
-            if(au) au.style.display = 'block';
-            if(!window._adminReady){
-              window._adminReady = true;
-              if(typeof adminInit === 'function') adminInit();
-            }
-          } else {
-            const err = document.getElementById('maint-err');
-            err.textContent = '❌ Mot de passe incorrect';
-            err.style.opacity = '1';
-            document.getElementById('maint-pwd').value = '';
-            setTimeout(()=>{ err.style.opacity='0'; }, 2500);
-          }
-        }
-
-        document.getElementById('maint-login-btn').addEventListener('click', tryMaintLogin);
-        document.getElementById('maint-pwd').addEventListener('keydown', function(e){ if(e.key==='Enter') tryMaintLogin(); });
+        // Enter key support
+        setTimeout(function(){
+          var inp = document.getElementById('maint-pwd');
+          if(inp) inp.addEventListener('keydown', function(e){
+            if(e.key==='Enter') inp.nextElementSibling && inp.nextElementSibling.click();
+          });
+        }, 100);
         return;
       }
 
@@ -4528,6 +4517,9 @@ function toast(msg){
   if(typeof render !== "undefined") window.render = render;
 
   window.openAdminPanel = function(){
+    // Enlever l'overlay maintenance si présent
+    var mo = document.getElementById('maint-overlay');
+    if(mo) mo.remove();
     var _ap = document.getElementById('ADMIN');
     // Show panel (already position:fixed so it covers page without touching body)
     _ap.style.cssText = 'display:flex!important;position:fixed;inset:0;z-index:9000;flex-direction:column;background:#0d1a14;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;-webkit-overflow-scrolling:touch;';
